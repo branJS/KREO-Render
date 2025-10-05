@@ -1,0 +1,304 @@
+/* Neo-brutalist KREO: cream canvas, bold outlines, modular palette */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+
+:root{
+  /* Canvas + ink */
+  --cream:#F2ECE3;
+  --ink:#0D0D0D;
+
+  /* Brand palette (from your image) */
+  --yellow:#F5C100;
+  --teal:#00B6A3;
+  --green:#2DBA72;
+  --blue:#1E6FE0;
+  --red:#E24C3A;
+  --pink:#E56BE3;
+
+  --muted:#6F6F6F;
+  --mx:50vw; --my:50vh; --mxp:.5; --myp:.5;
+}
+
+/* optional dark skin */
+:root.theme-dark{
+  --cream:#0E0E0F;
+  --ink:#F4F0E6;
+  --muted:#B7B7B7;
+}
+
+*{box-sizing:border-box}
+html,body,#__next{height:100%}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background:
+    radial-gradient(1200px 800px at 20% 0%, rgba(0,0,0,.06), transparent 60%),
+    radial-gradient(900px 700px at 80% 100%, rgba(0,0,0,.06), transparent 60%),
+    var(--cream);
+  color:var(--ink);
+  overflow-x:hidden;
+  cursor: default;
+}
+
+/* 3D canvas sits behind everything */
+.canvas-stage{ position:fixed; inset:0; z-index:0; pointer-events:none }
+
+/* ---------------- HUD ---------------- */
+.hud{
+  position:fixed; top:0; left:0; width:100%; z-index:8;
+  display:grid; grid-template-columns:1fr auto 1fr; align-items:center;
+  padding:.6rem 1rem;
+}
+.hud-left,.hud-center,.hud-right{
+  display:flex; align-items:center; gap:.6rem;
+}
+.hud-center{justify-content:center}
+.hud-right{justify-content:flex-end}
+.tag{
+  background:var(--cream);
+  border:3px solid var(--ink);
+  padding:.25rem .5rem;
+  box-shadow:4px 4px 0 var(--ink);
+}
+.bold{font-weight:700}
+.hud-nav{display:flex; gap:.5rem; flex-wrap:wrap}
+.hud-link{
+  background:var(--cream); color:var(--ink); text-decoration:none; font-weight:700;
+  border:3px solid var(--ink); padding:.35rem .6rem; letter-spacing:.06em;
+  box-shadow:4px 4px 0 var(--ink); transition:transform .15s;
+}
+.hud-link:hover{transform:translate(-2px,-2px)}
+.hud-btn{
+  background:var(--cream); color:var(--ink); font-weight:700; border:3px solid var(--ink);
+  padding:.35rem .6rem; box-shadow:4px 4px 0 var(--ink);
+}
+.hud-time{opacity:.7; font-weight:600}
+
+/* ---------------- Cursor ---------------- */
+#kc-core,#kc-ring{position:fixed; left:0; top:0; transform:translate(var(--mx), var(--my)); pointer-events:none; z-index:10}
+#kc-core{width:8px; height:8px; border-radius:50%; background:var(--ink)}
+#kc-ring{
+  width:34px; height:34px; border-radius:50%; border:3px solid var(--ink);
+  background:rgba(0,0,0,0); transition:transform .08s ease;
+}
+#kc-ring.down{transform:translate(var(--mx), var(--my)) scale(.88)}
+
+/* ---------------- Sections & panels ---------------- */
+.kreo{position:relative; z-index:3}
+.section{ padding:7rem 1.2rem; }
+.hero{min-height:86vh; display:grid; place-items:center}
+.panel{
+  background:var(--cream);
+  border:3px solid var(--ink);
+  box-shadow:12px 12px 0 var(--ink);
+  padding:1.2rem; max-width:1100px; margin:0 auto;
+  position:relative;
+}
+.panel-head{ display:flex; align-items:center; justify-content:space-between; gap:.6rem; margin-bottom:.6rem; }
+.legend{ display:flex; align-items:center; gap:.6rem; font-weight:600; }
+.dot{ width:12px; height:12px; border:3px solid var(--ink); box-shadow:2px 2px 0 var(--ink); display:inline-block; background:#fff }
+
+/* Title + hero */
+.title{ font-size:clamp(48px,10vw,140px); letter-spacing:.06em; margin:0; }
+.subtitle{ margin:.4rem 0 1rem; opacity:.8; font-weight:600; letter-spacing:.04em }
+.chip-row{ display:flex; gap:.4rem; justify-content:center; margin:.6rem 0 }
+.chip{
+  display:inline-grid; place-items:center; width:30px; height:30px;
+  border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink);
+  background:#fff; font-weight:700;
+}
+.cta-row{ display:flex; gap:.6rem; justify-content:center; flex-wrap:wrap; }
+
+/* Buttons (color variants) */
+.btn{
+  cursor:none; font-weight:800; text-decoration:none; color:var(--ink);
+  border:3px solid var(--ink); padding:.75rem 1rem;
+  box-shadow:6px 6px 0 var(--ink); background:#fff; transition:transform .15s;
+}
+.btn.outline{ background:var(--cream) }
+.btn.tiny{ padding:.45rem .7rem; font-size:.9rem; box-shadow:4px 4px 0 var(--ink) }
+.btn:hover{ transform:translate(-2px,-2px) }
+
+.b-yellow{ background:var(--yellow) }
+.b-teal{ background:var(--teal) }
+.b-green{ background:var(--green) }
+.b-blue{ background:var(--blue); color:#fff }
+.b-red{ background:var(--red); color:#fff }
+.b-pink{ background:var(--pink); color:#000 }
+.b-black{ background:var(--ink); color:#fff }
+
+.c-yellow{ background:var(--yellow) }
+.c-teal{ background:var(--teal) }
+.c-green{ background:var(--green) }
+.c-blue{ background:var(--blue) }
+.c-red{ background:var(--red) }
+.c-pink{ background:var(--pink) }
+
+/* Cards / grid */
+.grid{ display:grid; gap:1rem; grid-template-columns:repeat(auto-fit, minmax(260px,1fr)); }
+.grid.small{ grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); }
+.card{
+  border:3px solid var(--ink); padding:1rem; background:#fff; box-shadow:8px 8px 0 var(--ink);
+}
+.card h3{ margin:.2rem 0 .3rem; }
+.card p{ color:var(--muted); font-weight:600 }
+.card .row{ display:flex; gap:.5rem; margin-top:.6rem }
+.card-tab{
+  height:10px; border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); margin-bottom:.6rem;
+}
+
+/* About */
+.about{ display:grid; gap:.6rem; grid-template-columns:1.2fr; font-weight:600 }
+.pipes{ position:relative; height:160px; margin-top:.6rem; background:#fff; border:3px solid var(--ink); box-shadow:8px 8px 0 var(--ink) }
+.node{
+  position:absolute; top:14px; width:110px; height:40px; display:grid; place-items:center;
+  border:3px solid var(--ink); box-shadow:6px 6px 0 var(--ink); font-weight:800; background:#fff;
+}
+.node:first-child{ left:14px }
+.node:nth-child(2){ left:calc(50% - 55px) }
+.node:nth-child(3){ right:14px }
+.pipe{
+  position:absolute; background:var(--ink);
+}
+.pipe.h{ left:14px; right:14px; top:80px; height:6px }
+.pipe.v{ left:calc(50% - 3px); top:80px; bottom:14px; width:6px }
+
+/* Form */
+.form{ display:grid; gap:.6rem; max-width:520px; margin:0 auto }
+.form input,.form textarea{
+  background:#fff; color:var(--ink); border:3px solid var(--ink); padding:.7rem; font-weight:600; outline:none;
+  box-shadow:6px 6px 0 var(--ink);
+}
+
+/* Blog list */
+.list{ display:grid; gap:.6rem; max-width:760px; margin:0 auto }
+.list-item{
+  display:grid; grid-template-columns:20px 1fr; align-items:flex-start; gap:.6rem;
+  background:#fff; border:3px solid var(--ink); box-shadow:6px 6px 0 var(--ink); padding:.7rem;
+}
+.bullet{ width:12px; height:12px; border:3px solid var(--ink); box-shadow:2px 2px 0 var(--ink) }
+.li-body h3{ margin:.1rem 0 .2rem }
+
+/* Shop tiles */
+.tile{
+  display:grid; place-items:center; height:120px; background:#fff;
+  border:3px solid var(--ink); box-shadow:6px 6px 0 var(--ink); font-weight:800;
+}
+
+/* Downloads */
+.downloads{ list-style:none; display:grid; gap:.5rem; justify-items:center; padding:0; margin:0 }
+.link{
+  text-decoration:none; color:var(--ink); font-weight:800; background:#fff;
+  border:3px solid var(--ink); padding:.5rem .8rem; box-shadow:4px 4px 0 var(--ink);
+}
+
+/* Command palette */
+.cmd-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.35); z-index:10; display:grid; place-items:start center; padding-top:18vh }
+.cmd{
+  width:min(800px,92vw); background:var(--cream); border:3px solid var(--ink); box-shadow:10px 10px 0 var(--ink); border-radius:0;
+  overflow:hidden;
+}
+.cmd input{ width:100%; padding:.9rem 1rem; background:#fff; border-bottom:3px solid var(--ink); font-weight:700; outline:none }
+.cmd ul{ max-height:50vh; overflow:auto; margin:0; padding:0; list-style:none }
+.cmd li{ padding:.75rem 1rem; border-top:3px solid var(--ink); font-weight:700; background:var(--cream) }
+.cmd li.active{ background:#fff }
+.cmd li.muted{ color:var(--muted) }
+
+/* Responsive */
+@media (max-width:900px){
+  .hud{ grid-template-columns:1fr auto; grid-auto-flow:row; gap:.5rem }
+  .hud-center{ order:3; justify-content:center; }
+}
+
+/* Utility color backgrounds for dots/chips */
+.c-yellow{ background:var(--yellow) !important }
+.c-teal{ background:var(--teal) !important }
+.c-green{ background:var(--green) !important }
+.c-blue{ background:var(--blue) !important }
+.c-red{ background:var(--red) !important }
+.c-pink{ background:var(--pink) !important }
+
+/* DOWNLOADS FLEX FIX */
+.downloads-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.downloads-flex .link {
+  flex: 1;
+  text-align: center;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 800;
+  background: #fff;
+  border: 3px solid var(--ink);
+  padding: .6rem 1rem;
+  box-shadow: 4px 4px 0 var(--ink);
+  min-width: 160px;
+}
+
+/* Fix: Center hero KREO title perfectly */
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh; /* keeps it vertically centered on most screens */
+}
+
+.hero-panel.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: clamp(60px, 14vw, 180px);
+  margin: 0;
+  text-align: center;
+  line-height: 1;
+}
+
+/* Parallax visual effect for the hero background */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -10%;
+  background: radial-gradient(circle at center, rgba(0,0,0,0.06) 0%, transparent 70%);
+  transform: translate3d(calc((var(--mxp) - 0.5) * 60px), calc((var(--myp) - 0.5) * 60px), 0);
+  transition: transform 0.05s linear;
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; /* ensures text stays on top */
+}
+
+.title {
+  margin-bottom: 0.3rem;
+}
+.subtitle {
+  margin-top: 0.4rem;
+  margin-bottom: 1.4rem;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+
+
+
