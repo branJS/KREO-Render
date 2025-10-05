@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "next build"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.6",
