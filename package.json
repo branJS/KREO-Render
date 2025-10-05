@@ -5,10 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "export": "next export",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "npm run build && npm run export"
+    "deploy": "next build"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.6",
