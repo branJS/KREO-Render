@@ -78,7 +78,7 @@ function HUD({muted,setMuted}:{muted:boolean;setMuted:(v:boolean)=>void}){
   return (
     <div className="hud">
       <div className="hud-left">
-        <span className="tag bold">KREO v5 — Revamp</span>
+        <span className="tag bold">Brandon Allen</span>
       </div>
       <div className="hud-center">
         <nav className="hud-nav">
@@ -122,8 +122,8 @@ export default function Page(){
       <section id="home" className="section hero visible">
         <div className="panel hero-panel center">
           <div className="hero-content">
-            <h1 className="title">KREO</h1>
-            <p className="subtitle">KREO STUDIOS — SYSTEMS, MOTION & INTERACTION (PLYMOUTH, UK)</p>
+            <h1 className="title">BRANDON</h1>
+            <p className="subtitle">BRANDON ALLEN — VISUALS, MOTION & INTERACTION (PLYMOUTH, UK)</p>
             <div className="chip-row nav-chips">
               <a href="#home" className="chip c-yellow" title="Home">Y</a>
               <a href="#projects" className="chip c-teal" title="Projects">T</a>
@@ -156,7 +156,7 @@ export default function Page(){
           <div className="panel-head">
             <h2 className="section-title">About</h2>
           </div>
-          <p><b>KREO</b> designs interfaces like systems: modular, colorful, legible. We mix motion, code, and type into playful environments.</p>
+          <p><b>BRANDON</b> designs interfaces like systems: modular, colorful, legible. We mix motion, code, and type into playful environments.</p>
         </div>
       </section>
 
