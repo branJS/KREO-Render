@@ -3,21 +3,34 @@
 import { useEffect, useState } from "react";
 import { groq } from "next-sanity";
 import { createClient } from "next-sanity";
-import { PortableText } from "@portabletext/react";
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const dataset   = process.env.NEXT_PUBLIC_SANITY_DATASET;
+
+if (!projectId || !dataset) {
+  // Warn once when in development mode.  In production this will
+  // silently fall back to showing the placeholder content defined below.
+  if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
+    console.warn(
+      '[AboutSection] NEXT_PUBLIC_SANITY_PROJECT_ID or NEXT_PUBLIC_SANITY_DATASET is missing.\n' +
+      'About content will not load until these environment variables are provided.'
+    );
+  }
+}
 
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: projectId ?? '',
+  dataset: dataset ?? '',
   apiVersion: "2025-01-01",
   useCdn: true,
 });
 
 type About = {
-  title?: string;
-  body?: any;
+  headline?: string;
+  body?: string;
 };
 
-const query = groq`*[_type == "about" && !(_id in path("drafts.**"))][0]{title, body}`;
+const query = groq`*[_type == "about" && !(_id in path("drafts.**"))][0]{headline, body}`;
 
 export default function AboutSection() {
   const [data, setData] = useState<About | null>(null);
@@ -29,12 +42,10 @@ export default function AboutSection() {
   return (
     <section id="about" className="section">
       <div className="panel center">
-        <h2 className="title">{data?.title ?? "About"}</h2>
+        <h2 className="title">{data?.headline ?? "About"}</h2>
         {!data && <p>Loading about page…</p>}
         {data && data.body && (
-          <div className="rich-text">
-            <PortableText value={data.body} />
-          </div>
+          <p>{data.body}</p>
         )}
       </div>
     </section>

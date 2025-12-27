@@ -1,18 +1,18 @@
+'use client';
+
 /**
- * This route is responsible for the built-in authoring environment using Sanity Studio.
- * All routes under your studio path is handled by this file using Next.js' catch-all routes:
- * https://nextjs.org/docs/routing/dynamic-routes#catch-all-routes
- *
- * You can learn more about the next-sanity package here:
- * https://github.com/sanity-io/next-sanity
+ * This page embeds the Sanity Studio inside your Next.js app.  Marking this
+ * component as a client component ensures that the Studio is hydrated
+ * correctly; otherwise `createContext` will be undefined at runtime.
  */
 
 import { NextStudio } from 'next-sanity/studio';
-import config from '../../../sanity/sanity.config';
-
-// ✅ Important: mark this as a *server component* for Next.js 15
-export const dynamic = 'force-static';
-export const revalidate = false;
+// Import the studio configuration from the project root
+// Note: the studio configuration lives in the project root.  From this
+// nested route we need to traverse up three directories (app/studio/[[...tool]]/)
+// to import the config correctly.  Using an incorrect path will cause
+// a runtime error (`Module not found: Can't resolve '../../sanity.config'`).
+import config from '../../../sanity.config';
 
 export default function StudioPage() {
   return <NextStudio config={config} />;

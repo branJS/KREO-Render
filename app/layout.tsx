@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+// Import the edit mode provider. This file is marked as a client
+// component and will be tree-shaken from the server build. The provider
+// allows toggling edit mode globally.
+import { EditModeProvider } from "./providers";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -48,7 +53,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
+        {/*
+         * Wrap the application in the EditModeProvider. This enables a
+         * global edit mode toggle which child components can consume via
+         * the useEditMode hook. See app/providers.tsx for implementation.
+         */}
+        <EditModeProvider>
+          {children}
+        </EditModeProvider>
       </body>
     </html>
   );

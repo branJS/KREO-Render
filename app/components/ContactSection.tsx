@@ -4,9 +4,21 @@ import { useEffect, useState } from "react";
 import { groq } from "next-sanity";
 import { createClient } from "next-sanity";
 
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const dataset   = process.env.NEXT_PUBLIC_SANITY_DATASET;
+
+if (!projectId || !dataset) {
+  if (typeof window !== 'undefined' && process.env.NODE_ENV !== 'production') {
+    console.warn(
+      '[ContactSection] NEXT_PUBLIC_SANITY_PROJECT_ID or NEXT_PUBLIC_SANITY_DATASET is missing.\n' +
+      'Contact content will not load until these environment variables are provided.'
+    );
+  }
+}
+
 const client = createClient({
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: projectId ?? '',
+  dataset: dataset ?? '',
   apiVersion: "2025-01-01",
   useCdn: true,
 });
