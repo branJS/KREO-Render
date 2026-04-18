@@ -213,6 +213,41 @@ body{
 }
 
 /* ============================================================
+   INTRO SCREEN ANIMATIONS
+   ============================================================ */
+@keyframes kreo-intro-pulse {
+  0%, 100% { filter: brightness(1) drop-shadow(0 0 0px rgba(245,193,0,0)); }
+  50%       { filter: brightness(1.08) drop-shadow(0 0 18px rgba(245,193,0,0.35)); }
+}
+@keyframes kreo-intro-bar {
+  0%   { width: 0%; }
+  100% { width: 100%; }
+}
+
+/* ============================================================
+   HERO LOGO ANIMATIONS
+   ============================================================ */
+@keyframes kreo-logo-enter {
+  0%   { opacity: 0; transform: translateY(18px) scale(0.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes kreo-logo-shimmer {
+  0%   { filter: brightness(1); }
+  10%  { filter: brightness(1.06) drop-shadow(0 0 12px rgba(245,193,0,0.2)); }
+  20%  { filter: brightness(1); }
+  100% { filter: brightness(1); }
+}
+.kreo-logo-hero {
+  animation:
+    kreo-logo-enter   0.9s cubic-bezier(0.25,0.46,0.45,0.94) 0.1s both,
+    kreo-logo-shimmer 6s   ease-in-out                        2s   infinite;
+}
+.kreo-logo-hero:hover {
+  filter: brightness(0) saturate(1) invert(82%) sepia(90%) saturate(800%) hue-rotate(5deg) !important;
+  transition: filter 0.3s ease;
+}
+
+/* ============================================================
    RESPONSIVE — TABLET (max 900px)
    ============================================================ */
 @media (max-width:900px){

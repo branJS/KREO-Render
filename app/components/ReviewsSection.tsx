@@ -20,7 +20,7 @@ function Stars({ rating }: { rating: number }) {
   return (
     <div style={{ display: "flex", gap: "2px", marginBottom: "0.5rem" }}>
       {[1, 2, 3, 4, 5].map((n) => (
-        <span key={n} style={{ color: n <= rating ? "var(--yellow)" : "#ddd", fontSize: "0.9rem" }}>★</span>
+        <span key={n} style={{ color: n <= rating ? "var(--yellow)" : "#ddd", fontSize: "1.8rem" }}>★</span>
       ))}
     </div>
   );

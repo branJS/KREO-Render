@@ -13,6 +13,7 @@ import SoftwareSection from "./components/SoftwareSection";
 import DownloadsSection from "./components/DownloadsSection";
 import AboutSection from "./components/AboutSection";
 import ReviewsSection from "./components/ReviewsSection";
+import IntroScreen from "./components/IntroScreen";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
@@ -111,6 +112,7 @@ export default function Page() {
 
   return (
     <main className="kreo">
+      <IntroScreen />
       <WorldScene sections={["home","projects","twitter","clients","shop","software","downloads","about","reviews","contact"]} />
       <HUD />
 
@@ -122,6 +124,7 @@ export default function Page() {
               <img
                 src="/logos/kreo-black-crop.png"
                 alt="KREO"
+                className="kreo-logo-hero"
                 style={{
                   width: "min(780px, 88vw)",
                   height: "auto",

@@ -68,7 +68,7 @@ export default function ClientsSection() {
 
         {/* Marquee track */}
         <div
-          style={{ overflow: "hidden", padding: "1.4rem 0" }}
+          style={{ overflow: "hidden", padding: "1.8rem 0" }}
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
@@ -80,15 +80,15 @@ export default function ClientsSection() {
             gap: "0",
           }}>
             {track.map((c, i) => {
-              const logoUrl = c.logo ? urlFor(c.logo).height(56).url() : null;
+              const logoUrl = c.logo ? urlFor(c.logo).height(100).url() : null;
               const inner = (
                 <div
                   key={`${c._id}-${i}`}
                   style={{
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    padding: "0 2.8rem",
+                    padding: "0 3.5rem",
                     borderRight: "2px solid var(--ink)",
-                    minWidth: "200px", height: "64px",
+                    minWidth: "280px", height: "110px",
                     flexShrink: 0,
                     transition: "background 0.2s ease",
                   }}
@@ -100,7 +100,7 @@ export default function ClientsSection() {
                       src={logoUrl}
                       alt={c.name}
                       style={{
-                        maxHeight: "44px", maxWidth: "160px",
+                        maxHeight: "80px", maxWidth: "240px",
                         objectFit: "contain", display: "block",
                         filter: "grayscale(1) contrast(1.1)",
                         transition: "filter 0.2s ease",
@@ -110,7 +110,7 @@ export default function ClientsSection() {
                     />
                   ) : (
                     <span style={{
-                      fontWeight: 800, fontSize: "0.82rem",
+                      fontWeight: 800, fontSize: "1.1rem",
                       letterSpacing: "0.06em", color: "var(--ink)",
                       whiteSpace: "nowrap", opacity: 0.75,
                       textTransform: "uppercase",
