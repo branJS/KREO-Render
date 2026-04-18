@@ -9,11 +9,11 @@ const QUERY = groq`*[_type == "review"] | order(order asc) {
 }`;
 
 const PLACEHOLDERS = [
-  { _id: "ph1", name: "Client Name",     role: "Business Owner",     quote: "KREO delivered incredible work — fast, professional, and exactly what we needed.",        rating: 5 },
-  { _id: "ph2", name: "Another Client",  role: "Creative Director",  quote: "Outstanding visual identity. The branding package exceeded all expectations.",            rating: 5 },
-  { _id: "ph3", name: "Happy Customer",  role: "Startup Founder",    quote: "Responsive, creative, and genuinely passionate about design. Highly recommended.",       rating: 5 },
-  { _id: "ph4", name: "Studio Partner",  role: "Marketing Lead",     quote: "The motion work KREO produced elevated our entire brand campaign.",                       rating: 5 },
-  { _id: "ph5", name: "Loyal Client",    role: "Product Manager",    quote: "Incredible attention to detail. Every asset was polished and ready to ship.",             rating: 5 },
+  { _id: "ph1", name: "lilohs",         role: "Google Review ★★★★★", quote: "Awesome guy to work with and insanely talented. Recommend 200%",                                                            rating: 5 },
+  { _id: "ph2", name: "Dylan Polchies", role: "Google Review ★★★★★", quote: "Highly recommended always delivering quality work!",                                                                        rating: 5 },
+  { _id: "ph3", name: "jay osoria",     role: "Google Review ★★★★★", quote: "Very very professional graphic work, and extremely reliable with time. Good pricing! Highly recommend!!",                   rating: 5 },
+  { _id: "ph4", name: "Jaze LTD",       role: "Google Review ★★★★★", quote: "Worked with them frequently for a variety of design services, top class!",                                                  rating: 5 },
+  { _id: "ph5", name: "Mustafa Aijaz",  role: "Google Review ★★★★★", quote: "Very reliable designer. Capable of any style and needs as per my request. Highly recommend!",                              rating: 5 },
 ];
 
 function Stars({ rating }: { rating: number }) {
@@ -63,8 +63,9 @@ export default function ReviewsSection() {
                 Add via Studio → Reviews
               </span>
             )}
+            <span style={{ fontWeight: 700, fontSize: "0.72rem", opacity: 0.55 }}>via Google</span>
             <span className="btn b-yellow tiny" style={{ fontSize: "0.68rem", boxShadow: "3px 3px 0 var(--ink)" }}>
-              ★ {display.length} Reviews
+              ★ 5.0 · {display.length} Reviews
             </span>
           </div>
         </div>
