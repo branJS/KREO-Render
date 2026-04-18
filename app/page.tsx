@@ -73,7 +73,9 @@ function HUD() {
   return (
     <div className="hud">
       <div className="hud-left">
-        <span className="tag bold">KREO</span>
+        <span className="tag" style={{ padding: "0.2rem 0.5rem", display: "flex", alignItems: "center" }}>
+            <img src="/logos/kreo-black.png" alt="KREO" style={{ height: "22px", width: "auto", display: "block" }} />
+          </span>
       </div>
       <div className="hud-center">
         <nav className="hud-nav">
@@ -116,8 +118,19 @@ export default function Page() {
       <section id="home" className="section hero visible">
         <div className="panel hero-panel center">
           <div className="hero-content">
-            <h1 className="title">KREO</h1>
-            <p className="subtitle">VISUALS, MOTION & INTERACTION — PLYMOUTH, UK</p>
+            <h1 className="title" style={{ margin: 0, lineHeight: 1 }}>
+              <img
+                src="/logos/kreo-black.png"
+                alt="KREO"
+                style={{
+                  width: "min(580px, 82vw)",
+                  height: "auto",
+                  display: "block",
+                  margin: "0 auto",
+                }}
+              />
+            </h1>
+            <p className="subtitle" style={{ marginTop: "1rem" }}>VISUALS, MOTION & INTERACTION — PLYMOUTH, UK</p>
             <div className="chip-row nav-chips">
               <a href="#home"      className="chip c-yellow" title="Home">Y</a>
               <a href="#projects"  className="chip c-teal"   title="Projects">T</a>
