@@ -185,7 +185,7 @@ function Sector({ pos, index }: { pos: THREE.Vector3; index: number }) {
             boxShadow: "4px 4px 0 #0D0D0D",
           }}
         >
-          {["HOME", "PROJECTS", "ABOUT", "CONTACT", "BLOG", "SHOP", "DOWNLOADS"][index]}
+          {["HOME", "PROJECTS", "TWITTER", "SHOP", "CONTACT", "DOWNLOADS", "ABOUT", "REVIEWS"][index] ?? ""}
         </div>
       </Html>
     </group>

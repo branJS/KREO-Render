@@ -107,7 +107,7 @@ export default function Page() {
 
   return (
     <main className="kreo">
-      <WorldScene sections={["home", "projects", "shop", "contact", "downloads", "about", "reviews"]} />
+      <WorldScene sections={["home", "projects", "twitter", "shop", "contact", "downloads", "about", "reviews"]} />
       <HUD />
 
       {/* HERO */}
