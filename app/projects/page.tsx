@@ -54,17 +54,9 @@ export default async function ProjectsPage() {
                   <div
                     className="card"
                     style={{
-                      cursor: "pointer",
-                      transition: "transform 0.15s",
                       padding: 0,
                       overflow: "hidden",
                     }}
-                    onMouseEnter={(e) =>
-                      ((e.currentTarget as HTMLDivElement).style.transform = "translate(-3px,-3px)")
-                    }
-                    onMouseLeave={(e) =>
-                      ((e.currentTarget as HTMLDivElement).style.transform = "translate(0,0)")
-                    }
                   >
                     {/* Cover image */}
                     <div
