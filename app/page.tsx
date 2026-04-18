@@ -16,10 +16,11 @@ import ReviewsSection from "./components/ReviewsSection";
 import IntroScreen from "./components/IntroScreen";
 import Footer from "./components/Footer";
 import LighthouseWidget from "./components/LighthouseWidget";
+import PricingSection from "./components/PricingSection";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
-const SECTIONS = ["home","projects","twitter","clients","shop","software","downloads","about","reviews","contact"] as const;
+const SECTIONS = ["home","projects","twitter","clients","shop","software","downloads","about","reviews","pricing","contact"] as const;
 
 /* ---------------- Mouse tracking ---------------- */
 function useRootMouseVars() {
@@ -174,6 +175,9 @@ export default function Page() {
 
       {/* REVIEWS */}
       <ReviewsSection />
+
+      {/* PRICING */}
+      <PricingSection />
 
       {/* CONTACT — bottom of page */}
       <section id="contact" className="section">
