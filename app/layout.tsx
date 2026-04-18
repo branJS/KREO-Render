@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
-// Import the edit mode provider. This file is marked as a client
-// component and will be tree-shaken from the server build. The provider
-// allows toggling edit mode globally.
 import { EditModeProvider } from "./providers";
 
 const geistSans = Geist({
@@ -17,32 +13,108 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const SITE_URL = "https://brandonallen.uk";
+const SITE_NAME = "KREO";
+
 export const metadata: Metadata = {
-  title: "Freelance Graphic Designer in Plymouth | KREO Studios",
-  description: "KREO Studios is the portfolio of a Plymouth-based graphic designer and AI producer, offering visual design services, digital content, and a blog for designers.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "Freelance Graphic Designer Plymouth & Manchester | KREO",
+    template: "%s | KREO — Graphic Design & Motion",
+  },
+  description:
+    "KREO is a freelance graphic design studio based in Plymouth, UK — serving Plymouth, Manchester and beyond. Specialising in branding, 3D renders, motion graphics, print design and UI/UX.",
   keywords: [
-    "Graphic Design",
-    "Plymouth",
-    "Freelance Designer",
-    "AI Producer",
-    "Design Portfolio",
-    "Digital Services",
-    "Design Blog"
+    // Plymouth
+    "graphic designer Plymouth",
+    "freelance designer Plymouth",
+    "branding Plymouth",
+    "logo design Plymouth",
+    "motion graphics Plymouth",
+    "3D render Plymouth",
+    "print design Plymouth",
+    "creative studio Plymouth Devon",
+    "Plymouth freelance creative",
+    // Manchester
+    "graphic designer Manchester",
+    "freelance designer Manchester",
+    "branding Manchester",
+    "logo design Manchester",
+    "motion graphics Manchester",
+    "creative studio Manchester",
+    "Manchester freelance graphic designer",
+    // General UK
+    "freelance graphic designer UK",
+    "branding studio UK",
+    "motion designer UK",
+    "3D visualisation UK",
+    "UI UX designer UK",
+    // Brand
+    "KREO design",
+    "KREO studio",
+    "visual identity designer",
+    "brand identity UK",
   ],
+  authors: [{ name: "KREO", url: SITE_URL }],
+  creator: "KREO",
+  publisher: "KREO",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true },
+  },
+  alternates: {
+    canonical: SITE_URL,
+  },
   openGraph: {
-    title: "Freelance Graphic Designer in Plymouth | KREO Studios",
-    description: "KREO Studios is the portfolio of a Plymouth-based graphic designer and AI producer, offering visual design services, digital content, and a blog for designers.",
-    siteName: "KREO Studios",
-    locale: "en_US",
-    type: "website"
-    // You can add `images: [...]` here in the future for OG image
+    title: "Freelance Graphic Designer Plymouth & Manchester | KREO",
+    description:
+      "KREO is a freelance graphic design studio based in Plymouth, UK — specialising in branding, motion graphics, 3D renders and digital design.",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    locale: "en_GB",
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Freelance Graphic Designer in Plymouth | KREO Studios",
-    description: "KREO Studios is the portfolio of a Plymouth-based graphic designer and AI producer, offering visual design services, digital content, and a blog for designers."
-    // You can add `images: [...]` here for Twitter card image if available
-  }
+    title: "Freelance Graphic Designer Plymouth & Manchester | KREO",
+    description:
+      "Branding, motion graphics, 3D renders and digital design — from Plymouth to Manchester and beyond.",
+    site: "@kreoxi",
+    creator: "@kreoxi",
+  },
+};
+
+// JSON-LD structured data for local business SEO
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "KREO",
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.png`,
+  description:
+    "Freelance graphic design studio specialising in branding, motion graphics, 3D renders and digital design. Based in Plymouth, serving Plymouth, Manchester and the wider UK.",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Plymouth",
+    addressRegion: "Devon",
+    addressCountry: "GB",
+  },
+  areaServed: [
+    { "@type": "City", name: "Plymouth" },
+    { "@type": "City", name: "Manchester" },
+    { "@type": "Country", name: "United Kingdom" },
+  ],
+  sameAs: [`https://x.com/kreoxi`],
+  serviceType: [
+    "Graphic Design",
+    "Branding",
+    "Motion Graphics",
+    "3D Rendering",
+    "Print Design",
+    "UI/UX Design",
+  ],
+  priceRange: "££",
 };
 
 export default function RootLayout({
@@ -51,13 +123,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en-GB">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <meta name="geo.region" content="GB-PLY" />
+        <meta name="geo.placename" content="Plymouth, Devon" />
+        <meta name="ICBM" content="50.3755, -4.1427" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/*
-         * Wrap the application in the EditModeProvider. This enables a
-         * global edit mode toggle which child components can consume via
-         * the useEditMode hook. See app/providers.tsx for implementation.
-         */}
         <EditModeProvider>
           {children}
         </EditModeProvider>

@@ -16,6 +16,7 @@ export default function AboutSection() {
             gap: "1.2rem",
             marginTop: "0.8rem",
           }}
+          className="about-grid"
         >
           {/* Bio */}
           <div>
