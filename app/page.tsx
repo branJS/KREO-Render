@@ -14,6 +14,7 @@ import DownloadsSection from "./components/DownloadsSection";
 import AboutSection from "./components/AboutSection";
 import ReviewsSection from "./components/ReviewsSection";
 import IntroScreen from "./components/IntroScreen";
+import Footer from "./components/Footer";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
@@ -184,6 +185,8 @@ export default function Page() {
           <ContactForm />
         </div>
       </section>
+
+      <Footer />
 
     </main>
   );
