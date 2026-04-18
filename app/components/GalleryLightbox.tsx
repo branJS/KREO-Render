@@ -46,7 +46,7 @@ export default function GalleryLightbox({ images }: { images: GalleryImage[] }) 
               border: "3px solid var(--ink)",
               boxShadow: "6px 6px 0 var(--ink)",
               overflow: "hidden",
-              cursor: "none",
+              cursor: "zoom-in",
               position: "relative",
               background: "#f0ebe2",
             }}

@@ -15,6 +15,7 @@ import AboutSection from "./components/AboutSection";
 import ReviewsSection from "./components/ReviewsSection";
 import IntroScreen from "./components/IntroScreen";
 import Footer from "./components/Footer";
+import LighthouseWidget from "./components/LighthouseWidget";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
@@ -116,6 +117,7 @@ export default function Page() {
       <IntroScreen />
       <WorldScene sections={["home","projects","twitter","clients","shop","software","downloads","about","reviews","contact"]} />
       <HUD />
+      <LighthouseWidget />
 
       {/* HERO */}
       <section id="home" className="section hero visible">
