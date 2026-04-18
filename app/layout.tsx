@@ -69,9 +69,9 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/logos/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/logos/kreo-yellow.png", sizes: "512x512", type: "image/png" },
+      { url: "/logos/kreo-yellow-crop.png", sizes: "512x512", type: "image/png" },
     ],
-    apple: "/logos/kreo-yellow.png",
+    apple: "/logos/kreo-yellow-crop.png",
     shortcut: "/logos/favicon-32.png",
   },
   openGraph: {

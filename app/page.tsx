@@ -74,7 +74,7 @@ function HUD() {
     <div className="hud">
       <div className="hud-left">
         <span className="tag" style={{ padding: "0.3rem 0.6rem", display: "flex", alignItems: "center" }}>
-            <img src="/logos/kreo-black.png" alt="KREO" style={{ height: "30px", width: "auto", display: "block" }} />
+            <img src="/logos/kreo-black-crop.png" alt="KREO" style={{ height: "30px", width: "auto", display: "block" }} />
           </span>
       </div>
       <div className="hud-center">
@@ -120,7 +120,7 @@ export default function Page() {
           <div className="hero-content">
             <h1 style={{ margin: 0, lineHeight: 1, padding: 0 }}>
               <img
-                src="/logos/kreo-black.png"
+                src="/logos/kreo-black-crop.png"
                 alt="KREO"
                 style={{
                   width: "min(780px, 88vw)",
