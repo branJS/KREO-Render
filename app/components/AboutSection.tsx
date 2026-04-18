@@ -23,10 +23,22 @@ export default function AboutSection() {
             <p style={{ fontWeight: 600, lineHeight: 1.7, margin: "0 0 0.8rem" }}>
               KREO is a freelance creative studio based in Plymouth, UK — specialising in branding, 3D renders, motion graphics, and digital design that stands out.
             </p>
-            <p style={{ fontWeight: 600, lineHeight: 1.7, color: "var(--muted)", margin: 0 }}>
+            <p style={{ fontWeight: 600, lineHeight: 1.7, color: "var(--muted)", margin: "0 0 0.8rem" }}>
               With years of experience across print, digital, and motion — I help businesses and creators
               build bold visual identities that leave a lasting impression.
             </p>
+
+            {/* Transparency note */}
+            <div style={{
+              borderLeft: "3px solid var(--yellow)",
+              paddingLeft: "0.85rem",
+              marginBottom: "1rem",
+            }}>
+              <p style={{ margin: 0, fontWeight: 600, fontSize: "0.82rem", lineHeight: 1.7, color: "var(--muted)" }}>
+                A quick note — my name is <strong style={{ color: "var(--ink)" }}>Brandon</strong>, I&apos;m 28 and originally from Manchester. KREO is my studio, but the person behind it is very much human. I&apos;m currently studying Graphic Design at the <strong style={{ color: "var(--ink)" }}>University of Plymouth</strong>, and everything you see here is built and designed by me alongside my studies. Transparency matters — you know exactly who you&apos;re working with.
+              </p>
+            </div>
+
             <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginTop: "1rem" }}>
               {["Branding", "Motion", "3D Renders", "Print", "UI/UX", "Photoshop"].map((skill) => (
                 <span key={skill} className="btn tiny outline" style={{ fontSize: "0.75rem", boxShadow: "3px 3px 0 var(--ink)" }}>
