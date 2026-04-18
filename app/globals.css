@@ -75,7 +75,7 @@ body{
 .hud-time{opacity:.7; font-weight:600}
 
 /* ---------------- Cursor ---------------- */
-#kc-core,#kc-ring{position:fixed; left:0; top:0; transform:translate(var(--mx), var(--my)); pointer-events:none; z-index:10}
+#kc-core,#kc-ring{position:fixed; left:0; top:0; transform:translate(var(--mx), var(--my)); pointer-events:none; z-index:9999}
 #kc-core{width:8px; height:8px; border-radius:50%; background:var(--ink)}
 #kc-ring{
   width:34px; height:34px; border-radius:50%; border:3px solid var(--ink);

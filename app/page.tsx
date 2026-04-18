@@ -8,13 +8,14 @@ import ContactForm from "./components/ContactForm";
 import ProjectsSection from "./components/ProjectsSection";
 import TwitterSection from "./components/TwitterSection";
 import ShopSection from "./components/ShopSection";
+import SoftwareSection from "./components/SoftwareSection";
 import DownloadsSection from "./components/DownloadsSection";
 import AboutSection from "./components/AboutSection";
 import ReviewsSection from "./components/ReviewsSection";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
-const SECTIONS = ["home","projects","twitter","shop","contact","downloads","about","reviews"] as const;
+const SECTIONS = ["home","projects","twitter","shop","software","downloads","about","reviews","contact"] as const;
 
 /* ---------------- Mouse tracking ---------------- */
 function useRootMouseVars() {
@@ -107,7 +108,7 @@ export default function Page() {
 
   return (
     <main className="kreo">
-      <WorldScene sections={["home", "projects", "twitter", "shop", "contact", "downloads", "about", "reviews"]} />
+      <WorldScene sections={["home","projects","twitter","shop","software","downloads","about","reviews","contact"]} />
       <HUD />
 
       {/* HERO */}
@@ -139,15 +140,8 @@ export default function Page() {
       {/* SHOP */}
       <ShopSection />
 
-      {/* CONTACT */}
-      <section id="contact" className="section">
-        <div className="panel">
-          <div className="panel-head">
-            <h2 className="section-title" style={{ margin: 0 }}>Contact</h2>
-          </div>
-          <ContactForm />
-        </div>
-      </section>
+      {/* SOFTWARE PORTFOLIO */}
+      <SoftwareSection />
 
       {/* DOWNLOADS */}
       <DownloadsSection />
@@ -157,6 +151,20 @@ export default function Page() {
 
       {/* REVIEWS */}
       <ReviewsSection />
+
+      {/* CONTACT — bottom of page */}
+      <section id="contact" className="section">
+        <div className="panel">
+          <div className="panel-head">
+            <h2 className="section-title" style={{ margin: 0 }}>Contact</h2>
+            <span className="btn b-teal tiny" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 var(--ink)" }}>
+              Let&apos;s Talk
+            </span>
+          </div>
+          <ContactForm />
+        </div>
+      </section>
+
     </main>
   );
 }
