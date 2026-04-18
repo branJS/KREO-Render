@@ -114,8 +114,8 @@ export default function Page() {
       <section id="home" className="section hero visible">
         <div className="panel hero-panel center">
           <div className="hero-content">
-            <h1 className="title">BRAN</h1>
-            <p className="subtitle">BRANDON ALLEN — VISUALS, MOTION & INTERACTION (PLYMOUTH, UK)</p>
+            <h1 className="title">KREO</h1>
+            <p className="subtitle">VISUALS, MOTION & INTERACTION — PLYMOUTH, UK</p>
             <div className="chip-row nav-chips">
               <a href="#home"      className="chip c-yellow" title="Home">Y</a>
               <a href="#projects"  className="chip c-teal"   title="Projects">T</a>

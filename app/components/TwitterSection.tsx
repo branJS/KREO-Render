@@ -1,11 +1,30 @@
 "use client";
 
-import Script from "next/script";
+import { useEffect, useRef } from "react";
 
-// ← Update this to your actual X / Twitter handle
 const TWITTER_HANDLE = "kreoxi";
 
 export default function TwitterSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const load = () => {
+      if ((window as any).twttr?.widgets) {
+        (window as any).twttr.widgets.load(containerRef.current);
+      }
+    };
+
+    if ((window as any).twttr) {
+      load();
+    } else {
+      const script = document.createElement("script");
+      script.src = "https://platform.twitter.com/widgets.js";
+      script.async = true;
+      script.onload = load;
+      document.head.appendChild(script);
+    }
+  }, []);
+
   return (
     <section id="twitter" className="section">
       <div className="panel">
@@ -22,30 +41,26 @@ export default function TwitterSection() {
         </div>
 
         <div
+          ref={containerRef}
           style={{
-            maxHeight: "480px",
-            overflow: "hidden",
+            maxHeight: "520px",
+            overflowY: "auto",
             border: "3px solid var(--ink)",
             boxShadow: "6px 6px 0 var(--ink)",
             marginTop: "0.8rem",
+            background: "#fff",
           }}
         >
           <a
             className="twitter-timeline"
-            data-height="476"
+            data-height="516"
             data-theme="light"
-            data-chrome="noheader nofooter noborders transparent"
-            data-tweet-limit="4"
+            data-chrome="noheader nofooter noborders"
             href={`https://twitter.com/${TWITTER_HANDLE}`}
           >
             Loading tweets…
           </a>
         </div>
-
-        <Script
-          src="https://platform.twitter.com/widgets.js"
-          strategy="lazyOnload"
-        />
       </div>
     </section>
   );
