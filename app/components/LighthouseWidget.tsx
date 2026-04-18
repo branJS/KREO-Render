@@ -17,7 +17,7 @@ export default function LighthouseWidget() {
         flexDirection: "column",
         alignItems: "center",
         gap: "2px",
-        opacity: 0.28,
+        opacity: 0.45,
         pointerEvents: "none",
         userSelect: "none",
       }}
@@ -37,7 +37,7 @@ export default function LighthouseWidget() {
       {/* Beam */}
       <div style={{
         position: "absolute",
-        bottom: "38px",
+        bottom: "52px",
         left: "50%",
         width: "0",
         height: "0",
@@ -60,8 +60,8 @@ export default function LighthouseWidget() {
 
       {/* Lighthouse SVG */}
       <svg
-        width="32"
-        height="56"
+        width="44"
+        height="76"
         viewBox="0 0 32 56"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +95,7 @@ export default function LighthouseWidget() {
       <span style={{
         fontFamily: "Space Grotesk, system-ui",
         fontWeight: 700,
-        fontSize: "0.46rem",
+        fontSize: "0.54rem",
         letterSpacing: "0.18em",
         textTransform: "uppercase",
         color: "currentColor",
