@@ -85,8 +85,8 @@ body{
 
 /* ---------------- Sections & panels ---------------- */
 .kreo{position:relative; z-index:3}
-.section{ padding:2rem 1.2rem; }
-.hero{min-height:55vh; display:grid; place-items:center; padding-top:4rem;}
+.section{ padding:1.5rem 1.2rem; }
+.hero{ display:block; min-height:auto; padding-top:5rem; padding-bottom:0.5rem; }
 .panel{
   background:var(--cream);
   border:3px solid var(--ink);
