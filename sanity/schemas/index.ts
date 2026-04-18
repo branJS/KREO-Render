@@ -11,6 +11,7 @@ import shopItem from './shopItem';
 import download from './download';
 import review from './review';
 import software from './software';
+import client from './client';
 
 // Register all document types for the Sanity Studio
-export const schemaTypes = [project, shopItem, software, download, review, about, contact, blogPost];
+export const schemaTypes = [project, shopItem, software, download, review, client, about, contact, blogPost];

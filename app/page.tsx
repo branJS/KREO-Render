@@ -7,6 +7,7 @@ import { useEditMode } from "./providers";
 import ContactForm from "./components/ContactForm";
 import ProjectsSection from "./components/ProjectsSection";
 import TwitterSection from "./components/TwitterSection";
+import ClientsSection from "./components/ClientsSection";
 import ShopSection from "./components/ShopSection";
 import SoftwareSection from "./components/SoftwareSection";
 import DownloadsSection from "./components/DownloadsSection";
@@ -15,7 +16,7 @@ import ReviewsSection from "./components/ReviewsSection";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
-const SECTIONS = ["home","projects","twitter","shop","software","downloads","about","reviews","contact"] as const;
+const SECTIONS = ["home","projects","twitter","clients","shop","software","downloads","about","reviews","contact"] as const;
 
 /* ---------------- Mouse tracking ---------------- */
 function useRootMouseVars() {
@@ -108,7 +109,7 @@ export default function Page() {
 
   return (
     <main className="kreo">
-      <WorldScene sections={["home","projects","twitter","shop","software","downloads","about","reviews","contact"]} />
+      <WorldScene sections={["home","projects","twitter","clients","shop","software","downloads","about","reviews","contact"]} />
       <HUD />
 
       {/* HERO */}
@@ -136,6 +137,9 @@ export default function Page() {
 
       {/* TWITTER / X FEED */}
       <TwitterSection />
+
+      {/* CLIENT LOGOS MARQUEE */}
+      <ClientsSection />
 
       {/* SHOP */}
       <ShopSection />
