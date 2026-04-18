@@ -38,6 +38,34 @@ export async function getProjects() {
   }
 }
 
+export async function getShopItems() {
+  if (!projectId || !dataset) return [];
+  const query = groq`*[_type == "shopItem" && available == true] | order(order asc) {
+    _id, title, description, price, image, paypalLink, fileType
+  }`;
+  try { return await client.fetch(query); }
+  catch (err) { console.error('[getShopItems]', err); return []; }
+}
+
+export async function getDownloads() {
+  if (!projectId || !dataset) return [];
+  const query = groq`*[_type == "download"] | order(order asc) {
+    _id, title, description, category, free,
+    "fileUrl": file.asset->url
+  }`;
+  try { return await client.fetch(query); }
+  catch (err) { console.error('[getDownloads]', err); return []; }
+}
+
+export async function getReviews() {
+  if (!projectId || !dataset) return [];
+  const query = groq`*[_type == "review"] | order(order asc) {
+    _id, name, role, quote, rating, avatar, featured
+  }`;
+  try { return await client.fetch(query); }
+  catch (err) { console.error('[getReviews]', err); return []; }
+}
+
 export async function getProject(slug: string) {
   if (!projectId || !dataset) return null;
   const query = groq`*[_type == "project" && slug.current == $slug && !(_id in path("drafts.**"))][0] {

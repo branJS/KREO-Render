@@ -7,6 +7,9 @@ import about from './about';
 import contact from './contact';
 import project from './project';
 import blogPost from './blog';
+import shopItem from './shopItem';
+import download from './download';
+import review from './review';
 
 // Register all document types for the Sanity Studio
-export const schemaTypes = [project, about, contact, blogPost];
+export const schemaTypes = [project, shopItem, download, review, about, contact, blogPost];
