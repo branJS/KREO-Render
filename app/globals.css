@@ -85,8 +85,8 @@ body{
 
 /* ---------------- Sections & panels ---------------- */
 .kreo{position:relative; z-index:3}
-.section{ padding:1.5rem 1.2rem; }
-.hero{ display:block; min-height:auto; padding-top:5rem; padding-bottom:0.5rem; }
+.section{ padding:1rem 1.2rem; }
+.hero{ display:block; min-height:auto; padding-top:3.2rem; padding-bottom:0; }
 .panel{
   background:var(--cream);
   border:3px solid var(--ink);
@@ -241,16 +241,15 @@ body{
 
 /* Fix: Center hero KREO title perfectly */
 .hero {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 90vh; /* keeps it vertically centered on most screens */
+  display: block;
+  min-height: auto;
+  padding-top: 3.2rem;
+  padding-bottom: 0;
 }
 
 .hero-panel.center {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
   text-align: center;
   width: 100%;
@@ -273,6 +272,10 @@ body{
 .hero {
   position: relative;
   overflow: hidden;
+  display: block;
+  min-height: auto;
+  padding-top: 3.2rem;
+  padding-bottom: 0;
 }
 
 .hero::before {
