@@ -86,7 +86,7 @@ body{
 /* ---------------- Sections & panels ---------------- */
 .kreo{position:relative; z-index:3}
 .section{ padding:1.5rem 1.2rem; }
-.hero{ display:block; min-height:auto; padding-top:6rem; padding-bottom:2.5rem; }
+.hero{ display:block; min-height:auto; padding-top:4.8rem; padding-bottom:1.2rem; }
 .panel{
   background:var(--cream);
   border:3px solid var(--ink);
@@ -363,8 +363,8 @@ body{
 .hero {
   display: block;
   min-height: auto;
-  padding-top: 6rem;
-  padding-bottom: 2.5rem;
+  padding-top: 4.8rem;
+  padding-bottom: 1.2rem;
 }
 
 .hero-panel.center {
@@ -394,8 +394,8 @@ body{
   overflow: hidden;
   display: block;
   min-height: auto;
-  padding-top: 6rem;
-  padding-bottom: 2.5rem;
+  padding-top: 4.8rem;
+  padding-bottom: 1.2rem;
 }
 
 .hero::before {
