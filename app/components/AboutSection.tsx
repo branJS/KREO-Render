@@ -20,8 +20,7 @@ export default function AboutSection() {
           {/* Bio */}
           <div>
             <p style={{ fontWeight: 600, lineHeight: 1.7, margin: "0 0 0.8rem" }}>
-              I&apos;m Brandon Allen — a freelance graphic designer and motion artist based in Plymouth, UK.
-              I specialise in branding, 3D renders, motion graphics, and digital design that stands out.
+              KREO is a freelance creative studio based in Plymouth, UK — specialising in branding, 3D renders, motion graphics, and digital design that stands out.
             </p>
             <p style={{ fontWeight: 600, lineHeight: 1.7, color: "var(--muted)", margin: 0 }}>
               With years of experience across print, digital, and motion — I help businesses and creators

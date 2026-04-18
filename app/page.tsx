@@ -71,7 +71,7 @@ function HUD() {
   return (
     <div className="hud">
       <div className="hud-left">
-        <span className="tag bold">Brandon Allen</span>
+        <span className="tag bold">KREO</span>
       </div>
       <div className="hud-center">
         <nav className="hud-nav">

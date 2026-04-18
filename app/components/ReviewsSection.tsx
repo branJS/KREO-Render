@@ -35,7 +35,7 @@ export default function ReviewsSection() {
 
   // Placeholder reviews shown while empty
   const placeholders = [
-    { name: "Client Name", role: "Business Owner", quote: "Brandon delivered incredible work — fast, professional, and exactly what we needed.", rating: 5 },
+    { name: "Client Name", role: "Business Owner", quote: "KREO delivered incredible work — fast, professional, and exactly what we needed.", rating: 5 },
     { name: "Another Client", role: "Creative Director", quote: "Outstanding visual identity. The branding package exceeded all expectations.", rating: 5 },
     { name: "Happy Customer", role: "Startup Founder", quote: "Responsive, creative, and genuinely passionate about design. Highly recommended.", rating: 5 },
   ];
