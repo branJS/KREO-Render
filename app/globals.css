@@ -213,15 +213,14 @@ body{
 }
 
 /* ============================================================
-   FOOTER LOGO SPIN
+   FOOTER LOGO SPIN (X-axis 3D flip — like a coin)
    ============================================================ */
-@keyframes kreo-logo-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+@keyframes kreo-logo-spin-x {
+  0%   { transform: perspective(300px) rotateX(0deg); }
+  100% { transform: perspective(300px) rotateX(360deg); }
 }
 .kreo-footer-logo {
-  animation: kreo-logo-spin 9s linear infinite;
-  transform-origin: center center;
+  animation: kreo-logo-spin-x 2.4s linear infinite;
   display: block;
 }
 .kreo-footer-logo:hover {

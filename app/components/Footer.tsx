@@ -35,11 +35,13 @@ export default function Footer() {
               X / Twitter ↗
             </a>
             <a
-              href="#contact"
+              href="https://x.com/messages/compose?recipient_id=kreoxi"
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn tiny b-yellow"
               style={{ fontSize: "0.72rem", boxShadow: "3px 3px 0 var(--ink)" }}
             >
-              Get in Touch
+              DM on X ↗
             </a>
           </div>
         </div>
