@@ -79,6 +79,183 @@ function useCinemaMode(): [CinemaState, () => void] {
   return [cinemaState, closeCinema];
 }
 
+/* ---------------- Spring Cursor ---------------- */
+function Cursor() {
+  useEffect(() => {
+    const core = document.getElementById("kc-core");
+    const ring = document.getElementById("kc-ring");
+    if (!core || !ring) return;
+
+    let mx = -200, my = -200;
+    let rx = -200, ry = -200;
+    let rafId = 0;
+
+    const tick = () => {
+      rx += (mx - rx) * 0.13;
+      ry += (my - ry) * 0.13;
+      core.style.transform = `translate(${mx - 4}px,${my - 4}px)`;
+      ring.style.transform  = `translate(${rx - 18}px,${ry - 18}px)`;
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+
+    const onMove = (e: MouseEvent) => { mx = e.clientX; my = e.clientY; };
+    window.addEventListener("mousemove", onMove, { passive: true });
+
+    // Reactive ring: size + colour on interactive elements
+    const hovCls = ["hov-btn","hov-link","hov-card"];
+    const clr = () => ring.classList.remove(...hovCls);
+    const addCls = (c: string) => { clr(); ring.classList.add(c); };
+
+    document.querySelectorAll<HTMLElement>(".btn,button").forEach(el => {
+      el.addEventListener("mouseenter", () => addCls("hov-btn"));
+      el.addEventListener("mouseleave", clr);
+    });
+    document.querySelectorAll<HTMLElement>("a").forEach(el => {
+      el.addEventListener("mouseenter", () => addCls("hov-link"));
+      el.addEventListener("mouseleave", clr);
+    });
+    document.querySelectorAll<HTMLElement>(".card").forEach(el => {
+      el.addEventListener("mouseenter", () => addCls("hov-card"));
+      el.addEventListener("mouseleave", clr);
+    });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      window.removeEventListener("mousemove", onMove);
+    };
+  }, []);
+
+  return (
+    <>
+      <div id="kc-core" />
+      <div id="kc-ring" />
+    </>
+  );
+}
+
+/* ---------------- Scroll Reveal ---------------- */
+function useScrollReveal() {
+  useEffect(() => {
+    // Exclude hero panel (already visible)
+    const panels = Array.from(
+      document.querySelectorAll<HTMLElement>(".panel")
+    ).filter(el => !el.closest(".hero"));
+
+    panels.forEach(el => el.classList.add("reveal-panel"));
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).classList.add("is-visible");
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.07, rootMargin: "0px 0px -30px 0px" });
+
+    panels.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
+/* ---------------- 3-D Card Tilt ---------------- */
+function useCardTilt() {
+  useEffect(() => {
+    const cards = Array.from(document.querySelectorAll<HTMLElement>(".card"));
+    const cleanups: (() => void)[] = [];
+
+    cards.forEach(card => {
+      let rafId = 0, tx = 0, ty = 0, cx = 0, cy = 0, active = false;
+
+      const animate = () => {
+        cx += (tx - cx) * 0.14;
+        cy += (ty - cy) * 0.14;
+        const moving = Math.abs(tx - cx) > 0.01 || Math.abs(ty - cy) > 0.01;
+        if (active || moving) {
+          card.style.transform =
+            `perspective(700px) rotateX(${cx}deg) rotateY(${cy}deg) translateZ(4px)`;
+          rafId = requestAnimationFrame(animate);
+        } else {
+          card.style.transform = "";
+          rafId = 0;
+        }
+      };
+
+      const onMove = (e: MouseEvent) => {
+        const r = card.getBoundingClientRect();
+        ty =  ((e.clientX - (r.left + r.width  / 2)) / (r.width  / 2)) * 7;
+        tx = -((e.clientY - (r.top  + r.height / 2)) / (r.height / 2)) * 7;
+        if (!rafId) rafId = requestAnimationFrame(animate);
+      };
+      const onEnter = () => { active = true; };
+      const onLeave = () => { active = false; tx = 0; ty = 0; };
+
+      card.addEventListener("mousemove",  onMove);
+      card.addEventListener("mouseenter", onEnter);
+      card.addEventListener("mouseleave", onLeave);
+
+      cleanups.push(() => {
+        card.removeEventListener("mousemove",  onMove);
+        card.removeEventListener("mouseenter", onEnter);
+        card.removeEventListener("mouseleave", onLeave);
+        cancelAnimationFrame(rafId);
+      });
+    });
+
+    return () => cleanups.forEach(fn => fn());
+  }, []);
+}
+
+/* ---------------- Text Scramble on Section Titles ---------------- */
+const KREO_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%&";
+
+function useScrambleTitles() {
+  useEffect(() => {
+    const els = Array.from(document.querySelectorAll<HTMLElement>(".section-title"));
+    const origMap = new Map<HTMLElement, string>();
+    els.forEach(el => origMap.set(el, el.textContent ?? ""));
+
+    const scramble = (el: HTMLElement) => {
+      const orig = origMap.get(el) ?? "";
+      let frame = 0;
+      const total = 22;
+      let rafId = 0;
+      const tick = () => {
+        const p = frame / total;
+        el.textContent = orig
+          .split("")
+          .map((ch, i) => {
+            if (ch === " ") return " ";
+            if (i / orig.length < p) return ch;
+            return KREO_CHARS[Math.floor(Math.random() * KREO_CHARS.length)];
+          })
+          .join("");
+        if (frame < total) {
+          frame++;
+          rafId = requestAnimationFrame(tick);
+        } else {
+          el.textContent = orig;
+          el.classList.add("title-revealed");
+        }
+      };
+      rafId = requestAnimationFrame(tick);
+      return () => cancelAnimationFrame(rafId);
+    };
+
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          scramble(e.target as HTMLElement);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    els.forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+}
+
 /* ---------------- Mouse tracking ---------------- */
 function useRootMouseVars() {
   useEffect(() => {
@@ -189,6 +366,9 @@ function HUD() {
 export default function Page() {
   useRootMouseVars();
   useMagnetic();
+  useScrollReveal();
+  useCardTilt();
+  useScrambleTitles();
   const { isEditing } = useEditMode();
   const [cinemaState, closeCinema] = useCinemaMode();
 
@@ -196,6 +376,7 @@ export default function Page() {
     <main className="kreo">
       <IntroScreen />
       <WorldScene sections={["home","projects","twitter","clients","shop","software","downloads","about","reviews","contact"]} />
+      <Cursor />
       <HUD />
       <CinemaOverlay state={cinemaState} onClose={closeCinema} />
       <LighthouseWidget />

@@ -74,14 +74,22 @@ body{
 }
 .hud-time{opacity:.7; font-weight:600}
 
-/* ---------------- Cursor ---------------- */
-#kc-core,#kc-ring{position:fixed; left:0; top:0; transform:translate(var(--mx), var(--my)); pointer-events:none; z-index:9999}
-#kc-core{width:8px; height:8px; border-radius:50%; background:var(--ink)}
-#kc-ring{
-  width:34px; height:34px; border-radius:50%; border:3px solid var(--ink);
-  background:rgba(0,0,0,0); transition:transform .08s ease;
+/* ---------------- Cursor (JS spring-positioned) ---------------- */
+#kc-core,#kc-ring{position:fixed; left:0; top:0; pointer-events:none; z-index:99999;}
+#kc-core{
+  width:8px; height:8px; border-radius:50%; background:var(--ink);
 }
-#kc-ring.down{transform:translate(var(--mx), var(--my)) scale(.88)}
+#kc-ring{
+  width:36px; height:36px; border-radius:50%; border:2.5px solid var(--ink);
+  background:rgba(0,0,0,0);
+  transition:width .28s cubic-bezier(0.16,1,0.3,1),
+             height .28s cubic-bezier(0.16,1,0.3,1),
+             border-color .22s ease,
+             opacity .22s ease;
+}
+#kc-ring.hov-btn  { width:58px; height:58px; border-color:var(--yellow); }
+#kc-ring.hov-link { width:48px; height:48px; border-color:var(--teal); }
+#kc-ring.hov-card { width:52px; height:52px; border-color:var(--pink); }
 
 /* ---------------- Sections & panels ---------------- */
 .kreo{position:relative; z-index:3}
@@ -545,6 +553,96 @@ body{
 @media (max-width:380px){
   .title{ font-size:clamp(44px,18vw,72px) !important; }
   .hud-link{ font-size:0.6rem; padding:0.2rem 0.35rem; }
+}
+
+/* ============================================================
+   VISUAL UPGRADE v2 — Mouse Spotlight · Film Grain · Reveal
+                        Text Scramble · Card Tilt · Cursor React
+   ============================================================ */
+
+/* ── Mouse spotlight: subtle warm glow that trails the cursor ── */
+body::before {
+  content:"";
+  position:fixed;
+  width:720px; height:720px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(245,193,0,0.06) 0%, transparent 70%);
+  left:calc(var(--mx,50vw) - 360px);
+  top:calc(var(--my,50vh) - 360px);
+  pointer-events:none;
+  z-index:1;
+  will-change:left,top;
+  transition:left 0.1s linear, top 0.1s linear;
+}
+
+/* ── Film Grain: animated SVG noise overlay ── */
+@keyframes kreo-grain {
+  0%,100%{ transform:translate(0,0) }
+  10%    { transform:translate(-2%,-3%) }
+  20%    { transform:translate(3%,2%) }
+  30%    { transform:translate(-1%,4%) }
+  40%    { transform:translate(4%,-1%) }
+  50%    { transform:translate(-3%,3%) }
+  60%    { transform:translate(2%,-4%) }
+  70%    { transform:translate(-4%,1%) }
+  80%    { transform:translate(3%,-2%) }
+  90%    { transform:translate(-2%,4%) }
+}
+body::after {
+  content:"";
+  position:fixed; inset:-50%;
+  width:200%; height:200%;
+  z-index:99997;
+  pointer-events:none;
+  opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px 256px;
+  animation:kreo-grain 0.35s steps(1) infinite;
+}
+
+/* ── Scroll Reveal: panels slide up into view ── */
+.reveal-panel {
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity 0.78s cubic-bezier(0.16,1,0.3,1),
+             transform 0.78s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-panel.is-visible {
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ── Section title: underline draws itself after scramble ── */
+.section-title {
+  position:relative;
+  display:inline-block;
+}
+.section-title::after {
+  content:"";
+  position:absolute;
+  bottom:-3px; left:0;
+  height:3px; width:0;
+  background:var(--yellow);
+  transition:width 0.9s cubic-bezier(0.16,1,0.3,1);
+  pointer-events:none;
+}
+.section-title.title-revealed::after {
+  width:100%;
+}
+
+/* ── Card hover: deeper lift ── */
+.card {
+  transition:transform 0.22s cubic-bezier(0.16,1,0.3,1),
+             box-shadow 0.22s cubic-bezier(0.16,1,0.3,1);
+}
+.card:hover {
+  box-shadow:14px 14px 0 var(--ink);
+}
+
+/* ── Disable film grain on mobile (perf) ── */
+@media (max-width:640px) {
+  body::after { display:none; }
+  body::before { display:none; }
 }
 
 /* Utility color backgrounds for dots/chips */
