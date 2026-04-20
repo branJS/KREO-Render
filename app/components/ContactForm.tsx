@@ -33,17 +33,19 @@ export default function ContactForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      const json = await res.json();
+      // Safely parse — guard against non-JSON error pages
+      let json: { ok?: boolean; error?: string; msg?: string } = {};
+      try { json = await res.json(); } catch { /* ignore */ }
+
       if (json.ok) {
         setMessage("✓ Message sent! I'll be in touch soon.");
-        // reset form
         (e.currentTarget as HTMLFormElement).reset();
       } else {
-        setMessage(json.error || "Something went wrong. Please try again.");
+        setMessage(json.error || `Error ${res.status} — please try again.`);
       }
     } catch (err) {
       console.error(err);
-      setMessage("Network error — please check your connection and try again.");
+      setMessage("Could not reach the server. Please try again shortly.");
     } finally {
       setBusy(false);
     }
