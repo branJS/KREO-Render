@@ -222,6 +222,73 @@ export default function SoftwareSection() {
             ))}
           </div>
         )}
+
+        {/* Web Design CTA Banner */}
+        <div style={{
+          marginTop: "1.6rem",
+          border: "3px solid var(--ink)",
+          boxShadow: "6px 6px 0 var(--ink)",
+          background: "var(--ink)",
+          padding: "1.4rem 1.6rem",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          gap: "1.2rem",
+          flexWrap: "wrap",
+        }}>
+          <div style={{ flex: 1, minWidth: "220px" }}>
+            <div style={{
+              display: "inline-block",
+              background: "var(--yellow)",
+              color: "var(--ink)",
+              fontWeight: 900,
+              fontSize: "0.68rem",
+              padding: "2px 10px",
+              letterSpacing: "0.12em",
+              marginBottom: "0.55rem",
+              border: "2px solid var(--yellow)",
+            }}>
+              WE BUILD WEBSITES TOO
+            </div>
+            <h3 style={{
+              margin: "0 0 0.45rem",
+              fontWeight: 900,
+              fontSize: "1.1rem",
+              color: "#fff",
+              lineHeight: 1.25,
+            }}>
+              Need a website for your business?
+            </h3>
+            <p style={{
+              margin: 0,
+              fontWeight: 600,
+              fontSize: "0.83rem",
+              color: "rgba(255,255,255,0.6)",
+              lineHeight: 1.6,
+            }}>
+              KREO designs and builds fast, professional websites from scratch — custom layouts, mobile-first, ready to launch. All you need to do is get in touch.
+            </p>
+          </div>
+          <a
+            href="#contact"
+            className="btn b-yellow"
+            data-magnetic
+            onClick={(e) => {
+              e.preventDefault();
+              const target = document.getElementById("contact");
+              if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+            style={{
+              boxShadow: "4px 4px 0 var(--yellow)",
+              flexShrink: 0,
+              fontWeight: 900,
+              fontSize: "0.88rem",
+            }}
+          >
+            Get a Quote →
+          </a>
+        </div>
+
       </div>
     </section>
   );
