@@ -2,50 +2,46 @@
 
 import { useState } from "react";
 
-/*
- * ContactForm component
- *
- * Renders a simple contact form with name, email, and message fields. On
- * submission, it posts the data to the API route at `/api/contact`. The
- * form provides user feedback while sending and displays a success or
- * error message upon completion. After a successful send, the form
- * resets and shows a "Thank you" message.
- */
-
 export default function ContactForm() {
   const [busy, setBusy] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
+  const [status, setStatus] = useState<"idle" | "ok" | "err">("idle");
+  const [errMsg, setErrMsg] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (busy) return;
     setBusy(true);
-    setMessage(null);
-    const formData = new FormData(e.currentTarget);
-    const payload = {
-      name: formData.get("name") as string,
-      email: formData.get("email") as string,
-      message: formData.get("message") as string,
-    };
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      // Safely parse — guard against non-JSON error pages
-      let json: { ok?: boolean; error?: string; msg?: string } = {};
-      try { json = await res.json(); } catch { /* ignore */ }
+    setStatus("idle");
 
-      if (json.ok) {
-        setMessage("✓ Message sent! I'll be in touch soon.");
-        (e.currentTarget as HTMLFormElement).reset();
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    const payload = {
+      access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY ?? "",
+      name:    data.get("name")    as string,
+      email:   data.get("email")   as string,
+      message: data.get("message") as string,
+      subject: `New enquiry from ${data.get("name")}`,
+    };
+
+    try {
+      const res  = await fetch("https://api.web3forms.com/submit", {
+        method:  "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body:    JSON.stringify(payload),
+      });
+      const json = await res.json();
+
+      if (json.success) {
+        setStatus("ok");
+        form.reset();
       } else {
-        setMessage(json.error || `Error ${res.status} — please try again.`);
+        setErrMsg(json.message || "Something went wrong — please try again.");
+        setStatus("err");
       }
-    } catch (err) {
-      console.error(err);
-      setMessage("Could not reach the server. Please try again shortly.");
+    } catch {
+      setErrMsg("Network error — please check your connection.");
+      setStatus("err");
     } finally {
       setBusy(false);
     }
@@ -87,7 +83,17 @@ export default function ContactForm() {
           {busy ? "Sending…" : "Send"}
         </button>
       </div>
-      {message && <div style={{ marginTop: "0.25rem", fontWeight: 600 }}>{message}</div>}
+
+      {status === "ok" && (
+        <div style={{ marginTop: "0.25rem", fontWeight: 600, color: "var(--teal, #0d9488)" }}>
+          ✓ Message sent! I&apos;ll be in touch soon.
+        </div>
+      )}
+      {status === "err" && (
+        <div style={{ marginTop: "0.25rem", fontWeight: 600, color: "var(--red, #dc2626)" }}>
+          {errMsg}
+        </div>
+      )}
     </form>
   );
 }
