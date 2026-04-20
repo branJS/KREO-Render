@@ -67,11 +67,31 @@ function useMagnetic() {
 /* ---------------- HUD ---------------- */
 function HUD() {
   const [time, setTime] = useState("");
+  const [activeSection, setActiveSection] = useState<string>("home");
+
   useEffect(() => {
     const tick = () => setTime(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
     tick();
     const id = setInterval(tick, 30000);
     return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // pick the most-visible intersecting section
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible.length > 0) setActiveSection(visible[0].target.id);
+      },
+      { threshold: [0.2, 0.5] }
+    );
+    SECTIONS.forEach(s => {
+      const el = document.getElementById(s);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -87,9 +107,10 @@ function HUD() {
             <a
               key={s}
               href={`#${s}`}
-              className="hud-link"
+              className={`hud-link${activeSection === s ? " active" : ""}`}
               onClick={(e) => {
                 e.preventDefault();
+                setActiveSection(s);
                 window.dispatchEvent(new CustomEvent("kreo:navigate", { detail: { section: s } }));
                 const target = document.getElementById(s);
                 if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });

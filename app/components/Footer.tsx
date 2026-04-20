@@ -22,7 +22,8 @@ export default function Footer() {
           <img
             src="/logos/kreo-black-crop.png"
             alt="KREO"
-            style={{ height: "28px", width: "auto", display: "block" }}
+            className="kreo-footer-logo"
+            style={{ height: "28px", width: "auto" }}
           />
           <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
             <a
@@ -40,6 +41,59 @@ export default function Footer() {
             >
               Get in Touch
             </a>
+          </div>
+        </div>
+
+        {/* Services + Coverage */}
+        <div style={{
+          display: "flex", gap: "2.5rem", flexWrap: "wrap",
+          marginBottom: "1.4rem",
+        }}>
+          {/* Services */}
+          <div>
+            <p style={{
+              margin: "0 0 0.5rem",
+              fontWeight: 800, fontSize: "0.65rem",
+              letterSpacing: "0.18em", textTransform: "uppercase",
+              opacity: 0.4,
+            }}>
+              Services
+            </p>
+            <div style={{
+              display: "flex", flexWrap: "wrap", gap: "0.25rem 0.8rem",
+              maxWidth: "520px",
+            }}>
+              {[
+                "Website Design", "Graphic Design", "Identity & Branding",
+                "Logo Design", "Label & Packaging", "Flyer & Brochure Design",
+                "Business Card Design", "Social Media Design", "More on request",
+              ].map((s) => (
+                <span key={s} style={{
+                  fontSize: "0.72rem", fontWeight: 600, opacity: 0.5,
+                  whiteSpace: "nowrap",
+                }}>
+                  {s}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Coverage */}
+          <div style={{ marginLeft: "auto" }}>
+            <p style={{
+              margin: "0 0 0.5rem",
+              fontWeight: 800, fontSize: "0.65rem",
+              letterSpacing: "0.18em", textTransform: "uppercase",
+              opacity: 0.4,
+            }}>
+              Studio Coverage
+            </p>
+            <p style={{
+              margin: 0, fontSize: "0.72rem", fontWeight: 600,
+              opacity: 0.5, lineHeight: 1.7, maxWidth: "300px",
+            }}>
+              Based in Plymouth, Devon — working with clients across Cornwall, the South West, Manchester, London and throughout the UK &amp; Europe.
+            </p>
           </div>
         </div>
 
