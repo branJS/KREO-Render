@@ -272,6 +272,164 @@ body{
 }
 
 /* ============================================================
+   CINEMA MODE — "Get a Quote" spotlight experience
+   ============================================================ */
+
+/* ── Dark vignette overlay ── */
+.kreo-cinema-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background:
+    radial-gradient(ellipse 60% 55% at 50% 55%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.96) 100%);
+  backdrop-filter: blur(5px) saturate(0.3);
+  animation: kreo-cin-in 0.7s cubic-bezier(0.4,0,0.2,1) forwards;
+  cursor: pointer;
+}
+.kreo-cinema-overlay.closing {
+  animation: kreo-cin-out 0.55s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes kreo-cin-in  { from { opacity:0 } to { opacity:1 } }
+@keyframes kreo-cin-out { from { opacity:1 } to { opacity:0 } }
+
+/* ── Letterbox bars (cinematic widescreen feel) ── */
+.kreo-cinema-bar {
+  position: fixed;
+  left: 0; right: 0;
+  height: 56px;
+  background: var(--ink);
+  z-index: 9002;
+  pointer-events: none;
+}
+.kreo-cinema-bar.top    { top: 0;    animation: kreo-bar-top-in    0.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+.kreo-cinema-bar.bottom { bottom: 0; animation: kreo-bar-bot-in    0.5s cubic-bezier(0.16,1,0.3,1) forwards; }
+.kreo-cinema-bar.top.closing    { animation: kreo-bar-top-out 0.5s cubic-bezier(0.4,0,0.2,1) forwards; }
+.kreo-cinema-bar.bottom.closing { animation: kreo-bar-bot-out 0.5s cubic-bezier(0.4,0,0.2,1) forwards; }
+@keyframes kreo-bar-top-in  { from { transform:translateY(-100%) } to { transform:translateY(0) } }
+@keyframes kreo-bar-top-out { from { transform:translateY(0) }     to { transform:translateY(-100%) } }
+@keyframes kreo-bar-bot-in  { from { transform:translateY(100%) }  to { transform:translateY(0) } }
+@keyframes kreo-bar-bot-out { from { transform:translateY(0) }     to { transform:translateY(100%) } }
+
+/* ── Scan line that sweeps the viewport ── */
+.kreo-cinema-scanline {
+  position: fixed;
+  left: 0; right: 0;
+  height: 3px;
+  z-index: 9003;
+  pointer-events: none;
+  background: linear-gradient(to right,
+    transparent 0%, var(--yellow) 25%,
+    #fff 50%,
+    var(--yellow) 75%, transparent 100%);
+  opacity: 0;
+  animation: kreo-scan 1.1s 0.25s cubic-bezier(0.4,0,0.2,1) forwards;
+}
+@keyframes kreo-scan {
+  0%   { opacity:0; top:8vh }
+  8%   { opacity:1 }
+  85%  { opacity:0.9 }
+  100% { opacity:0; top:92vh }
+}
+
+/* ── ESC hint ── */
+.kreo-cinema-hint {
+  position: fixed;
+  bottom: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9004;
+  color: rgba(255,255,255,0.35);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: kreo-hint 5s 1.2s ease-out forwards;
+  opacity: 0;
+}
+@keyframes kreo-hint {
+  0%   { opacity:0 }
+  15%  { opacity:1 }
+  75%  { opacity:1 }
+  100% { opacity:0 }
+}
+
+/* ── Spotlit contact section ── */
+.kreo-cinema-contact {
+  position: relative;
+  z-index: 9001;
+}
+.kreo-cinema-contact .panel {
+  border-color: var(--yellow) !important;
+  box-shadow:
+    8px 8px 0 var(--ink),
+    0 0 0 3px var(--yellow),
+    0 0 50px rgba(245,193,0,0.28),
+    0 24px 100px rgba(0,0,0,0.75) !important;
+  animation:
+    kreo-panel-rise  0.8s 0.15s cubic-bezier(0.16,1,0.3,1) both,
+    kreo-glow-pulse  3s   1s    ease-in-out infinite;
+}
+@keyframes kreo-panel-rise {
+  from { transform:translateY(22px) scale(0.984); opacity:0.7 }
+  to   { transform:translateY(0)    scale(1);     opacity:1   }
+}
+@keyframes kreo-glow-pulse {
+  0%,100% { box-shadow:
+    8px 8px 0 var(--ink),
+    0 0 0 3px var(--yellow),
+    0 0 50px rgba(245,193,0,0.28),
+    0 24px 100px rgba(0,0,0,0.75) !important }
+  50%     { box-shadow:
+    8px 8px 0 var(--ink),
+    0 0 0 3px var(--yellow),
+    0 0 90px rgba(245,193,0,0.50),
+    0 24px 100px rgba(0,0,0,0.75) !important }
+}
+
+/* ── Success state — panel shifts to teal ── */
+.kreo-cinema-success .panel {
+  border-color: var(--teal) !important;
+  box-shadow:
+    8px 8px 0 var(--ink),
+    0 0 0 3px var(--teal),
+    0 0 70px rgba(0,182,163,0.55),
+    0 24px 100px rgba(0,0,0,0.75) !important;
+  animation:
+    kreo-success-pulse 1.8s ease-in-out infinite !important;
+}
+@keyframes kreo-success-pulse {
+  0%,100% { box-shadow:
+    8px 8px 0 var(--ink),
+    0 0 0 3px var(--teal),
+    0 0 60px rgba(0,182,163,0.45),
+    0 24px 100px rgba(0,0,0,0.75) !important }
+  50%     { box-shadow:
+    8px 8px 0 var(--ink),
+    0 0 0 4px var(--teal),
+    0 0 110px rgba(0,182,163,0.7),
+    0 24px 100px rgba(0,0,0,0.75) !important }
+}
+
+/* ── Form inputs: subtle stagger glow on cinema open ── */
+.kreo-cinema-contact input,
+.kreo-cinema-contact textarea {
+  transition: border-color 0.3s, box-shadow 0.3s;
+  border-color: rgba(245,193,0,0.5) !important;
+}
+.kreo-cinema-contact input:focus,
+.kreo-cinema-contact textarea:focus {
+  border-color: var(--yellow) !important;
+  box-shadow: 0 0 0 3px rgba(245,193,0,0.2) !important;
+  outline: none;
+}
+.kreo-cinema-success input,
+.kreo-cinema-success textarea {
+  border-color: rgba(0,182,163,0.5) !important;
+}
+
+/* ============================================================
    RESPONSIVE — TABLET (max 900px)
    ============================================================ */
 @media (max-width:900px){

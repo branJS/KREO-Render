@@ -35,6 +35,7 @@ export default function ContactForm() {
       if (json.success) {
         setStatus("ok");
         form.reset();
+        window.dispatchEvent(new CustomEvent("kreo:cinema-success"));
       } else {
         setErrMsg(json.message || "Something went wrong — please try again.");
         setStatus("err");
@@ -97,3 +98,4 @@ export default function ContactForm() {
     </form>
   );
 }
+// rebuild

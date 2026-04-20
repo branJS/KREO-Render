@@ -70,9 +70,16 @@ export default function PricingSection() {
 
         {/* CTA */}
         <div style={{ marginTop: "1.2rem", display: "flex", gap: "0.6rem", flexWrap: "wrap", alignItems: "center" }}>
-          <a href="#contact" className="btn b-yellow" style={{ boxShadow: "4px 4px 0 var(--ink)" }} data-magnetic>
+          <button
+            className="btn b-yellow"
+            style={{ boxShadow: "4px 4px 0 var(--ink)" }}
+            data-magnetic
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent("kreo:cinema-open"));
+            }}
+          >
             Get a Quote
-          </a>
+          </button>
           <p style={{ margin: 0, fontWeight: 600, fontSize: "0.8rem", color: "var(--muted)" }}>
             Rush jobs, retainers &amp; ongoing work — rates on request.
           </p>

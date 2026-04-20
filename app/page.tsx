@@ -22,6 +22,63 @@ const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
 const SECTIONS = ["home","projects","twitter","clients","shop","software","downloads","about","reviews","pricing","contact"] as const;
 
+/* ---------------- Cinema Mode ---------------- */
+type CinemaState = "off" | "active" | "success" | "closing";
+
+function CinemaOverlay({ state, onClose }: { state: CinemaState; onClose: () => void }) {
+  if (state === "off") return null;
+  const closing = state === "closing";
+  return (
+    <>
+      <div
+        className={`kreo-cinema-overlay${closing ? " closing" : ""}`}
+        onClick={onClose}
+        aria-label="Close"
+      />
+      <div className={`kreo-cinema-bar top${closing ? " closing" : ""}`} />
+      <div className={`kreo-cinema-bar bottom${closing ? " closing" : ""}`} />
+      {!closing && <div className="kreo-cinema-scanline" key={state} />}
+      {!closing && (
+        <div className="kreo-cinema-hint">ESC to close</div>
+      )}
+    </>
+  );
+}
+
+function useCinemaMode(): [CinemaState, () => void] {
+  const [cinemaState, setCinemaState] = React.useState<CinemaState>("off");
+  const closeCinema = React.useCallback(() => {
+    setCinemaState("closing");
+    setTimeout(() => setCinemaState("off"), 650);
+  }, []);
+  React.useEffect(() => {
+    const onOpen = () => {
+      setCinemaState("active");
+      // Slight delay so the overlay renders before scroll
+      setTimeout(() => {
+        const el = document.getElementById("contact");
+        if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 60);
+    };
+    const onSuccess = () => {
+      setCinemaState("success");
+      setTimeout(closeCinema, 3200);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeCinema();
+    };
+    window.addEventListener("kreo:cinema-open", onOpen);
+    window.addEventListener("kreo:cinema-success", onSuccess);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("kreo:cinema-open", onOpen);
+      window.removeEventListener("kreo:cinema-success", onSuccess);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [closeCinema]);
+  return [cinemaState, closeCinema];
+}
+
 /* ---------------- Mouse tracking ---------------- */
 function useRootMouseVars() {
   useEffect(() => {
@@ -133,12 +190,14 @@ export default function Page() {
   useRootMouseVars();
   useMagnetic();
   const { isEditing } = useEditMode();
+  const [cinemaState, closeCinema] = useCinemaMode();
 
   return (
     <main className="kreo">
       <IntroScreen />
       <WorldScene sections={["home","projects","twitter","clients","shop","software","downloads","about","reviews","contact"]} />
       <HUD />
+      <CinemaOverlay state={cinemaState} onClose={closeCinema} />
       <LighthouseWidget />
 
       {/* HERO */}
@@ -201,7 +260,14 @@ export default function Page() {
       <PricingSection />
 
       {/* CONTACT — bottom of page */}
-      <section id="contact" className="section">
+      <section
+        id="contact"
+        className={[
+          "section",
+          cinemaState !== "off" ? "kreo-cinema-contact" : "",
+          cinemaState === "success" ? "kreo-cinema-success" : "",
+        ].filter(Boolean).join(" ")}
+      >
         <div className="panel">
           <div className="panel-head">
             <h2 className="section-title" style={{ margin: 0 }}>Contact</h2>
