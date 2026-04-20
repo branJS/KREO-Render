@@ -35,15 +35,15 @@ export default function ContactForm() {
       });
       const json = await res.json();
       if (json.ok) {
-        setMessage("Thank you!");
+        setMessage("✓ Message sent! I'll be in touch soon.");
         // reset form
         (e.currentTarget as HTMLFormElement).reset();
       } else {
-        setMessage(json.error || "Something went wrong");
+        setMessage(json.error || "Something went wrong. Please try again.");
       }
     } catch (err) {
       console.error(err);
-      setMessage("Failed to send. Please try again later.");
+      setMessage("Network error — please check your connection and try again.");
     } finally {
       setBusy(false);
     }

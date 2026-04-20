@@ -27,14 +27,23 @@ export async function POST(req: Request) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from,
       to: [to],
       subject: `New portfolio inquiry from ${name}`,
-      reply_to: email,
+      replyTo: email,
       text: message,
     });
 
+    if (error) {
+      console.error("Resend error:", error);
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { status: 500 }
+      );
+    }
+
+    console.log("Email sent:", data?.id);
     return NextResponse.json({ ok: true, msg: "Thank you!" });
   } catch (err: any) {
     console.error("Failed to send contact form", err);
