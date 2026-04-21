@@ -6,9 +6,197 @@ export interface BlogPost {
   readTime: string;
   tags: string[];
   content: string;
+  accentColor?: string;
 }
 
 export const POSTS: BlogPost[] = [
+  {
+    slug: "negative-space-logo-design",
+    title: "The Art of Negative Space: When What You Remove Matters More",
+    description:
+      "There's an arrow in the FedEx logo. Most people have never noticed it. Once you do, you can't unsee it — and the brand becomes more interesting, more clever, more memorable.",
+    date: "2025-06-10",
+    readTime: "6 min read",
+    tags: ["Logo Design", "Design Theory", "Branding"],
+    accentColor: "#1E6FE0",
+    content: `
+<p>There's an arrow in the FedEx logo. Most people have never noticed it. Once you do, you cannot unsee it — and the brand becomes more interesting, more clever, more memorable.</p>
+
+<p>It was there all along. In the space between the E and the X.</p>
+
+<p>This is what negative space does in logo design: it rewards attention. It creates depth and meaning without adding a single element. It transforms a mark from something you look at into something you <em>experience</em>.</p>
+
+<h2>What Negative Space Actually Is</h2>
+
+<p>In design, negative space refers to the area around and between the subjects of an image. In logo design specifically, it refers to the deliberate shaping of the empty areas within or around a mark to create secondary meaning.</p>
+
+<p>It's not accidental. The best examples of negative space in logo design are the result of methodical, disciplined thinking — using what's <em>not</em> there as actively as what is.</p>
+
+<blockquote>A mark that works on two levels is worth twice as much as one that works on one. Negative space is how you build the second level.</blockquote>
+
+<h2>Five Logos That Mastered the Invisible</h2>
+
+<h3>FedEx (Lindon Leader, 1994)</h3>
+<p>The most famous negative space logo ever created. The gap between the E and X forms a perfect forward-pointing arrow — representing speed, precision, and direction. It won over 40 design awards and has never been redesigned in 30 years. That is the power of a concept that's right.</p>
+
+<h3>Amazon (Turner Duckworth)</h3>
+<p>The smile arrow beneath "amazon" does triple duty: it's a smile (friendliness and satisfaction), an arrow pointing from a to z (we sell everything), and a face expressing delight. Three meanings from one curved line.</p>
+
+<h3>NBC Peacock</h3>
+<p>The space between the feathers forms a bird in flight only when the whole mark is read together. Each feather simultaneously represents a different division of the network. Unity through carefully managed space.</p>
+
+<h3>Guild of Food Writers</h3>
+<p>A pen nib that, when inverted, reads as a spoon. Writing and food sharing exactly the same form — the mark is the idea.</p>
+
+<h3>Yoga Australia</h3>
+<p>A woman in a yoga pose whose stretched arm and leg create the recognisable outline of the Australian continent. Geography, identity, and practice collapsed into a single silhouette.</p>
+
+<h2>Why Negative Space Makes Logos Memorable</h2>
+
+<p>The psychology here is well-documented. When the brain identifies a hidden element in an image, it releases a small amount of dopamine — the same mechanism at work in puzzles and "aha" moments. A logo that creates this response is one people will describe to others, share online, and remember years later.</p>
+
+<p>Beyond the dopamine hit, negative space logos communicate sophisticated design thinking. They signal that the brand behind them pays attention to detail, thinks carefully, and operates at a higher level. In competitive markets — Plymouth's business landscape very much included — that signal has real commercial value.</p>
+
+<h2>How to Brief a Designer for Negative Space</h2>
+
+<p>You can't explicitly brief for it ("put a hidden arrow in my logo") — the concept has to emerge organically from the letterforms, shapes, and meaning of your specific brand. But you can create conditions for it to emerge:</p>
+
+<ul>
+  <li><strong>Give space for conceptual thinking</strong>, not just execution</li>
+  <li><strong>Brief around meaning</strong>, not just aesthetics ("we're about precision and forward movement" rather than "we want something minimal and modern")</li>
+  <li><strong>Ask to see sketch stages</strong> and concept rationale, not just polished finals</li>
+  <li><strong>Be open to surprising solutions</strong> — negative space ideas rarely look like what you expected</li>
+</ul>
+
+<h2>KREO's Approach to Mark-Making</h2>
+
+<p>At KREO Studio, every logo project begins with conceptual exploration — understanding what your brand actually <em>means</em> before deciding how it looks. Negative space, letterform reduction, geometric interplay — these are the tools of considered logo design, and they're the difference between a mark that's recognised and one that's <em>remembered</em>.</p>
+
+<p>If you're in Plymouth or the wider UK and you want a logo that does more than look nice, <a href="/#contact">let's talk</a>.</p>
+    `.trim(),
+  },
+  {
+    slug: "colour-psychology-branding",
+    title: "Colour Psychology: The Invisible Force Behind Every Great Brand",
+    description:
+      "Before a word is read, before a price is seen — colour has already done its work. In 90 milliseconds, up to 90% of a first impression is driven by colour alone. Here's how to use that.",
+    date: "2025-05-18",
+    readTime: "7 min read",
+    tags: ["Branding", "Design Theory", "Strategy"],
+    accentColor: "#E24C3A",
+    content: `
+<p>Before a single word is read, before a product is held, before a price is seen — colour has already done its work. In the 90 milliseconds it takes a customer to form a first impression of your brand, up to <strong>90% of that decision is influenced by colour alone</strong>.</p>
+
+<p>This isn't aesthetics. It's neuroscience. And it's one of the most underused strategic tools in branding.</p>
+
+<h2>Why Colour Works the Way It Does</h2>
+
+<p>Colour triggers the limbic system — the part of the brain responsible for emotion, memory, and behaviour. It does this before the rational mind engages. This is why a hospital painted red feels instinctively wrong, and why a premium bank in bold orange might trigger doubt before you've read a single word.</p>
+
+<p>These associations aren't universal — they're shaped by culture, personal history, and context. But certain patterns hold remarkably consistently across Western audiences, which is where most British brands are speaking.</p>
+
+<blockquote>The brands you trust most have spent enormous resources ensuring their colour triggers exactly the feeling they want before you consciously register anything.</blockquote>
+
+<h2>The Colour Profiles That Define Modern Branding</h2>
+
+<h3>Red — Urgency, Passion, Power</h3>
+<p>Red accelerates the heart rate. It creates a measurable physiological response. This is why it's the weapon of choice for fast food brands (McDonald's, KFC, Nando's), clearance sale banners, and subscription services that need you to act now. Coca-Cola has owned it for a century — transforming red from urgency into joy through decades of consistent brand storytelling. That's what sustained brand investment does.</p>
+
+<h3>Blue — Trust, Calm, Authority</h3>
+<p>Blue is the most globally trusted colour in branding. It's the colour of sky and water — ancient signals of safety. PayPal, Barclays, LinkedIn, Samsung, the NHS — institutions where trust is the primary product default to blue. It's not exciting, but it's reliable. In financial services, healthcare, or legal practices in Plymouth, blue should be your starting conversation.</p>
+
+<h3>Yellow — Optimism, Attention, Intelligence</h3>
+<p>Yellow is the colour the human eye processes first. Highest-visibility on the spectrum, which is why taxis, warning signs, and IKEA all use it. But it's also the colour of optimism and creative confidence.</p>
+<p>At KREO, yellow is our primary brand colour — chosen deliberately. It communicates that our work is visible, confident, and forward-moving. It signals that we won't disappear into the background. It demands to be noticed.</p>
+
+<h3>Black — Luxury, Sophistication, Precision</h3>
+<p>Black is the absence of colour, and in branding that creates space for projection. Chanel, Apple, Rolex — brands that want customers to project their own aspirations onto them lean on black heavily. It says "we don't need to explain ourselves." The risk: without strong visual execution, black reads as anonymous rather than premium.</p>
+
+<h2>The 60-30-10 Rule</h2>
+
+<p>Professional brand colour systems almost always follow a ratio: <strong>60% dominant colour, 30% secondary, 10% accent</strong>. The dominant colour sets the overall feel. The secondary provides contrast and flexibility. The accent creates moments of emphasis — the eye-blink that draws attention to CTAs, key information, and brand marks.</p>
+
+<p>Violating this balance is the fastest way to make a brand feel visually chaotic. The eye needs to rest somewhere.</p>
+
+<h2>Practical Questions to Ask Before Choosing Brand Colours</h2>
+
+<p>When briefing a designer on colour, don't start with what you personally like. Start here:</p>
+
+<ul>
+  <li><strong>What emotion do I want customers to feel first?</strong></li>
+  <li><strong>What do my competitors use?</strong> (And should I contrast or align?)</li>
+  <li><strong>Where will this colour live?</strong> (Print, screen, signage, vehicle wrap?)</li>
+  <li><strong>Will this colour age well in 10 years?</strong> (Trends fade; brand equity compounds)</li>
+</ul>
+
+<p>Your designer should translate honest answers to those questions into a considered colour rationale — not just "this looks nice." If they can't explain the strategic reasoning behind every colour choice, you're getting a decorator, not a brand designer.</p>
+
+<p>KREO Studio approaches every brand identity project with colour psychology at the foundation. If your brand's colour isn't doing a specific strategic job, we'll redesign it until it is. <a href="/#contact">Let's start that conversation.</a></p>
+    `.trim(),
+  },
+  {
+    slug: "motion-design-brands-2025",
+    title: "Motion Design in 2025: Why Static Brands Are Being Left Behind",
+    description:
+      "Your logo sits still on a business card. But it also lives in a world that scrolls, moves, and breathes. In every context except the first — stillness is a failure mode.",
+    date: "2025-04-22",
+    readTime: "6 min read",
+    tags: ["Motion", "Animation", "Digital", "Branding"],
+    accentColor: "#00B6A3",
+    content: `
+<p>Your logo sits still on a business card. It also sits still on a website that scrolls, on a social feed that moves, in a video that breathes. In every one of those contexts except the first — stillness is a failure mode.</p>
+
+<p>Motion design isn't decoration. It's communication. And in 2025, it's no longer optional.</p>
+
+<h2>What Motion Actually Does</h2>
+
+<p>When something moves on screen, the human visual system cannot ignore it. This is a survival instinct — movement means something is alive, and alive things matter. Motion design hijacks this instinct in service of your brand.</p>
+
+<p>Done well, motion design does four things static design cannot:</p>
+
+<ul>
+  <li><strong>Directs attention</strong> — A subtle animation tells the eye where to look next</li>
+  <li><strong>Communicates personality</strong> — How something moves says as much as what it is</li>
+  <li><strong>Builds memory</strong> — Moving assets are recalled at significantly higher rates than static ones</li>
+  <li><strong>Signals modernity</strong> — Brands that move feel alive; brands that don't feel dated</li>
+</ul>
+
+<blockquote>The difference between a brand that feels alive and one that feels static isn't the logo — it's what the logo does when it loads.</blockquote>
+
+<h2>Types of Motion Design (And When to Use Each)</h2>
+
+<h3>Logo Animation</h3>
+<p>The first and most impactful motion investment for most brands. An animated logo doesn't need to be complex — some of the most effective are simply the letterforms drawing themselves, or a subtle reveal that reinforces the logo's underlying concept. The FedEx arrow becoming visible. The Nike swoosh sweeping in. For Plymouth businesses, an animated logo creates a premium signal immediately, and opens the door to video, social, and presentation content that reads polished and intentional.</p>
+
+<h3>UI Micro-animations</h3>
+<p>The small interactions that make a website feel considered. Buttons that respond to hover. Page transitions that feel like turning a page rather than teleportation. Scroll-triggered reveals that unfold your brand story as the user moves through it. These aren't flashy effects — they're the difference between a website that feels like a tool and one that feels like an experience.</p>
+
+<h3>Social Media Motion</h3>
+<p>Instagram Reels, TikTok, and YouTube Shorts have fundamentally changed the social landscape. Static posts still work, but they work harder when paired with moving content. Animated graphics, kinetic typography, and looping brand assets consistently outperform static equivalents for engagement, reach, and recall.</p>
+
+<h3>Presentation Design</h3>
+<p>If you're pitching for investment or presenting to a major client, a static PowerPoint signals that you're still in 2008. Motion-designed presentations communicate that you operate at a different level — before you've said a word.</p>
+
+<h2>The Animation Principles That Separate Pro from Amateur</h2>
+
+<p>Disney's animators formalised 12 principles of animation in the 1930s. The ones that matter most in brand motion:</p>
+
+<ul>
+  <li><strong>Anticipation</strong> — A slight pause before action makes movement feel intentional, not mechanical</li>
+  <li><strong>Follow-through</strong> — Elements that slightly overshoot and settle back feel organic and alive</li>
+  <li><strong>Ease in / ease out</strong> — Nothing in the natural world starts or stops instantaneously</li>
+  <li><strong>Secondary action</strong> — Supporting movements that reinforce the primary one add depth</li>
+</ul>
+
+<p>Applied to brand motion, these principles are the difference between animation that feels cheap and animation that feels like it cost five times what it did. Timing is everything. A 12-frame ease-in-out where a linear move would have been is invisible to the viewer — but it's the reason they trust the brand more.</p>
+
+<h2>Where Plymouth Businesses Should Start</h2>
+
+<p>If you've never invested in motion design before, start with your logo. A three-to-five second animated version that you can use across social headers, video intros, and email signatures. From there: micro-animations on your website, then a social motion pack. The compounding effect on brand perception is significant.</p>
+
+<p>KREO Studio creates motion graphics for brands across Plymouth, Devon, and the UK. Motion design starts from <strong>£450</strong>. <a href="/#contact">Get in touch</a> to discuss your project.</p>
+    `.trim(),
+  },
   {
     slug: "logo-design-cost-plymouth",
     title: "How Much Does Logo Design Cost in Plymouth? [2025 Pricing Guide]",
@@ -17,6 +205,7 @@ export const POSTS: BlogPost[] = [
     date: "2025-01-15",
     readTime: "5 min read",
     tags: ["Logo Design", "Plymouth", "Pricing", "Branding"],
+    accentColor: "#F5C100",
     content: `
 <p>One of the first questions Plymouth businesses ask when they're ready to level up their brand is: <strong>how much does a logo actually cost?</strong></p>
 
@@ -70,6 +259,7 @@ export const POSTS: BlogPost[] = [
     date: "2025-02-03",
     readTime: "6 min read",
     tags: ["Graphic Design", "Plymouth", "Business", "Studio"],
+    accentColor: "#2DBA72",
     content: `
 <p>Plymouth has no shortage of people calling themselves graphic designers. From bedroom freelancers to established agencies, the choice can feel overwhelming — especially when you're trying to grow your business and don't have time to sift through mediocre portfolios.</p>
 
@@ -116,6 +306,7 @@ export const POSTS: BlogPost[] = [
     date: "2025-03-10",
     readTime: "5 min read",
     tags: ["Website Design", "Plymouth", "Local Business", "Digital"],
+    accentColor: "#E56BE3",
     content: `
 <p>When Plymouth businesses start thinking about a new website, the temptation is to use a cheap national template service or an overseas agency promising "professional results" for a few hundred pounds. Sometimes that works. Usually it doesn't.</p>
 
@@ -168,6 +359,7 @@ export const POSTS: BlogPost[] = [
     date: "2025-04-01",
     readTime: "7 min read",
     tags: ["Branding", "Plymouth", "Identity", "Strategy"],
+    accentColor: "#1E6FE0",
     content: `
 <p>Most Plymouth businesses underestimate the value of a coherent brand identity. A logo is just the beginning — your brand is the full system of visual and verbal signals that tell your customers who you are, what you stand for, and why they should choose you over anyone else.</p>
 
