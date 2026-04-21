@@ -7,6 +7,8 @@ export interface BlogPost {
   tags: string[];
   content: string;
   accentColor?: string;
+  /** Optional thumbnail image URL — shown on index cards and the featured hero */
+  thumbnail?: string;
 }
 
 export const POSTS: BlogPost[] = [

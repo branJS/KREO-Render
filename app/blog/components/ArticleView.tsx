@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import type { BlogPost } from "../../../lib/blog";
 import InkCanvas from "./InkCanvas";
+import { useKreoNav } from "../../components/KreoTransition";
 
 /* ════════════════════════════════════════════════════════════════════════════
    KREO ARTICLE VIEW — Immersive reading experience
@@ -37,6 +38,7 @@ export default function ArticleView({
   const [nextVisible, setNextVisible] = useState(false);
   const articleRef  = useRef<HTMLElement>(null);
   const nextRef     = useRef<HTMLDivElement>(null);
+  const { navigate } = useKreoNav();
 
   const totalWords = wordCount(post.content);
   const totalMins  = Math.ceil(totalWords / WORDS_PER_MIN);
@@ -102,14 +104,19 @@ export default function ArticleView({
         backdropFilter: "blur(8px)",
         position: "sticky", top: 0, zIndex: 50,
       }}>
-        <Link href="/" style={{
-          fontWeight: 900, fontSize: "0.85rem", letterSpacing: "0.14em",
-          textDecoration: "none", color: "var(--ink)",
-          border: "2.5px solid var(--ink)", padding: "0.3rem 0.7rem",
-          boxShadow: "3px 3px 0 var(--ink)",
-        }}>
+        {/* KREO → portfolio with cinematic transition */}
+        <a
+          href="/"
+          onClick={(e) => { e.preventDefault(); navigate("/"); }}
+          style={{
+            fontWeight: 900, fontSize: "0.85rem", letterSpacing: "0.14em",
+            textDecoration: "none", color: "var(--ink)",
+            border: "2.5px solid var(--ink)", padding: "0.3rem 0.7rem",
+            boxShadow: "3px 3px 0 var(--ink)", cursor: "pointer",
+          }}
+        >
           KREO
-        </Link>
+        </a>
         <Link href="/blog" style={{
           fontWeight: 700, fontSize: "0.78rem", opacity: 0.5,
           letterSpacing: "0.08em", textDecoration: "none", color: "var(--ink)",
@@ -241,14 +248,18 @@ export default function ArticleView({
             Logo design, brand identity, websites, motion graphics, 3D renders and print — from Plymouth to the wider UK.
           </p>
           <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap" }}>
-            <Link href="/#contact" style={{
-              background: "var(--ink)", color: "#fff", fontWeight: 800,
-              border: "2.5px solid var(--ink)", padding: "0.7rem 1.2rem",
-              textDecoration: "none", boxShadow: "4px 4px 0 rgba(0,0,0,0.25)",
-              fontSize: "0.88rem",
-            }}>
+            <a
+              href="/#contact"
+              onClick={(e) => { e.preventDefault(); navigate("/#contact"); }}
+              style={{
+                background: "var(--ink)", color: "#fff", fontWeight: 800,
+                border: "2.5px solid var(--ink)", padding: "0.7rem 1.2rem",
+                textDecoration: "none", boxShadow: "4px 4px 0 rgba(0,0,0,0.25)",
+                fontSize: "0.88rem", cursor: "pointer",
+              }}
+            >
               Start a Project →
-            </Link>
+            </a>
             <Link href="/blog" style={{
               background: "transparent", color: "var(--ink)", fontWeight: 800,
               border: "2.5px solid var(--ink)", padding: "0.7rem 1.2rem",

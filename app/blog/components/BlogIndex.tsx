@@ -4,6 +4,7 @@ import { useState, useRef, useCallback } from "react";
 import Link from "next/link";
 import type { BlogPost } from "../../../lib/blog";
 import InkCanvas from "./InkCanvas";
+import { useKreoNav } from "../../components/KreoTransition";
 
 /* ════════════════════════════════════════════════════════════════════════════
    KREO JOURNAL — Revolutionary blog index
@@ -154,8 +155,19 @@ function PostCard({ post, listView }: { post: BlogPost; listView: boolean }) {
         overflow: "hidden",
       }}
     >
-      {/* Top accent bar */}
-      <div style={{ height: 5, background: accent, borderBottom: "3px solid var(--ink)" }} />
+      {/* Thumbnail or top accent bar */}
+      {post.thumbnail ? (
+        <div style={{ position: "relative", height: 160, overflow: "hidden", borderBottom: "3px solid var(--ink)" }}>
+          <img
+            src={post.thumbnail}
+            alt={post.title}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+          />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 4, background: accent }} />
+        </div>
+      ) : (
+        <div style={{ height: 5, background: accent, borderBottom: "3px solid var(--ink)" }} />
+      )}
 
       <div style={{ padding: "1.2rem 1.2rem 1.4rem" }}>
         {/* Category + tags */}
@@ -219,7 +231,7 @@ function FeaturedPost({ post }: { post: BlogPost }) {
         boxShadow: "10px 10px 0 rgba(0,0,0,0.3)",
         textDecoration: "none",
         color: "#fff",
-        padding: "2.5rem 2rem",
+        padding: post.thumbnail ? 0 : "2.5rem 2rem",
         marginBottom: "2.5rem",
         position: "relative",
         overflow: "hidden",
@@ -232,6 +244,14 @@ function FeaturedPost({ post }: { post: BlogPost }) {
         e.currentTarget.style.transform = `perspective(1000px) rotateX(${y}deg) rotateY(${x}deg) translate(-3px,-3px)`;
       }}
     >
+      {/* Thumbnail background for featured post */}
+      {post.thumbnail && (
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+          <img src={post.thumbnail} alt={post.title} style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.25 }} />
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.5) 100%)" }} />
+        </div>
+      )}
+
       {/* Background typography watermark */}
       <div style={{
         position: "absolute", bottom: -20, right: -10,
@@ -239,11 +259,12 @@ function FeaturedPost({ post }: { post: BlogPost }) {
         fontWeight: 900, opacity: 0.04, letterSpacing: "-0.05em",
         lineHeight: 1, pointerEvents: "none", userSelect: "none",
         color: "#fff",
+        zIndex: 1,
       }}>
         KREO
       </div>
 
-      <div style={{ position: "relative", zIndex: 1 }}>
+      <div style={{ position: "relative", zIndex: 2, padding: "2.5rem 2rem" }}>
         {/* Badge */}
         <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "1rem" }}>
           <span style={{
@@ -310,6 +331,7 @@ function FeaturedPost({ post }: { post: BlogPost }) {
 export default function BlogIndex({ posts }: { posts: BlogPost[] }) {
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [listView, setListView] = useState(false);
+  const { navigate } = useKreoNav();
 
   // Collect all tags
   const allTags = Array.from(new Set(posts.flatMap(p => p.tags))).sort();
@@ -334,18 +356,41 @@ export default function BlogIndex({ posts }: { posts: BlogPost[] }) {
         backdropFilter: "blur(8px)",
         position: "sticky", top: 0, zIndex: 20,
       }}>
-        <Link href="/" style={{
-          fontWeight: 900, fontSize: "0.85rem", letterSpacing: "0.14em",
-          textDecoration: "none", color: "var(--ink)",
-          border: "2.5px solid var(--ink)", padding: "0.3rem 0.7rem",
-          boxShadow: "3px 3px 0 var(--ink)",
-        }}>
+        {/* KREO logo → portfolio with cinematic transition */}
+        <a
+          href="/"
+          onClick={(e) => { e.preventDefault(); navigate("/"); }}
+          style={{
+            fontWeight: 900, fontSize: "0.85rem", letterSpacing: "0.14em",
+            textDecoration: "none", color: "var(--ink)",
+            border: "2.5px solid var(--ink)", padding: "0.3rem 0.7rem",
+            boxShadow: "3px 3px 0 var(--ink)",
+            cursor: "pointer",
+          }}
+        >
           KREO
-        </Link>
+        </a>
         <span style={{ fontWeight: 700, fontSize: "0.8rem", opacity: 0.45, letterSpacing: "0.1em" }}>
           / JOURNAL
         </span>
-        <div style={{ marginLeft: "auto", display: "flex", gap: "0.4rem" }}>
+
+        <div style={{ marginLeft: "auto", display: "flex", gap: "0.4rem", alignItems: "center" }}>
+          {/* Back to Portfolio link */}
+          <a
+            href="/"
+            onClick={(e) => { e.preventDefault(); navigate("/"); }}
+            style={{
+              fontWeight: 700, fontSize: "0.72rem",
+              border: "2px solid var(--ink)", padding: "0.28rem 0.6rem",
+              background: "var(--ink)", color: "#fff",
+              cursor: "pointer", textDecoration: "none",
+              letterSpacing: "0.04em",
+              boxShadow: "2px 2px 0 var(--yellow)",
+            }}
+          >
+            ← Portfolio
+          </a>
+
           {/* Grid/List toggle */}
           {[false, true].map((lv) => (
             <button

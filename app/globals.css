@@ -885,3 +885,150 @@ body::after {
   from { opacity: 0; transform: translateY(10px); }
   to   { opacity: 0.8; transform: translateY(0); }
 }
+
+
+/* ════════════════════════════════════════════════════════════════
+   KREO CINEMATIC PAGE TRANSITION SYSTEM
+   ─ laser beam sweeps the page in / out with golden light
+════════════════════════════════════════════════════════════════ */
+
+.kreo-pt {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ── Dark veil ── */
+.kreo-pt-veil {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  opacity: 0;
+  clip-path: inset(0 100% 0 0);  /* hidden by default */
+}
+
+/* ── Laser beam ── */
+.kreo-pt-laser {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 5px;
+  left: -10px;
+  opacity: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--yellow) 15%,
+    #fff 50%,
+    var(--yellow) 85%,
+    transparent 100%
+  );
+  box-shadow:
+    0 0 10px 5px var(--yellow),
+    0 0 40px 20px rgba(245,193,0,0.45),
+    0 0 80px 40px rgba(245,193,0,0.15);
+}
+
+/* ── CRT scanlines ── */
+.kreo-pt-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.32) 3px,
+    rgba(0, 0, 0, 0.32) 4px
+  );
+  opacity: 0;
+}
+
+/* ── Chromatic flash ── */
+.kreo-pt-chromatic {
+  position: absolute;
+  inset: 0;
+  background: var(--yellow);
+  opacity: 0;
+  mix-blend-mode: overlay;
+}
+
+/* ════ EXIT: laser sweeps right, darkness follows ════ */
+.kreo-pt[data-phase="exit"] .kreo-pt-scanlines {
+  animation: pt-scanlines-flash 0.48s ease forwards;
+}
+.kreo-pt[data-phase="exit"] .kreo-pt-laser {
+  animation: pt-laser-sweep 0.42s cubic-bezier(0.55, 0, 0.45, 1) 0.04s forwards;
+  opacity: 1;
+}
+.kreo-pt[data-phase="exit"] .kreo-pt-veil {
+  animation: pt-veil-close 0.46s cubic-bezier(0.55, 0, 0.45, 1) forwards;
+}
+
+/* ════ ENTRY: dark screen, laser reveals page ════ */
+.kreo-pt[data-phase="entry"] .kreo-pt-veil {
+  animation: pt-veil-open 0.58s cubic-bezier(0.25, 0, 0.25, 1) forwards;
+  clip-path: inset(0 0 0 0);
+  opacity: 1;
+}
+.kreo-pt[data-phase="entry"] .kreo-pt-laser {
+  animation: pt-laser-sweep 0.48s cubic-bezier(0.25, 0, 0.25, 1) 0.05s forwards;
+  opacity: 1;
+}
+.kreo-pt[data-phase="entry"] .kreo-pt-chromatic {
+  animation: pt-chromatic-flash 0.55s ease 0.45s forwards;
+}
+.kreo-pt[data-phase="entry"] .kreo-pt-scanlines {
+  animation: pt-scanlines-entry 0.55s ease forwards;
+}
+
+/* ════ Keyframes ════ */
+
+/* Laser fires left → right */
+@keyframes pt-laser-sweep {
+  0%   { left: -10px; opacity: 1; }
+  92%  { left: calc(100% - 5px); opacity: 1; }
+  100% { left: calc(100% + 10px); opacity: 0; }
+}
+
+/* Exit veil — expands from left to right */
+@keyframes pt-veil-close {
+  0%   { opacity: 1; clip-path: inset(0 100% 0 0); }
+  8%   { opacity: 1; clip-path: inset(0 99% 0 0); }
+  100% { opacity: 1; clip-path: inset(0 0% 0 0); }
+}
+
+/* Entry veil — retreats from left to right (reveal) */
+@keyframes pt-veil-open {
+  0%   { opacity: 1; clip-path: inset(0 0 0 0%); }
+  92%  { opacity: 1; clip-path: inset(0 0 0 100%); }
+  100% { opacity: 0; clip-path: inset(0 0 0 100%); }
+}
+
+/* Scanlines flicker on exit */
+@keyframes pt-scanlines-flash {
+  0%   { opacity: 0; }
+  18%  { opacity: 0.65; }
+  55%  { opacity: 0.35; }
+  100% { opacity: 0; }
+}
+
+/* Scanlines dissolve on entry */
+@keyframes pt-scanlines-entry {
+  0%   { opacity: 0.55; }
+  100% { opacity: 0; }
+}
+
+/* Yellow flash on entry reveal */
+@keyframes pt-chromatic-flash {
+  0%   { opacity: 0; }
+  25%  { opacity: 0.12; }
+  100% { opacity: 0; }
+}
+
+/* HUD active link */
+.hud-link.active {
+  background: var(--yellow);
+  transform: translate(-1px, -1px);
+}

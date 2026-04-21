@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { EditModeProvider } from "./providers";
+import { KreoTransitionProvider } from "./components/KreoTransition";
+import KreoNav from "./components/KreoNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -205,7 +207,10 @@ export default function RootLayout({
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <EditModeProvider>
-          {children}
+          <KreoTransitionProvider>
+            {children}
+            <KreoNav />
+          </KreoTransitionProvider>
         </EditModeProvider>
       </body>
     </html>

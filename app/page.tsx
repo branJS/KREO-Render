@@ -19,10 +19,12 @@ import LighthouseWidget from "./components/LighthouseWidget";
 import PricingSection from "./components/PricingSection";
 import PlymouthHelm from "./components/PlymouthHelm";
 import QuoteBuilder from "./components/QuoteBuilder";
+import BlogSection from "./components/BlogSection";
+import { useKreoNav } from "./components/KreoTransition";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
-const SECTIONS = ["home","projects","twitter","clients","shop","software","downloads","about","reviews","pricing","contact"] as const;
+const SECTIONS = ["home","projects","twitter","clients","shop","software","downloads","about","reviews","blog","pricing","contact"] as const;
 
 /* ---------------- Cinema Mode ---------------- */
 type CinemaState = "off" | "active" | "success" | "closing";
@@ -315,6 +317,7 @@ function useMagnetic() {
 function HUD() {
   const [time, setTime] = useState("");
   const [activeSection, setActiveSection] = useState<string>("home");
+  const { navigate } = useKreoNav();
 
   useEffect(() => {
     const tick = () => setTime(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
@@ -350,22 +353,41 @@ function HUD() {
       </div>
       <div className="hud-center">
         <nav className="hud-nav">
-          {SECTIONS.map((s) => (
-            <a
-              key={s}
-              href={`#${s}`}
-              className={`hud-link${activeSection === s ? " active" : ""}`}
-              onClick={(e) => {
-                e.preventDefault();
-                setActiveSection(s);
-                window.dispatchEvent(new CustomEvent("kreo:navigate", { detail: { section: s } }));
-                const target = document.getElementById(s);
-                if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-              }}
-            >
-              {s.toUpperCase()}
-            </a>
-          ))}
+          {SECTIONS.map((s) => {
+            /* BLOG links out of the page with a cinematic transition */
+            if (s === "blog") {
+              return (
+                <a
+                  key={s}
+                  href="/blog"
+                  className={`hud-link${activeSection === s ? " active" : ""}`}
+                  style={{ background: "var(--yellow)" }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/blog");
+                  }}
+                >
+                  JOURNAL
+                </a>
+              );
+            }
+            return (
+              <a
+                key={s}
+                href={`#${s}`}
+                className={`hud-link${activeSection === s ? " active" : ""}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveSection(s);
+                  window.dispatchEvent(new CustomEvent("kreo:navigate", { detail: { section: s } }));
+                  const target = document.getElementById(s);
+                  if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}
+              >
+                {s.toUpperCase()}
+              </a>
+            );
+          })}
         </nav>
       </div>
       <div className="hud-right">
@@ -388,7 +410,7 @@ export default function Page() {
   return (
     <main className="kreo">
       <IntroScreen />
-      <WorldScene sections={["home","projects","twitter","clients","shop","software","downloads","about","reviews","contact"]} />
+      <WorldScene sections={["home","projects","twitter","clients","shop","software","downloads","about","reviews","blog","contact"]} />
       <Cursor />
       <HUD />
       <CinemaOverlay state={cinemaState} onClose={closeCinema} />
@@ -450,6 +472,9 @@ export default function Page() {
 
       {/* REVIEWS */}
       <ReviewsSection />
+
+      {/* JOURNAL / BLOG */}
+      <BlogSection />
 
       {/* QUOTE BUILDER */}
       <QuoteBuilder />
