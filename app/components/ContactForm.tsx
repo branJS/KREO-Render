@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { KreoEvents } from "../../lib/analytics";
 
 export default function ContactForm() {
   const [busy, setBusy] = useState(false);
@@ -35,6 +36,7 @@ export default function ContactForm() {
       if (json.success) {
         setStatus("ok");
         form.reset();
+        KreoEvents.contactFormSubmitted();
         window.dispatchEvent(new CustomEvent("kreo:cinema-success"));
       } else {
         setErrMsg(json.message || "Something went wrong — please try again.");

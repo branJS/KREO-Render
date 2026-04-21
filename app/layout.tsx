@@ -4,6 +4,9 @@ import "./globals.css";
 import { EditModeProvider } from "./providers";
 import { KreoTransitionProvider } from "./components/KreoTransition";
 import KreoNav from "./components/KreoNav";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -212,6 +215,15 @@ export default function RootLayout({
             <KreoNav />
           </KreoTransitionProvider>
         </EditModeProvider>
+
+        {/* ── Vercel: page-view tracking + real-user performance ── */}
+        <Analytics />
+        <SpeedInsights />
+
+        {/* ── Google Analytics 4 — only loads when the env var is set ── */}
+        {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+        )}
       </body>
     </html>
   );
