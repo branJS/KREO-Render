@@ -315,16 +315,8 @@ function useMagnetic() {
 
 /* ---------------- HUD ---------------- */
 function HUD() {
-  const [time, setTime] = useState("");
   const [activeSection, setActiveSection] = useState<string>("home");
   const { navigate } = useKreoNav();
-
-  useEffect(() => {
-    const tick = () => setTime(new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }));
-    tick();
-    const id = setInterval(tick, 30000);
-    return () => clearInterval(id);
-  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -390,9 +382,8 @@ function HUD() {
           })}
         </nav>
       </div>
-      <div className="hud-right">
-        <span className="hud-time">{time}</span>
-      </div>
+      {/* hud-right is intentionally empty — the global KreoNav button occupies this slot */}
+      <div className="hud-right" />
     </div>
   );
 }

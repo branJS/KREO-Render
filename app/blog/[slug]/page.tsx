@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
-import { getPost, getAllPosts } from "../../../lib/blog";
+import { fetchPost, fetchAllPosts, fetchAllSlugs } from "../../../lib/blog";
 import { notFound } from "next/navigation";
 import ArticleView from "../components/ArticleView";
 
 const SITE_URL = "https://kreostudio.co.uk";
 
 export async function generateStaticParams() {
-  return getAllPosts().map((p) => ({ slug: p.slug }));
+  const slugs = await fetchAllSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -15,7 +16,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await fetchPost(slug);
   if (!post) return {};
 
   return {
@@ -31,6 +32,7 @@ export async function generateMetadata({
       publishedTime: post.date,
       authors: ["KREO Studio"],
       tags: post.tags,
+      ...(post.thumbnail ? { images: [{ url: post.thumbnail }] } : {}),
     },
     twitter: {
       card: "summary_large_image",
@@ -46,11 +48,11 @@ export default async function BlogPost({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getPost(slug);
+  const post = await fetchPost(slug);
   if (!post) notFound();
 
   // Find the next post (chronologically older)
-  const all = getAllPosts();
+  const all = await fetchAllPosts();
   const idx = all.findIndex((p) => p.slug === slug);
   const nextPost = idx < all.length - 1 ? all[idx + 1] : all[0];
 
@@ -60,6 +62,7 @@ export default async function BlogPost({
     headline: post.title,
     description: post.description,
     datePublished: post.date,
+    ...(post.thumbnail ? { image: post.thumbnail } : {}),
     author: {
       "@type": "Organization",
       name: "KREO Studio",

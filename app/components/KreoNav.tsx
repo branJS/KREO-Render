@@ -167,30 +167,30 @@ export default function KreoNav() {
       </div>
 
       <style>{`
-        /* ── Hamburger button ── */
+        /* ── Hamburger button — sits in the top-right HUD slot ── */
         .kreo-nav-btn {
           position: fixed;
-          bottom: 1.4rem;
-          right: 1.4rem;
+          top: 0.5rem;
+          right: 0.9rem;
           z-index: 9997;
-          width: 48px;
-          height: 48px;
-          background: var(--ink);
+          width: 44px;
+          height: 44px;
+          background: var(--cream);
           border: 3px solid var(--ink);
-          box-shadow: 5px 5px 0 var(--yellow);
+          box-shadow: 4px 4px 0 var(--ink);
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: transform 0.15s cubic-bezier(0.16,1,0.3,1), box-shadow 0.15s;
+          transition: transform 0.15s cubic-bezier(0.16,1,0.3,1), box-shadow 0.15s, background 0.15s;
         }
         .kreo-nav-btn:hover {
           transform: translate(-2px,-2px);
-          box-shadow: 7px 7px 0 var(--yellow);
+          box-shadow: 6px 6px 0 var(--ink);
         }
         .kreo-nav-btn[data-open="true"] {
           background: var(--yellow);
-          box-shadow: 5px 5px 0 var(--ink);
+          box-shadow: 4px 4px 0 var(--ink);
         }
 
         /* Hamburger lines */
@@ -204,7 +204,7 @@ export default function KreoNav() {
           display: block;
           width: 100%;
           height: 2.5px;
-          background: #fff;
+          background: var(--ink);
           transition: all 0.22s cubic-bezier(0.16,1,0.3,1);
           transform-origin: center;
         }

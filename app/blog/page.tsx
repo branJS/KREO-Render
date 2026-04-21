@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getAllPosts } from "../../lib/blog";
+import { fetchAllPosts } from "../../lib/blog";
 import BlogIndex from "./components/BlogIndex";
 
 const SITE_URL = "https://kreostudio.co.uk";
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
-  const posts = getAllPosts();
+export default async function BlogPage() {
+  const posts = await fetchAllPosts();
   return <BlogIndex posts={posts} />;
 }
