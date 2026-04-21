@@ -91,6 +91,9 @@ export const metadata: Metadata = {
     site: "@kreoxi",
     creator: "@kreoxi",
   },
+  verification: {
+    google: "ANAeZTEnBQocluJ3b2aKuedLyoLKK-h60qR1Mmy2a58",
+  },
 };
 
 // JSON-LD structured data for local business SEO + FAQ rich results
