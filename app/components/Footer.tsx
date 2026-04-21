@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -96,6 +98,34 @@ export default function Footer() {
             }}>
               Based in Plymouth, Devon — working with clients across Cornwall, the South West, Manchester, London and throughout the UK &amp; Europe.
             </p>
+          </div>
+        </div>
+
+        {/* SEO location landing pages */}
+        <div style={{ marginBottom: "1.2rem" }}>
+          <p style={{
+            margin: "0 0 0.45rem", fontWeight: 800, fontSize: "0.65rem",
+            letterSpacing: "0.18em", textTransform: "uppercase", opacity: 0.4,
+          }}>
+            Plymouth Services
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "0.25rem 0.8rem" }}>
+            {[
+              { href: "/graphic-design-plymouth", label: "Graphic Design Plymouth" },
+              { href: "/web-design-plymouth",     label: "Web Design Plymouth" },
+              { href: "/logo-design-plymouth",    label: "Logo Design Plymouth" },
+              { href: "/blog",                    label: "Design Journal" },
+            ].map(({ href, label }) => (
+              <Link key={href} href={href} style={{
+                fontSize: "0.72rem", fontWeight: 700, opacity: 0.55,
+                whiteSpace: "nowrap", color: "var(--ink)", textDecoration: "none",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = "1")}
+              onMouseLeave={e => (e.currentTarget.style.opacity = "0.55")}
+              >
+                {label}
+              </Link>
+            ))}
           </div>
         </div>
 
