@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const SITE_URL = "https://brandonallen.uk";
+const SITE_URL = "https://kreostudio.co.uk";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date().toISOString();
