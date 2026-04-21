@@ -17,6 +17,7 @@ import IntroScreen from "./components/IntroScreen";
 import Footer from "./components/Footer";
 import LighthouseWidget from "./components/LighthouseWidget";
 import PricingSection from "./components/PricingSection";
+import PlymouthHelm from "./components/PlymouthHelm";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
@@ -380,6 +381,7 @@ export default function Page() {
       <HUD />
       <CinemaOverlay state={cinemaState} onClose={closeCinema} />
       <LighthouseWidget />
+      <PlymouthHelm />
 
       {/* HERO */}
       <section id="home" className="section hero visible">

@@ -750,3 +750,9 @@ body::after {
   transform: translate(-3px, -3px);
   box-shadow: 12px 12px 0 var(--ink) !important;
 }
+
+/* Plymouth Helm — hide on mobile */
+:root { --helm-display: block; }
+@media (max-width: 768px) {
+  :root { --helm-display: none; }
+}
