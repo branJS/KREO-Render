@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 
-const SITE_URL = "https://brandonallen.uk";
+const SITE_URL = "https://kreostudio.co.uk";
 
 export const metadata: Metadata = {
   title: "Logo Design Plymouth | Professional Logo Designer Devon | KREO",

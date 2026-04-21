@@ -741,3 +741,12 @@ body::after {
 
 
 
+
+/* Blog card hover effect */
+.blog-card {
+  cursor: pointer;
+}
+.blog-card:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 12px 12px 0 var(--ink) !important;
+}

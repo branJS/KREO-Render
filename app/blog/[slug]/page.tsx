@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getPost, getAllPosts } from "../../../lib/blog";
 import { notFound } from "next/navigation";
 
-const SITE_URL = "https://brandonallen.uk";
+const SITE_URL = "https://kreostudio.co.uk";
 
 export async function generateStaticParams() {
   return getAllPosts().map((p) => ({ slug: p.slug }));

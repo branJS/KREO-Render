@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllPosts } from "../../lib/blog";
 
-const SITE_URL = "https://brandonallen.uk";
+const SITE_URL = "https://kreostudio.co.uk";
 
 export const metadata: Metadata = {
   title: "Blog — Graphic Design & Branding Insights | KREO Plymouth",
@@ -76,7 +76,7 @@ export default function BlogIndex() {
               href={`/blog/${post.slug}`}
               style={{ textDecoration: "none", color: "inherit" }}
             >
-              <article style={{
+              <article className="blog-card" style={{
                 border: "3px solid var(--ink)",
                 background: "#fff",
                 boxShadow: "8px 8px 0 var(--ink)",
@@ -86,16 +86,7 @@ export default function BlogIndex() {
                 gap: "1rem",
                 alignItems: "start",
                 transition: "transform 0.15s, box-shadow 0.15s",
-              }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.transform = "translate(-3px,-3px)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "12px 12px 0 var(--ink)";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.transform = "";
-                (e.currentTarget as HTMLElement).style.boxShadow = "8px 8px 0 var(--ink)";
-              }}
-              >
+              }}>
                 <div>
                   <div style={{ display: "flex", gap: "0.4rem", flexWrap: "wrap", marginBottom: "0.5rem" }}>
                     {post.tags.slice(0, 3).map(tag => (

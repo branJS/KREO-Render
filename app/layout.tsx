@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const SITE_URL = "https://brandonallen.uk";
+const SITE_URL = "https://kreostudio.co.uk";
 const SITE_NAME = "KREO";
 
 export const metadata: Metadata = {
@@ -176,7 +176,7 @@ const jsonLd = {
           name: "How do I get a quote for graphic design in Plymouth?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Use the contact form on the KREO Studio website at brandonallen.uk — describe your project and we'll respond within 24 hours with a free, no-obligation quote.",
+            text: "Use the contact form on the KREO Studio website at kreostudio.co.uk — describe your project and we'll respond within 24 hours with a free, no-obligation quote.",
           },
         },
       ],
