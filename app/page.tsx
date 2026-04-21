@@ -18,6 +18,7 @@ import Footer from "./components/Footer";
 import LighthouseWidget from "./components/LighthouseWidget";
 import PricingSection from "./components/PricingSection";
 import PlymouthHelm from "./components/PlymouthHelm";
+import QuoteBuilder from "./components/QuoteBuilder";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
@@ -138,11 +139,10 @@ function Cursor() {
 /* ---------------- Scroll Reveal ---------------- */
 function useScrollReveal() {
   useEffect(() => {
-    // Exclude hero panel (already visible)
+    // Existing panel reveal
     const panels = Array.from(
       document.querySelectorAll<HTMLElement>(".panel")
     ).filter(el => !el.closest(".hero"));
-
     panels.forEach(el => el.classList.add("reveal-panel"));
 
     const io = new IntersectionObserver(entries => {
@@ -153,9 +153,21 @@ function useScrollReveal() {
         }
       });
     }, { threshold: 0.07, rootMargin: "0px 0px -30px 0px" });
-
     panels.forEach(el => io.observe(el));
-    return () => io.disconnect();
+
+    // data-sr reveal system (staggered)
+    const srEls = document.querySelectorAll<HTMLElement>("[data-sr]");
+    const srIo = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).setAttribute("data-sr-visible", "1");
+          srIo.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: "0px 0px -40px 0px" });
+    srEls.forEach(el => srIo.observe(el));
+
+    return () => { io.disconnect(); srIo.disconnect(); };
   }, []);
 }
 
@@ -438,6 +450,9 @@ export default function Page() {
 
       {/* REVIEWS */}
       <ReviewsSection />
+
+      {/* QUOTE BUILDER */}
+      <QuoteBuilder />
 
       {/* PRICING */}
       <PricingSection />

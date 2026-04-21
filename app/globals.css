@@ -756,3 +756,132 @@ body::after {
 @media (max-width: 768px) {
   :root { --helm-display: none; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   SCROLL REVEAL — add data-sr to any element to animate it in
+   Optional: data-sr-delay="1|2|3|4" for stagger
+════════════════════════════════════════════════════════════════ */
+[data-sr] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity  0.65s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-sr="left"] {
+  transform: translateX(-32px);
+}
+[data-sr="right"] {
+  transform: translateX(32px);
+}
+[data-sr="scale"] {
+  transform: scale(0.94);
+}
+[data-sr-visible] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+[data-sr-delay="1"] { transition-delay: 0.08s; }
+[data-sr-delay="2"] { transition-delay: 0.16s; }
+[data-sr-delay="3"] { transition-delay: 0.24s; }
+[data-sr-delay="4"] { transition-delay: 0.32s; }
+[data-sr-delay="5"] { transition-delay: 0.40s; }
+
+/* ════════════════════════════════════════════════════════════════
+   SECTION PANEL — smooth border glow on scroll entry
+════════════════════════════════════════════════════════════════ */
+.panel {
+  transition: box-shadow 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+.panel:hover {
+  box-shadow: 14px 14px 0 var(--ink);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MAGNETIC BUTTON — enhanced hover lift
+════════════════════════════════════════════════════════════════ */
+.btn {
+  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.18s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.btn:hover {
+  transform: translate(-2px, -2px) !important;
+}
+.btn:active {
+  transform: translate(1px, 1px) !important;
+  box-shadow: 2px 2px 0 var(--ink) !important;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SECTION TITLE — underline sweep on hover
+════════════════════════════════════════════════════════════════ */
+.section-title {
+  position: relative;
+  display: inline-block;
+}
+.section-title::after {
+  content: "";
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 3px;
+  background: var(--yellow);
+  transition: width 0.35s cubic-bezier(0.16,1,0.3,1);
+}
+.section-title:hover::after {
+  width: 100%;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CHIP row — stagger pop-in animation
+════════════════════════════════════════════════════════════════ */
+@keyframes chipPop {
+  from { opacity: 0; transform: scale(0.7) translateY(6px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.chip-row .chip {
+  animation: chipPop 0.35s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.chip-row .chip:nth-child(1) { animation-delay: 0.05s; }
+.chip-row .chip:nth-child(2) { animation-delay: 0.12s; }
+.chip-row .chip:nth-child(3) { animation-delay: 0.19s; }
+.chip-row .chip:nth-child(4) { animation-delay: 0.26s; }
+
+/* ════════════════════════════════════════════════════════════════
+   PANEL HEAD — slide in from left
+════════════════════════════════════════════════════════════════ */
+@keyframes panelHeadIn {
+  from { opacity: 0; transform: translateX(-16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HERO LOGO — entrance scale
+════════════════════════════════════════════════════════════════ */
+.kreo-logo-hero {
+  animation: logoReveal 0.9s cubic-bezier(0.16,1,0.3,1) 0.2s both;
+}
+@keyframes logoReveal {
+  from { opacity: 0; transform: scale(0.88) translateY(12px); filter: blur(4px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   CTA ROW — stagger bounce in
+════════════════════════════════════════════════════════════════ */
+@keyframes ctaBounce {
+  from { opacity: 0; transform: translateY(14px) scale(0.95); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.cta-row .btn:nth-child(1) { animation: ctaBounce 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.5s both; }
+.cta-row .btn:nth-child(2) { animation: ctaBounce 0.5s cubic-bezier(0.34,1.56,0.64,1) 0.65s both; }
+
+/* ════════════════════════════════════════════════════════════════
+   SUBTITLE — fade slide up
+════════════════════════════════════════════════════════════════ */
+.subtitle {
+  animation: subtitleIn 0.7s cubic-bezier(0.16,1,0.3,1) 0.35s both;
+}
+@keyframes subtitleIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 0.8; transform: translateY(0); }
+}
