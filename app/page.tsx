@@ -308,18 +308,23 @@ function useMagnetic() {
 }
 
 /* ---------------- Client Logos Band ---------------- */
-/* ✏️  TO UPDATE: Replace the placeholder names below with real client names.
-       You can also swap the text for an <img> tag pointing to a logo file in /public/logos/ */
-const CLIENT_LOGOS = [
-  "Client Name", "Your Brand Here", "Studio Project", "Client Name",
-  "Brand Partner", "Your Client", "Creative Work", "Client Name",
-  "Brand Identity", "Client Project", "Studio Work", "Brand Partner",
+type ClientLogo = { name: string; logo?: string };
+
+const CLIENT_LOGOS: ClientLogo[] = [
+  { name: "Jaze Cinema" },
+  { name: "British Esports", logo: "https://cdn.sanity.io/images/m0fof14p/production/16662a096336be64f5368456479335b17802c494-294x339.png" },
+  { name: "G-FUEL", logo: "https://cdn.sanity.io/images/m0fof14p/production/92ad5835e3d37e4be839d3ac8a7c75732e8574e9-477x209.png" },
+  { name: "Plymouth University", logo: "https://cdn.sanity.io/images/m0fof14p/production/fab3d6556d56006c38f95d745b5d4d8ba8a20b56-1280x800.png" },
+  { name: "FaZe Clan", logo: "https://cdn.sanity.io/images/m0fof14p/production/0cc505bd8ec630c7f5c11a3188a025943f9f3481-1280x850.png" },
+  { name: "SoaR Gaming", logo: "https://cdn.sanity.io/images/m0fof14p/production/cb3c2c7ebd33b31f89508bd9d76d95f347714436-1000x1000.png" },
+  { name: "Call of Duty", logo: "https://cdn.sanity.io/images/m0fof14p/production/d7e43a58f0fd43fac5b948b7034b6ee138d75cb6-242x76.png" },
+  { name: "Team Property" },
 ];
 
 function ClientLogos() {
   const doubled = [...CLIENT_LOGOS, ...CLIENT_LOGOS]; // seamless loop
   return (
-    <div className="kreo-logos-band" style={{ margin: "0 0 0 0" }} aria-hidden="true">
+    <div className="kreo-logos-band" aria-hidden="true">
       <div style={{
         padding: "0.35rem 1rem",
         fontFamily: "monospace",
@@ -332,12 +337,30 @@ function ClientLogos() {
       }}>
         Trusted by
       </div>
-      <div style={{ padding: "0.55rem 0" }}>
+      <div style={{ padding: "0.7rem 0" }}>
         <div className="kreo-logos-track">
-          {doubled.map((name, i) => (
+          {doubled.map((client, i) => (
             <div key={i} className="kreo-logo-item">
-              <span className="kreo-logo-dot" />
-              {name}
+              {client.logo ? (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={client.logo}
+                  alt={client.name}
+                  style={{
+                    height: "32px",
+                    width: "auto",
+                    maxWidth: "120px",
+                    objectFit: "contain",
+                    filter: "grayscale(1) contrast(1.1)",
+                    opacity: 0.75,
+                  }}
+                />
+              ) : (
+                <>
+                  <span className="kreo-logo-dot" />
+                  {client.name}
+                </>
+              )}
             </div>
           ))}
         </div>
