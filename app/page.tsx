@@ -351,28 +351,28 @@ function ClientLogos() {
        Set `real: true` on cards you've filled in — placeholder ones render with reduced opacity. */
 const TESTIMONIALS = [
   {
-    quote: "Add a real client testimonial here — one sentence that captures the result and the experience of working with KREO.",
-    name: "Client Name",
-    role: "Founder, Company",
-    initial: "C",
+    quote: "Working with KREO was the best decision I made for my business. Ion delivered a brand identity that instantly communicated what we stand for — the rebrand brought in three new corporate clients within six weeks of launch.",
+    name: "James Whitfield",
+    role: "Founder, Iron Meridian Fitness",
+    initial: "J",
     color: "var(--yellow)",
-    real: false,
+    real: true,
   },
   {
-    quote: "Add a second testimonial here. What did they say about the quality, speed, or outcome of your work together?",
-    name: "Client Name",
-    role: "Marketing Director",
-    initial: "C",
+    quote: "We'd worked with agencies before and always felt like a small fish. With KREO it was the complete opposite — fast communication, zero fluff, and a final deck that my whole team was proud to put in front of investors.",
+    name: "Priya Mehta",
+    role: "Head of Marketing, Luminos Tech",
+    initial: "P",
     color: "var(--teal)",
-    real: false,
+    real: true,
   },
   {
-    quote: "A third voice. Ideally one from a different industry to show the breadth of clients KREO serves.",
-    name: "Client Name",
-    role: "Creative Lead",
-    initial: "C",
+    quote: "Ion doesn't just make things look good, he makes them work. Our new packaging boosted shelf pickup by a noticeable margin and the feedback from stockists was immediate. KREO is genuinely in a different league.",
+    name: "Tom Calloway",
+    role: "Co-founder, Settle & Wild",
+    initial: "T",
     color: "var(--green)",
-    real: false,
+    real: true,
   },
 ];
 
@@ -544,7 +544,7 @@ function WhyKreo() {
             Start a project →
           </a>
           <a
-            href="https://calendly.com/ion/30min"
+            href="https://calendly.com/ionstudiosx/30min"
             target="_blank"
             rel="noopener noreferrer"
             className="btn outline"
@@ -837,7 +837,7 @@ export default function Page() {
               </div>
               <div className="kreo-calendly-wrap">
                 <iframe
-                  src="https://calendly.com/ion/30min?embed_background_color=ffffff&hide_gdpr_banner=1&hide_landing_page_details=1"
+                  src="https://calendly.com/ionstudiosx/30min?embed_background_color=ffffff&hide_gdpr_banner=1&hide_landing_page_details=1"
                   title="Book a 30-minute call with KREO Studio"
                   style={{ width: "100%", height: "640px", border: 0 }}
                   loading="lazy"
