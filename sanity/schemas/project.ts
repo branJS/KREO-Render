@@ -86,6 +86,27 @@ export default defineType({
       type: 'datetime',
     }),
     defineField({
+      name: 'brief',
+      title: 'The Brief',
+      description: 'What did the client need? The problem, their goals, and what success looked like.',
+      type: 'text',
+      rows: 4,
+    }),
+    defineField({
+      name: 'process',
+      title: 'The Process',
+      description: 'How did you approach it? Key decisions, thinking, tools used.',
+      type: 'text',
+      rows: 4,
+    }),
+    defineField({
+      name: 'outcome',
+      title: 'The Outcome',
+      description: 'What was delivered? Client response, real-world impact, results.',
+      type: 'text',
+      rows: 4,
+    }),
+    defineField({
       name: 'featured',
       title: 'Featured Project',
       description: 'Pin this project to the top of your portfolio',

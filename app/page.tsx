@@ -6,25 +6,19 @@ import dynamic from "next/dynamic";
 import { useEditMode } from "./providers";
 import ContactForm from "./components/ContactForm";
 import ProjectsSection from "./components/ProjectsSection";
-import TwitterSection from "./components/TwitterSection";
-import ClientsSection from "./components/ClientsSection";
-import ShopSection from "./components/ShopSection";
-import SoftwareSection from "./components/SoftwareSection";
-import DownloadsSection from "./components/DownloadsSection";
 import AboutSection from "./components/AboutSection";
 import ReviewsSection from "./components/ReviewsSection";
 import IntroScreen from "./components/IntroScreen";
 import Footer from "./components/Footer";
 import LighthouseWidget from "./components/LighthouseWidget";
 import PricingSection from "./components/PricingSection";
-import PlymouthHelm from "./components/PlymouthHelm";
 import QuoteBuilder from "./components/QuoteBuilder";
 import BlogSection from "./components/BlogSection";
 import { useKreoNav } from "./components/KreoTransition";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
-const SECTIONS = ["home","projects","twitter","clients","shop","software","downloads","about","reviews","blog","pricing","contact"] as const;
+const SECTIONS = ["home","projects","about","why-kreo","reviews","blog","pricing","contact"] as const;
 
 /* ---------------- Cinema Mode ---------------- */
 type CinemaState = "off" | "active" | "success" | "closing";
@@ -313,6 +307,93 @@ function useMagnetic() {
   }, []);
 }
 
+/* ---------------- Why KREO ---------------- */
+function WhyKreo() {
+  return (
+    <section id="why-kreo" className="section">
+      <div className="panel" style={{ background: "var(--yellow)", borderColor: "var(--ink)" }}>
+        <div className="panel-head">
+          <h2 className="section-title" style={{ margin: 0 }}>Why KREO</h2>
+          <span className="btn tiny outline" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 var(--ink)" }}>
+            The Lore
+          </span>
+        </div>
+
+        <p style={{
+          fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
+          fontWeight: 800,
+          lineHeight: 1.3,
+          margin: "0 0 1.5rem",
+          maxWidth: "680px",
+          letterSpacing: "-0.01em",
+        }}>
+          The freelancer who treats your brand like it&apos;s their own.
+        </p>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gap: "1rem",
+          marginBottom: "2rem",
+        }}>
+          {[
+            {
+              num: "01",
+              heading: "Direct line. No middlemen.",
+              body: "Most agencies hand your project to a junior. At KREO, every brief lands directly with me — one designer, fully invested, from first conversation to final file.",
+            },
+            {
+              num: "02",
+              heading: "One studio. Every medium.",
+              body: "I work across branding, motion, 3D and web because good design rarely lives in just one medium. Whether you need a logo that moves or a website that sells, the thinking stays consistent.",
+            },
+            {
+              num: "03",
+              heading: "Plymouth-based. UK-wide. Remote-ready.",
+              body: "If you're a business that cares about how it looks and what that communicates — we'll get on. Pick up the phone, drop a message, let's make something worth talking about.",
+            },
+          ].map(({ num, heading, body }) => (
+            <div key={num} style={{
+              background: "var(--cream)",
+              border: "3px solid var(--ink)",
+              boxShadow: "5px 5px 0 var(--ink)",
+              padding: "1.4rem 1.2rem",
+            }}>
+              <span style={{
+                display: "block",
+                fontFamily: "monospace",
+                fontSize: "0.65rem",
+                fontWeight: 800,
+                letterSpacing: "0.18em",
+                opacity: 0.4,
+                marginBottom: "0.5rem",
+              }}>{num}</span>
+              <h3 style={{ margin: "0 0 0.6rem", fontSize: "0.95rem", fontWeight: 800, letterSpacing: "0.01em" }}>
+                {heading}
+              </h3>
+              <p style={{ margin: 0, fontSize: "0.87rem", lineHeight: 1.7, color: "var(--muted)" }}>
+                {body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <a
+          href="#contact"
+          className="btn b-teal"
+          data-magnetic
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }}
+        >
+          Start a project →
+        </a>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- HUD ---------------- */
 function HUD() {
   const [activeSection, setActiveSection] = useState<string>("home");
@@ -401,12 +482,11 @@ export default function Page() {
   return (
     <main className="kreo">
       <IntroScreen />
-      <WorldScene sections={["home","projects","twitter","clients","shop","software","downloads","about","reviews","blog","contact"]} />
+      <WorldScene sections={["home","projects","about","reviews","blog","pricing","contact"]} />
       <Cursor />
       <HUD />
       <CinemaOverlay state={cinemaState} onClose={closeCinema} />
       <LighthouseWidget />
-      <PlymouthHelm />
 
       {/* HERO */}
       <section id="home" className="section hero visible">
@@ -425,13 +505,20 @@ export default function Page() {
                 }}
               />
             </h1>
-            <p className="subtitle" style={{ marginTop: "0.6rem", marginBottom: "0.8rem" }}>VISUALS, MOTION & INTERACTION — PLYMOUTH, UK</p>
-            <div className="chip-row nav-chips">
-              <a href="#home"      className="chip c-yellow" title="Home">Y</a>
-              <a href="#projects"  className="chip c-teal"   title="Projects">T</a>
-              <a href="#shop"      className="chip c-red"    title="Shop">R</a>
-              <a href="#downloads" className="chip c-pink"   title="Downloads">P</a>
-            </div>
+            <p className="subtitle" style={{ marginTop: "0.6rem", marginBottom: "0.3rem" }}>
+              Freelance graphic design studio
+            </p>
+            <p style={{
+              margin: "0 0 1rem",
+              fontSize: "clamp(0.72rem, 1.5vw, 0.85rem)",
+              fontWeight: 600,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              color: "var(--muted)",
+              opacity: 0.7,
+            }}>
+              Branding · Motion · 3D · Web — Plymouth, UK
+            </p>
             <div className="cta-row">
               <a href="#projects" className="btn b-yellow" data-magnetic>Explore Projects</a>
               <a href="#contact"  className="btn b-blue outline" data-magnetic>Get in Touch</a>
@@ -443,23 +530,11 @@ export default function Page() {
       {/* PROJECTS */}
       <ProjectsSection />
 
-      {/* TWITTER / X FEED */}
-      <TwitterSection />
-
-      {/* CLIENT LOGOS MARQUEE */}
-      <ClientsSection />
-
-      {/* SHOP */}
-      <ShopSection />
-
-      {/* SOFTWARE PORTFOLIO */}
-      <SoftwareSection />
-
-      {/* DOWNLOADS */}
-      <DownloadsSection />
-
       {/* ABOUT */}
       <AboutSection />
+
+      {/* WHY KREO */}
+      <WhyKreo />
 
       {/* REVIEWS */}
       <ReviewsSection />

@@ -84,7 +84,10 @@ export async function getProject(slug: string) {
     videoUrl,
     tags,
     url,
-    publishedAt
+    publishedAt,
+    brief,
+    process,
+    outcome
   }`;
   try {
     return await client.fetch(query, { slug });

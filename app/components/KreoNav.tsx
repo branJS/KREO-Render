@@ -18,8 +18,7 @@ const PORTFOLIO_SECTIONS = [
   { id: "home",      label: "Home",      color: "var(--yellow)" },
   { id: "projects",  label: "Projects",  color: "var(--teal)" },
   { id: "about",     label: "About",     color: "var(--green)" },
-  { id: "reviews",   label: "Reviews",   color: "var(--pink)" },
-  { id: "shop",      label: "Shop",      color: "var(--red)" },
+  { id: "why-kreo",  label: "Why KREO",  color: "var(--yellow)" },
   { id: "pricing",   label: "Pricing",   color: "var(--blue)" },
   { id: "contact",   label: "Contact",   color: "var(--ink)" },
 ];
@@ -159,9 +158,20 @@ export default function KreoNav() {
 
           {/* Footer */}
           <div className="kreo-nav-footer">
-            <span style={{ fontFamily: "monospace", fontSize: "0.6rem", opacity: 0.3, letterSpacing: "0.1em" }}>
-              kreostudio.co.uk
-            </span>
+            <a
+              href="https://x.com/kreoxi"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: "monospace", fontSize: "0.6rem", opacity: 0.3,
+                letterSpacing: "0.1em", color: "#fff", textDecoration: "none",
+                transition: "opacity 0.15s",
+              }}
+              onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
+              onMouseLeave={e => (e.currentTarget.style.opacity = "0.3")}
+            >
+              @kreoxi · kreostudio.co.uk
+            </a>
           </div>
         </div>
       </div>

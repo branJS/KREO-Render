@@ -122,6 +122,58 @@ export default async function ProjectPage({ params }: { params: any }) {
             ))}
           </div>
 
+          {/* Project Story: Brief / Process / Outcome */}
+          {(project.brief || project.process || project.outcome) && (
+            <div style={{ marginBottom: "2.5rem" }}>
+              <h2 style={{
+                fontSize: "0.8rem", fontWeight: 800, letterSpacing: "0.15em",
+                textTransform: "uppercase", marginBottom: "1rem",
+                display: "flex", alignItems: "center", gap: "0.5rem",
+              }}>
+                <span style={{ display: "inline-block", width: 10, height: 10, background: catColor, border: "2px solid var(--ink)" }} />
+                Project Story
+              </h2>
+              <div style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                gap: "1rem",
+              }}>
+                {[
+                  { num: "01", label: "The Brief",   text: project.brief,   color: "var(--yellow)" },
+                  { num: "02", label: "The Process",  text: project.process, color: "var(--teal)" },
+                  { num: "03", label: "The Outcome",  text: project.outcome, color: "var(--green)" },
+                ].map(({ num, label, text, color }) => text ? (
+                  <div key={num} style={{
+                    border: "3px solid var(--ink)",
+                    boxShadow: "5px 5px 0 var(--ink)",
+                    padding: "1.2rem",
+                    background: "var(--cream)",
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.6rem" }}>
+                      <span style={{
+                        display: "inline-block", width: 8, height: 8,
+                        background: color, border: "2px solid var(--ink)",
+                        flexShrink: 0,
+                      }} />
+                      <span style={{
+                        fontFamily: "monospace", fontSize: "0.6rem",
+                        fontWeight: 800, letterSpacing: "0.14em",
+                        textTransform: "uppercase", opacity: 0.45,
+                      }}>{num}</span>
+                      <span style={{
+                        fontSize: "0.78rem", fontWeight: 800,
+                        letterSpacing: "0.06em", textTransform: "uppercase",
+                      }}>{label}</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: "var(--muted)" }}>
+                      {text}
+                    </p>
+                  </div>
+                ) : null)}
+              </div>
+            </div>
+          )}
+
           {/* Description + CTA row */}
           <div style={{
             display: "grid",
