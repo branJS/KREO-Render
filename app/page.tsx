@@ -330,7 +330,7 @@ function ClientLogos() {
         opacity: 0.35,
         borderBottom: "2px solid var(--ink)",
       }}>
-        Trusted by — add your clients via studio
+        Trusted by
       </div>
       <div style={{ padding: "0.55rem 0" }}>
         <div className="kreo-logos-track">
@@ -351,7 +351,7 @@ function ClientLogos() {
        Set `real: true` on cards you've filled in — placeholder ones render with reduced opacity. */
 const TESTIMONIALS = [
   {
-    quote: "Working with KREO was the best decision I made for my business. Ion delivered a brand identity that instantly communicated what we stand for — the rebrand brought in three new corporate clients within six weeks of launch.",
+    quote: "Working with KREO was the best decision I made for my business. Brandon delivered a brand identity that instantly communicated what we stand for — the rebrand brought in three new corporate clients within six weeks of launch.",
     name: "James Whitfield",
     role: "Founder, Iron Meridian Fitness",
     initial: "J",
@@ -367,7 +367,7 @@ const TESTIMONIALS = [
     real: true,
   },
   {
-    quote: "Ion doesn't just make things look good, he makes them work. Our new packaging boosted shelf pickup by a noticeable margin and the feedback from stockists was immediate. KREO is genuinely in a different league.",
+    quote: "Brandon doesn't just make things look good, he makes them work. Our new packaging boosted shelf pickup by a noticeable margin and the feedback from stockists was immediate. KREO is genuinely in a different league.",
     name: "Tom Calloway",
     role: "Co-founder, Settle & Wild",
     initial: "T",
@@ -768,11 +768,11 @@ export default function Page() {
         </div>
       </section>
 
+      {/* CLIENT LOGOS BAND — social proof immediately below hero */}
+      <ClientLogos />
+
       {/* PROJECTS */}
       <ProjectsSection />
-
-      {/* CLIENT LOGOS BAND — sits just below projects */}
-      <ClientLogos />
 
       {/* ABOUT */}
       <AboutSection />
