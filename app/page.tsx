@@ -307,7 +307,149 @@ function useMagnetic() {
   }, []);
 }
 
-/* ---------------- Why KREO ---------------- */
+/* ---------------- Client Logos Band ---------------- */
+/* ✏️  TO UPDATE: Replace the placeholder names below with real client names.
+       You can also swap the text for an <img> tag pointing to a logo file in /public/logos/ */
+const CLIENT_LOGOS = [
+  "Client Name", "Your Brand Here", "Studio Project", "Client Name",
+  "Brand Partner", "Your Client", "Creative Work", "Client Name",
+  "Brand Identity", "Client Project", "Studio Work", "Brand Partner",
+];
+
+function ClientLogos() {
+  const doubled = [...CLIENT_LOGOS, ...CLIENT_LOGOS]; // seamless loop
+  return (
+    <div className="kreo-logos-band" style={{ margin: "0 0 0 0" }} aria-hidden="true">
+      <div style={{
+        padding: "0.35rem 1rem",
+        fontFamily: "monospace",
+        fontSize: "0.55rem",
+        fontWeight: 800,
+        letterSpacing: "0.18em",
+        textTransform: "uppercase",
+        opacity: 0.35,
+        borderBottom: "2px solid var(--ink)",
+      }}>
+        Trusted by — add your clients via studio
+      </div>
+      <div style={{ padding: "0.55rem 0" }}>
+        <div className="kreo-logos-track">
+          {doubled.map((name, i) => (
+            <div key={i} className="kreo-logo-item">
+              <span className="kreo-logo-dot" />
+              {name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------------- Social Proof Testimonials ---------------- */
+/* ✏️  TO UPDATE: Replace quote, name, role, and initial with real testimonials.
+       Set `real: true` on cards you've filled in — placeholder ones render with reduced opacity. */
+const TESTIMONIALS = [
+  {
+    quote: "Add a real client testimonial here — one sentence that captures the result and the experience of working with KREO.",
+    name: "Client Name",
+    role: "Founder, Company",
+    initial: "C",
+    color: "var(--yellow)",
+    real: false,
+  },
+  {
+    quote: "Add a second testimonial here. What did they say about the quality, speed, or outcome of your work together?",
+    name: "Client Name",
+    role: "Marketing Director",
+    initial: "C",
+    color: "var(--teal)",
+    real: false,
+  },
+  {
+    quote: "A third voice. Ideally one from a different industry to show the breadth of clients KREO serves.",
+    name: "Client Name",
+    role: "Creative Lead",
+    initial: "C",
+    color: "var(--green)",
+    real: false,
+  },
+];
+
+function SocialProof() {
+  return (
+    <section id="reviews-social" className="section">
+      <div className="panel">
+        <div className="panel-head">
+          <h2 className="section-title" style={{ margin: 0 }}>What Clients Say</h2>
+          <span className="btn tiny outline" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 var(--ink)" }}>
+            Social Proof
+          </span>
+        </div>
+        <p style={{ margin: "0 0 1.5rem", fontSize: "0.88rem", color: "var(--muted)", fontWeight: 600, maxWidth: 540 }}>
+          Real words from real clients. Fill these in via Sanity Studio.
+        </p>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gap: "1rem",
+          marginBottom: "1.5rem",
+        }}>
+          {TESTIMONIALS.map((t, i) => (
+            <div key={i} className="kreo-testimonial" data-sr data-sr-delay={String(i + 1)} style={{ opacity: t.real ? undefined : 0.55 }}>
+              <div className="kreo-stars">★★★★★</div>
+              <p className="kreo-testimonial-quote">&ldquo;{t.quote}&rdquo;</p>
+              <div className="kreo-testimonial-author">
+                <div className="kreo-testimonial-avatar" style={{ background: t.color }}>
+                  {t.initial}
+                </div>
+                <div>
+                  <div style={{ fontSize: "0.82rem", fontWeight: 800 }}>{t.name}</div>
+                  <div style={{ fontSize: "0.7rem", opacity: 0.6, fontWeight: 600 }}>{t.role}</div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        {/* Newsletter / lead capture */}
+        <div style={{
+          borderTop: "2px solid var(--ink)",
+          paddingTop: "1.5rem",
+          marginTop: "0.5rem",
+          display: "flex",
+          flexDirection: "column" as const,
+          gap: "0.6rem",
+        }}>
+          <div>
+            <span style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", opacity: 0.45, fontFamily: "monospace" }}>
+              Stay in the loop
+            </span>
+            <p style={{ margin: "0.3rem 0 0.8rem", fontSize: "0.88rem", fontWeight: 700, color: "var(--muted)" }}>
+              Design tips, brand breakdowns, and studio updates. No spam — unsubscribe any time.
+            </p>
+          </div>
+          <div className="kreo-newsletter">
+            <input type="email" placeholder="your@email.com" aria-label="Email address" />
+            <button type="button" onClick={() => {
+              const input = document.querySelector<HTMLInputElement>(".kreo-newsletter input");
+              if (input?.value) {
+                alert("Thanks! We'll be in touch.");
+                input.value = "";
+              }
+            }}>
+              Subscribe →
+            </button>
+          </div>
+          <p style={{ margin: 0, fontSize: "0.68rem", opacity: 0.4, fontWeight: 600 }}>
+            ✏️ Connect to Mailchimp, Resend, or Loops via Studio → Integrations to activate real email capture.
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- Why KREO — Anti-AI Positioning ---------------- */
 function WhyKreo() {
   return (
     <section id="why-kreo" className="section">
@@ -315,7 +457,7 @@ function WhyKreo() {
         <div className="panel-head">
           <h2 className="section-title" style={{ margin: 0 }}>Why KREO</h2>
           <span className="btn tiny outline" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 var(--ink)" }}>
-            The Lore
+            Human-Led
           </span>
         </div>
 
@@ -323,11 +465,22 @@ function WhyKreo() {
           fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
           fontWeight: 800,
           lineHeight: 1.3,
-          margin: "0 0 1.5rem",
+          margin: "0 0 0.5rem",
           maxWidth: "680px",
           letterSpacing: "-0.01em",
         }}>
-          The freelancer who treats your brand like it&apos;s their own.
+          AI can generate a logo. It cannot build a legacy.
+        </p>
+        <p style={{
+          fontSize: "clamp(0.82rem, 1.6vw, 0.96rem)",
+          fontWeight: 600,
+          color: "var(--ink)",
+          opacity: 0.65,
+          margin: "0 0 1.8rem",
+          maxWidth: "580px",
+          lineHeight: 1.65,
+        }}>
+          Every prompt produces something that looks like a brand. KREO produces something that <em>is</em> one — built on research, instinct, and craft that no model has learned.
         </p>
 
         <div style={{
@@ -339,35 +492,35 @@ function WhyKreo() {
           {[
             {
               num: "01",
-              heading: "Direct line. No middlemen.",
-              body: "Most agencies hand your project to a junior. At KREO, every brief lands directly with me — one designer, fully invested, from first conversation to final file.",
+              heading: "Direct line. No account managers.",
+              body: "Agencies hand your brief to a junior. AI hands it to a prompt. At KREO, every project lands with me — one designer, fully accountable, from first call to final file.",
+              accent: "var(--teal)",
             },
             {
               num: "02",
-              heading: "One studio. Every medium.",
-              body: "I work across branding, motion, 3D and web because good design rarely lives in just one medium. Whether you need a logo that moves or a website that sells, the thinking stays consistent.",
+              heading: "Strategy first. Aesthetics second.",
+              body: "I ask why before I ask what. Brand direction, audience positioning, competitor context — the thinking that separates lasting identity from pretty decoration.",
+              accent: "var(--green)",
             },
             {
               num: "03",
-              heading: "Plymouth-based. UK-wide. Remote-ready.",
-              body: "If you're a business that cares about how it looks and what that communicates — we'll get on. Pick up the phone, drop a message, let's make something worth talking about.",
+              heading: "One studio. Every medium.",
+              body: "Branding, motion, 3D, web — the thinking stays consistent across every touchpoint. No briefing four different specialists. No diluted vision.",
+              accent: "var(--blue)",
             },
-          ].map(({ num, heading, body }) => (
-            <div key={num} style={{
-              background: "var(--cream)",
-              border: "3px solid var(--ink)",
-              boxShadow: "5px 5px 0 var(--ink)",
-              padding: "1.4rem 1.2rem",
-            }}>
-              <span style={{
-                display: "block",
-                fontFamily: "monospace",
-                fontSize: "0.65rem",
-                fontWeight: 800,
-                letterSpacing: "0.18em",
-                opacity: 0.4,
-                marginBottom: "0.5rem",
-              }}>{num}</span>
+          ].map(({ num, heading, body, accent }) => (
+            <div key={num} data-sr className="kreo-guarantee-card" style={{ background: "var(--cream)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.3rem" }}>
+                <span style={{
+                  display: "inline-block", width: 8, height: 8,
+                  background: accent, border: "2px solid var(--ink)", flexShrink: 0,
+                }} />
+                <span style={{
+                  fontFamily: "monospace", fontSize: "0.6rem",
+                  fontWeight: 800, letterSpacing: "0.18em",
+                  textTransform: "uppercase", opacity: 0.4,
+                }}>{num}</span>
+              </div>
               <h3 style={{ margin: "0 0 0.6rem", fontSize: "0.95rem", fontWeight: 800, letterSpacing: "0.01em" }}>
                 {heading}
               </h3>
@@ -378,16 +531,104 @@ function WhyKreo() {
           ))}
         </div>
 
+        <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" as const, alignItems: "center" }}>
+          <a
+            href="#contact"
+            className="btn b-teal"
+            data-magnetic
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
+            Start a project →
+          </a>
+          <a
+            href="https://calendly.com/ion/30min"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn outline"
+            style={{ background: "var(--cream)" }}
+          >
+            Book a free 30-min call ↗
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- KREO Guarantee ---------------- */
+function KreoGuarantee() {
+  return (
+    <section className="section">
+      <div className="panel" style={{ background: "var(--ink)", borderColor: "var(--ink)" }}>
+        <div style={{ display: "flex", gap: "0.6rem", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap" as const }}>
+          <h2 className="section-title" style={{ margin: 0, color: "#fff" }}>The KREO Guarantee</h2>
+          <span className="btn tiny" style={{
+            fontSize: "0.7rem", background: "var(--yellow)",
+            boxShadow: "3px 3px 0 rgba(255,255,255,0.3)",
+          }}>
+            No Risk
+          </span>
+        </div>
+
+        <p style={{
+          fontSize: "clamp(1rem, 2.2vw, 1.35rem)",
+          fontWeight: 800,
+          color: "#fff",
+          lineHeight: 1.35,
+          margin: "0 0 1rem",
+          maxWidth: "640px",
+        }}>
+          If you&apos;re not sure KREO is the right fit — work with me for 14 days. If you find a better match, walk away. No invoice. No hard feelings.
+        </p>
+
+        <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.55)", fontWeight: 600, margin: "0 0 1.8rem", maxWidth: 520, lineHeight: 1.65 }}>
+          That&apos;s the level of confidence I have in what I do. Great creative work starts with trust — and trust starts with removing the risk of getting it wrong.
+        </p>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gap: "0.8rem",
+          marginBottom: "2rem",
+        }}>
+          {[
+            { icon: "✓", label: "14-day risk-free window" },
+            { icon: "✓", label: "No upfront payment required" },
+            { icon: "✓", label: "Walk away with no invoice" },
+            { icon: "✓", label: "Full creative ownership to you" },
+          ].map(({ icon, label }) => (
+            <div key={label} style={{
+              display: "flex", alignItems: "center", gap: "0.6rem",
+              background: "rgba(255,255,255,0.06)",
+              border: "1.5px solid rgba(255,255,255,0.12)",
+              padding: "0.8rem 1rem",
+              fontWeight: 700, fontSize: "0.85rem", color: "#fff",
+            }}>
+              <span style={{
+                width: 22, height: 22, borderRadius: "50%",
+                background: "var(--yellow)", color: "var(--ink)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "0.7rem", fontWeight: 900, flexShrink: 0,
+              }}>{icon}</span>
+              {label}
+            </div>
+          ))}
+        </div>
+
         <a
           href="#contact"
-          className="btn b-teal"
+          className="btn b-yellow"
           data-magnetic
+          style={{ boxShadow: "5px 5px 0 rgba(255,255,255,0.3)" }}
           onClick={(e) => {
             e.preventDefault();
             document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
           }}
         >
-          Start a project →
+          Claim your 14-day guarantee →
         </a>
       </div>
     </section>
@@ -530,11 +771,20 @@ export default function Page() {
       {/* PROJECTS */}
       <ProjectsSection />
 
+      {/* CLIENT LOGOS BAND — sits just below projects */}
+      <ClientLogos />
+
       {/* ABOUT */}
       <AboutSection />
 
-      {/* WHY KREO */}
+      {/* WHY KREO — anti-AI positioning */}
       <WhyKreo />
+
+      {/* KREO GUARANTEE */}
+      <KreoGuarantee />
+
+      {/* SOCIAL PROOF */}
+      <SocialProof />
 
       {/* REVIEWS */}
       <ReviewsSection />
@@ -548,7 +798,7 @@ export default function Page() {
       {/* PRICING */}
       <PricingSection />
 
-      {/* CONTACT — bottom of page */}
+      {/* CONTACT — Calendly embed + contact form */}
       <section
         id="contact"
         className={[
@@ -564,7 +814,54 @@ export default function Page() {
               Let&apos;s Talk
             </span>
           </div>
-          <ContactForm />
+
+          {/* Intro line */}
+          <p style={{ margin: "0 0 1.5rem", fontSize: "0.92rem", fontWeight: 600, color: "var(--muted)", maxWidth: 580, lineHeight: 1.65 }}>
+            Pick your preferred way in. Book a free 30-minute call to talk through your project, or drop a message and I&apos;ll come back to you within 24 hours.
+          </p>
+
+          <div className="kreo-contact-grid">
+            {/* LEFT: Calendly embed */}
+            <div>
+              <div style={{
+                display: "flex", alignItems: "center", gap: "0.5rem",
+                marginBottom: "0.8rem",
+              }}>
+                <span style={{
+                  display: "inline-block", width: 8, height: 8,
+                  background: "var(--teal)", border: "2px solid var(--ink)",
+                }} />
+                <span style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", opacity: 0.5, fontFamily: "monospace" }}>
+                  Book a call
+                </span>
+              </div>
+              <div className="kreo-calendly-wrap">
+                <iframe
+                  src="https://calendly.com/ion/30min?embed_background_color=ffffff&hide_gdpr_banner=1&hide_landing_page_details=1"
+                  title="Book a 30-minute call with KREO Studio"
+                  style={{ width: "100%", height: "640px", border: 0 }}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+
+            {/* RIGHT: Contact form */}
+            <div>
+              <div style={{
+                display: "flex", alignItems: "center", gap: "0.5rem",
+                marginBottom: "0.8rem",
+              }}>
+                <span style={{
+                  display: "inline-block", width: 8, height: 8,
+                  background: "var(--yellow)", border: "2px solid var(--ink)",
+                }} />
+                <span style={{ fontSize: "0.7rem", fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", opacity: 0.5, fontFamily: "monospace" }}>
+                  Send a message
+                </span>
+              </div>
+              <ContactForm />
+            </div>
+          </div>
         </div>
       </section>
 

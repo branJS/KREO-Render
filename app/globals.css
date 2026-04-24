@@ -787,6 +787,232 @@ body::after {
 [data-sr-delay="4"] { transition-delay: 0.32s; }
 [data-sr-delay="5"] { transition-delay: 0.40s; }
 
+/* ============================================================
+   SPRINT 1 — MICRO-INTERACTIONS, SOCIAL PROOF, GLASSMORPHISM
+   ============================================================ */
+
+/* ── Enhanced button: ripple overlay on click ── */
+.btn { position: relative; overflow: hidden; }
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.08);
+  opacity: 0;
+  transition: opacity 0.12s;
+}
+.btn:active::after { opacity: 1; }
+.btn:hover {
+  transform: translate(-3px, -3px);
+  box-shadow: 9px 9px 0 var(--ink);
+}
+.btn.tiny:hover { box-shadow: 6px 6px 0 var(--ink); }
+
+/* ── Form focus micro-feedback ── */
+.form input:focus,
+.form textarea:focus,
+.form select:focus {
+  border-color: var(--yellow) !important;
+  box-shadow: 6px 6px 0 var(--yellow) !important;
+  transform: translate(-1px, -1px);
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+/* ── Glassmorphism card variant ── */
+.card-glass {
+  background: rgba(242,236,227,0.72);
+  backdrop-filter: blur(18px) saturate(1.5);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  border: 1.5px solid rgba(13,13,13,0.18);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.10), 5px 5px 0 rgba(13,13,13,0.14);
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+.card-glass:hover {
+  transform: translate(-3px,-3px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.14), 8px 8px 0 rgba(13,13,13,0.18);
+}
+
+/* ── Client logos scrolling band ── */
+.kreo-logos-band {
+  border-top: 3px solid var(--ink);
+  border-bottom: 3px solid var(--ink);
+  background: var(--cream);
+  padding: 0.6rem 0;
+  overflow: hidden;
+  position: relative;
+}
+.kreo-logos-track {
+  display: flex;
+  gap: 1.8rem;
+  align-items: center;
+  animation: kreo-marquee 22s linear infinite;
+  width: max-content;
+}
+.kreo-logos-band:hover .kreo-logos-track { animation-play-state: paused; }
+.kreo-logo-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid var(--ink);
+  background: #fff;
+  padding: 0.4rem 1rem;
+  box-shadow: 3px 3px 0 var(--ink);
+  font-weight: 800;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  opacity: 0.65;
+  transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+.kreo-logo-item:hover {
+  opacity: 1;
+  transform: translate(-2px,-2px);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+.kreo-logo-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--yellow);
+  border: 1.5px solid var(--ink);
+  flex-shrink: 0;
+}
+
+/* ── Calendly embed wrapper ── */
+.kreo-calendly-wrap {
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  overflow: hidden;
+  background: #fff;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+}
+.kreo-calendly-wrap iframe {
+  border: 0;
+  flex: 1;
+  min-height: 640px;
+}
+
+/* ── Guarantee section accent ── */
+.kreo-guarantee-card {
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  padding: 1.4rem 1.2rem;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.kreo-guarantee-card:hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+
+/* ── Contact two-column layout ── */
+.kreo-contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+@media (max-width: 860px) {
+  .kreo-contact-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Social proof testimonial cards ── */
+.kreo-testimonial {
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  padding: 1.2rem;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.kreo-testimonial:hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+.kreo-testimonial-quote {
+  font-size: 0.92rem;
+  line-height: 1.7;
+  font-weight: 600;
+  color: var(--muted);
+  font-style: italic;
+}
+.kreo-testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+.kreo-testimonial-avatar {
+  width: 32px; height: 32px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--yellow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.kreo-stars {
+  color: var(--yellow);
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+/* ── Newsletter / lead capture ── */
+.kreo-newsletter {
+  display: flex;
+  gap: 0;
+  max-width: 480px;
+}
+.kreo-newsletter input {
+  flex: 1;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-right: none;
+  padding: 0.7rem 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  outline: none;
+  box-shadow: none;
+  font-family: inherit;
+}
+.kreo-newsletter input:focus { border-color: var(--yellow); }
+.kreo-newsletter button {
+  background: var(--yellow);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  padding: 0.7rem 1.2rem;
+  font-weight: 800;
+  font-size: 0.9rem;
+  cursor: pointer;
+  box-shadow: 5px 5px 0 var(--ink);
+  transition: transform 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.kreo-newsletter button:hover {
+  transform: translate(-2px,-2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+@media (max-width: 640px) {
+  .kreo-newsletter { flex-direction: column; }
+  .kreo-newsletter input { border-right: 3px solid var(--ink); border-bottom: none; }
+  .kreo-newsletter button { box-shadow: 4px 4px 0 var(--ink); }
+}
+
 /* ════════════════════════════════════════════════════════════════
    SECTION PANEL — smooth border glow on scroll entry
 ════════════════════════════════════════════════════════════════ */
