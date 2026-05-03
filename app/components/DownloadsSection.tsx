@@ -63,7 +63,7 @@ export default function DownloadsSection() {
         </div>
 
         <p style={{ color: "var(--muted)", fontWeight: 600, fontSize: "0.9rem", margin: "0.4rem 0 1rem" }}>
-          Download brand assets, templates, and case study PDFs.
+          Free content will randomly spawn here — keep watch.
         </p>
 
         {loading ? (

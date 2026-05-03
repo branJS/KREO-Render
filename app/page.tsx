@@ -781,7 +781,7 @@ export default function Page() {
               color: "var(--muted)",
               opacity: 0.7,
             }}>
-              Branding · Motion · 3D · Web — Plymouth, UK
+              Brandon Allen — Creative Director, KREO Studio · Plymouth, UK
             </p>
             <div className="cta-row">
               <a href="#projects" className="btn b-yellow" data-magnetic>Explore Projects</a>
@@ -790,6 +790,19 @@ export default function Page() {
           </div>
         </div>
       </section>
+
+      {/* SHORT BIO — intro under hero */}
+      <div style={{ padding: "1.4rem 1.2rem 0.2rem", maxWidth: "680px", margin: "0 auto" }}>
+        <p style={{
+          fontWeight: 600,
+          lineHeight: 1.75,
+          fontSize: "clamp(0.9rem, 1.8vw, 1.05rem)",
+          color: "var(--muted)",
+          margin: 0,
+        }}>
+          I&apos;m Brandon — a graphic designer and creative director based in Plymouth. I&apos;ve been working with brands on visuals, motion, and identity for five years. KREO Studio is where that work lives.
+        </p>
+      </div>
 
       {/* CLIENT LOGOS BAND — social proof immediately below hero */}
       <ClientLogos />
@@ -806,8 +819,8 @@ export default function Page() {
       {/* KREO GUARANTEE */}
       <KreoGuarantee />
 
-      {/* SOCIAL PROOF */}
-      <SocialProof />
+      {/* SOCIAL PROOF — hidden until real testimonials are added; uncomment when ready */}
+      {/* <SocialProof /> */}
 
       {/* REVIEWS */}
       <ReviewsSection />
