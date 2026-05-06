@@ -629,6 +629,7 @@ export default function CaseStudyPage() {
                 ['Tools', 'Photoshop · Runway · ComfyUI · Topaz · After Effects / Premiere · ChatGPT · Claude · Gemini'],
                 ['Role', 'Independent creator / designer / AI visual producer'],
                 ['Status', 'Private · Watermarked · Not publicly distributed'],
+                ['Business Status', 'Preparing to formalise through HMRC or Companies House guidance'],
               ].map(([k, v]) => (
                 <div className="cs-snapshot-row" key={k}>
                   <div className="cs-snapshot-key">{k}</div>
@@ -1061,8 +1062,8 @@ export default function CaseStudyPage() {
 
             <BodyText style={{ marginTop: '1.8rem', margin: '1.8rem 0 0' }}>
               The market for this type of work exists and is growing. AI-enhanced creative production
-              is no longer experimental — it is increasingly expected at the premium end of property
-              and brand marketing.
+              is moving quickly from experimentation into commercial expectation, especially where
+              brands need faster, more cinematic visual content.
             </BodyText>
           </FadeIn>
         </Section>
@@ -1086,41 +1087,43 @@ export default function CaseStudyPage() {
             <BodyText>Funding would support:</BodyText>
           </FadeIn>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', marginTop: '0.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '2.4rem', marginTop: '0.5rem' }}>
             {[
               {
-                category: 'Hardware & Production',
+                category: 'Faster Production',
                 items: [
                   'New GPU for faster local AI video generation',
                   'Upgraded workstation processor',
+                  'Cloud GPU / rendering credits',
+                ],
+                outcome: 'shorter render times, faster turnaround and capacity for more client work.',
+              },
+              {
+                category: 'Professional Quality',
+                items: [
                   'Professional colour-accurate monitor',
                   'Drawing tablet and input hardware',
-                  'External storage and backup systems',
+                  'Professional printer / print testing',
                 ],
+                outcome: 'stronger visual precision and more polished digital and print outputs.',
               },
               {
-                category: 'Software & Cloud',
+                category: 'Business Infrastructure',
                 items: [
-                  'AI software licences and subscriptions',
-                  'Cloud rendering and GPU credits',
                   'Hosting services and private preview infrastructure',
-                ],
-              },
-              {
-                category: 'Studio & Operations',
-                items: [
-                  'Art studio accessories and workspace setup',
-                  'Professional printing and print testing services',
+                  'External storage and backup systems',
                   'Legal templates and licence agreements',
                 ],
+                outcome: 'safer, more professional client delivery.',
               },
               {
-                category: 'Growth & Outreach',
+                category: 'Market Validation',
                 items: [
-                  'Marketing materials and outreach campaigns',
-                  'Future case studies and pilot projects',
-                  'Improved website and client presentation systems',
+                  'Outreach campaigns and marketing materials',
+                  'Future pilot projects and case studies',
+                  'Improved website and service pages',
                 ],
+                outcome: 'stronger client pipeline and clearer commercial proof.',
               },
             ].map((cat, i) => (
               <FadeIn key={cat.category} delay={i * 80}>
@@ -1129,6 +1132,9 @@ export default function CaseStudyPage() {
                   <ul className="cs-bullets">
                     {cat.items.map(item => <li key={item}>{item}</li>)}
                   </ul>
+                  <p style={{ marginTop: '0.6rem', fontSize: '0.88rem', fontStyle: 'italic', color: '#7a7268', lineHeight: 1.6 }}>
+                    Outcome: {cat.outcome}
+                  </p>
                 </div>
               </FadeIn>
             ))}
@@ -1185,7 +1191,7 @@ export default function CaseStudyPage() {
           <FadeIn>
             <SectionLabel>13 — Why This Matters for Funding Support</SectionLabel>
             <div className="cs-pull-quote">
-              <p>This is not a speculative pitch. It is evidence.</p>
+              <p>This is more than an idea. It is evidence.</p>
             </div>
 
             <BodyText>KREO Studio has already:</BodyText>
@@ -1213,6 +1219,76 @@ export default function CaseStudyPage() {
             <BodyText style={{ margin: 0 }}>
               This aligns design, technology and entrepreneurship — and represents a strong student
               enterprise opportunity with a clear path to commercial viability.
+            </BodyText>
+          </FadeIn>
+        </Section>
+
+        <div style={{ margin: '0 clamp(1.5rem,5vw,4rem)' }}><Divider /></div>
+
+        {/* ══════════════════════════════════════════════════════════════ */}
+        {/* SECTION — FUNDING ROUTE FIT                                    */}
+        {/* ══════════════════════════════════════════════════════════════ */}
+        <Section>
+          <FadeIn>
+            <SectionLabel>FUNDING ROUTE FIT</SectionLabel>
+            <BodyText>
+              KREO Studio is currently seeking guidance on the most suitable University of Plymouth
+              enterprise route: Kickstart support for further validation, or Scale Up support once
+              the venture is formally registered and ready to grow.
+            </BodyText>
+            <BodyText>
+              This case study demonstrates that the project has moved beyond idea stage into practical
+              proof-of-concept: the offer has been researched, tested, packaged, and presented to a
+              real market contact.
+            </BodyText>
+            <BodyText style={{ margin: 0 }}>
+              The next step is to formalise KREO Studio's business structure, refine the service
+              packages, and use funding support to develop repeatable pilot campaigns.
+            </BodyText>
+          </FadeIn>
+        </Section>
+
+        <div style={{ margin: '0 clamp(1.5rem,5vw,4rem)' }}><Divider /></div>
+
+        {/* ══════════════════════════════════════════════════════════════ */}
+        {/* SECTION — FIVE-MINUTE PITCH READINESS                         */}
+        {/* ══════════════════════════════════════════════════════════════ */}
+        <Section>
+          <FadeIn>
+            <SectionLabel>FIVE-MINUTE PITCH READINESS</SectionLabel>
+            <BodyText>
+              This case study can be converted into a five-minute funding pitch covering:
+            </BodyText>
+            <ul className="cs-bullets">
+              {[
+                'What KREO Studio does',
+                'The problem it solves',
+                'Why funding matters',
+                'What impact funding would have',
+                'How the project can become a repeatable commercial service',
+              ].map(item => <li key={item}>{item}</li>)}
+            </ul>
+          </FadeIn>
+        </Section>
+
+        <div style={{ margin: '0 clamp(1.5rem,5vw,4rem)' }}><Divider /></div>
+
+        {/* ══════════════════════════════════════════════════════════════ */}
+        {/* FUNDING SUPPORT SOUGHT                                         */}
+        {/* ══════════════════════════════════════════════════════════════ */}
+        <Section>
+          <FadeIn>
+            <SectionLabel>Funding Support Sought</SectionLabel>
+            <BodyText>
+              KREO Studio is seeking early-stage enterprise support, mentorship and funding to
+              improve production capacity, formalise service packages, develop further pilot projects
+              and turn this proof-of-concept into a repeatable commercial offer for property,
+              architecture and premium brand clients.
+            </BodyText>
+            <BodyText style={{ margin: 0 }}>
+              This case study has been prepared to support conversations around University of Plymouth
+              enterprise support, including The Cube funding routes, expert appointments and
+              Santander-backed growth support where appropriate.
             </BodyText>
           </FadeIn>
         </Section>
@@ -1262,11 +1338,30 @@ export default function CaseStudyPage() {
               </FadeIn>
             ))}
           </div>
+
+          <FadeIn delay={420}>
+            <p
+              style={{
+                marginTop: '2.4rem',
+                fontSize: 'clamp(0.88rem,1.7vw,1rem)',
+                fontWeight: 500,
+                lineHeight: 1.8,
+                color: '#8a7a54',
+                fontStyle: 'italic',
+                letterSpacing: '0.02em',
+                borderLeft: '2px solid rgba(201,169,110,0.25)',
+                paddingLeft: '1.2rem',
+              }}
+            >
+              The next milestone is to produce 2–3 additional pilot campaigns, secure the first
+              paid client, and formalise KREO Studio’s AI-enhanced campaign packages.
+            </p>
+          </FadeIn>
         </Section>
 
         <div style={{ margin: '0 clamp(1.5rem,5vw,4rem)' }}><Divider /></div>
 
-        {/* ── FOOTER ───────────────────────────────────────────────────── */}
+        {/* ── FOOTER ─────────────────────────────────────────────────────── */}
         <footer
           style={{
             padding: 'clamp(3rem,6vw,5rem) clamp(1.5rem,5vw,4rem)',
@@ -1313,7 +1408,7 @@ export default function CaseStudyPage() {
                 It is not publicly distributed and does not represent an official commission or
                 approved campaign.
                 <br />
-                All assets are watermarked and remain the intellectual property of KREO Studio.
+                Campaign concept, edit structure, design treatment, AI-enhanced outputs and presentation materials are produced by KREO Studio. Source listing materials remain the property of their respective rights holders.
                 <br />
                 A private speculative concept study. Selected private review only.
               </p>
