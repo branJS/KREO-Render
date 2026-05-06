@@ -26,6 +26,215 @@ const images = [
 
 export default function TheGatePreview() {
   const [lightbox, setLightbox] = useState<number | null>(null);
+  const [locked, setLocked] = useState(true);
+  const [input, setInput] = useState('');
+  const [error, setError] = useState(false);
+  const [shake, setShake] = useState(false);
+
+  function handleUnlock(e: React.FormEvent) {
+    e.preventDefault();
+    if (input.trim().toLowerCase() === 'john') {
+      setLocked(false);
+      setError(false);
+    } else {
+      setError(true);
+      setShake(true);
+      setInput('');
+      setTimeout(() => setShake(false), 500);
+    }
+  }
+
+  if (locked) {
+    return (
+      <>
+        <style>{`
+          @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700;800&display=swap');
+          * { box-sizing: border-box; margin: 0; padding: 0; }
+
+          .gate-lock-screen {
+            min-height: 100vh;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Grotesk', system-ui, sans-serif;
+            padding: 2rem;
+          }
+
+          .gate-lock-inner {
+            width: 100%;
+            max-width: 380px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+          }
+
+          .gate-lock-wordmark {
+            font-size: 0.7rem;
+            font-weight: 800;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: #3a3630;
+          }
+
+          .gate-lock-rule {
+            width: 1px;
+            height: 48px;
+            background: #1e1c19;
+          }
+
+          .gate-lock-title {
+            text-align: center;
+          }
+          .gate-lock-title h1 {
+            font-size: clamp(2rem, 8vw, 2.8rem);
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #f0ebe2;
+            line-height: 1;
+          }
+          .gate-lock-title p {
+            margin-top: 0.6rem;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: #3a3630;
+            text-transform: uppercase;
+          }
+
+          .gate-lock-form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+          }
+
+          .gate-lock-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #4a4540;
+          }
+
+          .gate-lock-input-wrap {
+            position: relative;
+          }
+
+          .gate-lock-input {
+            width: 100%;
+            background: #0f0e0c;
+            border: 1px solid #2a2825;
+            color: #e8e2d9;
+            padding: 0.9rem 1rem;
+            font-size: 0.9rem;
+            font-family: inherit;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            outline: none;
+            transition: border-color 0.2s;
+            -webkit-text-security: disc;
+            text-security: disc;
+          }
+          .gate-lock-input:focus {
+            border-color: #c8a96e;
+          }
+          .gate-lock-input.gate-lock-error {
+            border-color: #7a3535;
+          }
+
+          @keyframes gate-shake {
+            0%,100% { transform: translateX(0); }
+            20%      { transform: translateX(-6px); }
+            40%      { transform: translateX(6px); }
+            60%      { transform: translateX(-4px); }
+            80%      { transform: translateX(4px); }
+          }
+          .gate-lock-shake {
+            animation: gate-shake 0.45s cubic-bezier(0.36,0.07,0.19,0.97) both;
+          }
+
+          .gate-lock-btn {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #2a2825;
+            color: #e8e2d9;
+            padding: 0.9rem 1rem;
+            font-size: 0.72rem;
+            font-family: inherit;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+          }
+          .gate-lock-btn:hover {
+            border-color: #c8a96e;
+            color: #c8a96e;
+          }
+
+          .gate-lock-error-msg {
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #7a3535;
+            text-align: center;
+            min-height: 1em;
+          }
+
+          .gate-lock-footer {
+            font-size: 0.58rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #1e1c19;
+          }
+        `}</style>
+
+        <div className="gate-lock-screen">
+          <div className="gate-lock-inner">
+            <span className="gate-lock-wordmark">KREO Studio</span>
+            <div className="gate-lock-rule" />
+
+            <div className="gate-lock-title">
+              <h1>THE GATE</h1>
+              <p>Chelsea Square · SW3 · Private Preview</p>
+            </div>
+
+            <form className="gate-lock-form" onSubmit={handleUnlock}>
+              <label className="gate-lock-label" htmlFor="gate-pw">
+                Access Code
+              </label>
+              <div className={`gate-lock-input-wrap ${shake ? 'gate-lock-shake' : ''}`}>
+                <input
+                  id="gate-pw"
+                  type="password"
+                  className={`gate-lock-input ${error ? 'gate-lock-error' : ''}`}
+                  value={input}
+                  onChange={e => { setInput(e.target.value); setError(false); }}
+                  autoComplete="off"
+                  autoFocus
+                  placeholder="· · · · · · · ·"
+                />
+              </div>
+              <button type="submit" className="gate-lock-btn">
+                Enter
+              </button>
+              <p className="gate-lock-error-msg">
+                {error ? 'Incorrect access code — please try again' : ''}
+              </p>
+            </form>
+
+            <span className="gate-lock-footer">Confidential · Not for distribution</span>
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
