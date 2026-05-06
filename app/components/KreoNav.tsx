@@ -30,6 +30,9 @@ export default function KreoNav() {
 
   const isOnPortfolio = pathname === "/" || pathname === "";
 
+  // Hide the nav entirely on private preview pages
+  if (pathname.startsWith("/preview/")) return null;
+
   /* Close on ESC */
   useEffect(() => {
     if (!open) return;
