@@ -1,4 +1,4 @@
-import { client } from './sanity';
+import { client, hasSanityConfig } from './sanity';
 import imageUrlBuilder from '@sanity/image-url';
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -447,6 +447,8 @@ const BLOG_FIELDS = `
 `;
 
 export async function fetchAllPosts(): Promise<BlogPost[]> {
+  if (!hasSanityConfig) return getAllPosts();
+
   try {
     const docs = await client.fetch(
       `*[_type == "blogPost"] | order(publishedAt desc) { ${BLOG_FIELDS} }`,
@@ -461,6 +463,8 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
 }
 
 export async function fetchPost(slug: string): Promise<BlogPost | undefined> {
+  if (!hasSanityConfig) return getPost(slug);
+
   try {
     const doc = await client.fetch(
       `*[_type == "blogPost" && slug.current == $slug][0] { ${BLOG_FIELDS} }`,
@@ -475,6 +479,8 @@ export async function fetchPost(slug: string): Promise<BlogPost | undefined> {
 }
 
 export async function fetchAllSlugs(): Promise<string[]> {
+  if (!hasSanityConfig) return POSTS.map((p) => p.slug);
+
   try {
     const docs = await client.fetch(
       `*[_type == "blogPost"]{ "slug": slug.current }`,

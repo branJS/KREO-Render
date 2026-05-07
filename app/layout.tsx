@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { EditModeProvider } from "./providers";
 import { KreoTransitionProvider } from "./components/KreoTransition";
@@ -7,16 +6,6 @@ import KreoNav from "./components/KreoNav";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const SITE_URL = "https://kreostudio.co.uk";
 const SITE_NAME = "KREO";
@@ -208,7 +197,7 @@ export default function RootLayout({
         <meta name="geo.placename" content="Plymouth, Devon" />
         <meta name="ICBM" content="50.3755, -4.1427" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body>
         <EditModeProvider>
           <KreoTransitionProvider>
             {children}

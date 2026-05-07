@@ -3,8 +3,9 @@ import { createClient } from 'next-sanity';
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+export const hasSanityConfig = Boolean(projectId && dataset);
 
-if (!projectId || !dataset) {
+if (!hasSanityConfig && process.env.NODE_ENV !== 'production') {
   // @sanity/client 5+ throws on empty `projectId` at construction time, so we
   // can't pass empty strings. Fall back to placeholder values that pass
   // validation but won't resolve over the network — fetches return no

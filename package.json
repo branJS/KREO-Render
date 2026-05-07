@@ -4,17 +4,20 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build --webpack",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
+    "@mux/mux-video": "^0.27.0",
+    "@mux/playback-core": "^0.31.0",
     "@next/third-parties": "^14.2.35",
     "@portabletext/react": "^4.0.3",
     "@react-email/render": "^2.0.7",
     "@react-three/drei": "^10.7.6",
     "@react-three/fiber": "^9.3.0",
-    "@sanity/client": "^5.4.2",
+    "@reduxjs/toolkit": "^2.11.2",
+    "@sanity/client": "^7.8.2",
     "@sanity/image-url": "^1.0.3",
     "@sanity/vision": "^3.4.0",
     "@vercel/analytics": "^1.6.1",
@@ -25,7 +28,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "resend": "^6.1.2",
-    "sanity": "^3.5.0",
+    "sanity": "^4.14.2",
     "sanity-plugin-media": "^4.1.1",
     "styled-components": "^6.1.2",
     "three": "^0.180.0"

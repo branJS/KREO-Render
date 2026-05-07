@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+const path = require("path");
+
 /** @type {import('next').NextConfig} */
 const securityHeaders = [
   { key: "X-DNS-Prefetch-Control",   value: "on" },
@@ -24,8 +27,18 @@ const nextConfig = {
       },
     ],
   },
-  eslint:     { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
+  webpack(config) {
+    config.resolve.alias = {
+      ...(config.resolve.alias ?? {}),
+      "@mux/mux-video/base": path.resolve(__dirname, "node_modules/@mux/mux-video/dist/base.cjs.js"),
+      "@mux/mux-video$": path.resolve(__dirname, "node_modules/@mux/mux-video/dist/index.cjs.js"),
+      "@mux/mux-player$": path.resolve(__dirname, "node_modules/@mux/mux-player/dist/index.cjs.js"),
+      "@mux/playback-core": path.resolve(__dirname, "node_modules/@mux/playback-core/dist/index.cjs.js"),
+      "@reduxjs/toolkit": path.resolve(__dirname, "node_modules/@reduxjs/toolkit/dist/cjs/index.js"),
+    };
+    return config;
+  },
 
   async headers() {
     return [
@@ -37,4 +50,4 @@ const nextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
