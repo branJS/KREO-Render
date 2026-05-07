@@ -1,11 +1,14 @@
 import Link from "next/link";
 import type React from "react";
+import type { Metadata } from "next";
 import { getProject, urlFor } from "@/lib/sanity.server";
 import { isUniversityDesignPortfolio } from "@/lib/projectLock";
 import { notFound } from "next/navigation";
 import GalleryLightbox from "@/app/components/GalleryLightbox";
 
 export const revalidate = 60;
+
+const SITE_URL = "https://www.kreostudio.co.uk";
 
 const CAT_COLOR: Record<string, string> = {
   branding: "#F5C100",
@@ -18,6 +21,44 @@ const CAT_COLOR: Record<string, string> = {
 
 function formatCategory(category?: string) {
   return category?.replace(/-/g, " ").replace("3d", "3D") || "Project";
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function generateMetadata({ params }: { params: any }): Promise<Metadata> {
+  const { slug } = await params;
+  const project = await getProject(slug);
+
+  if (!project) {
+    return {
+      title: "Project Not Found",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const description =
+    project.description ||
+    "A KREO Studio case study covering visual strategy, deliverables, launch assets and intended impact.";
+  const coverUrl = project.coverImage ? urlFor(project.coverImage).width(1200).height(630).url() : undefined;
+  const url = `${SITE_URL}/projects/${project.slug}`;
+
+  return {
+    title: `${project.title} Case Study`,
+    description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${project.title} Case Study | KREO`,
+      description,
+      url,
+      type: "article",
+      ...(coverUrl ? { images: [{ url: coverUrl, width: 1200, height: 630, alt: project.title }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${project.title} Case Study | KREO`,
+      description,
+      ...(coverUrl ? { images: [coverUrl] } : {}),
+    },
+  };
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

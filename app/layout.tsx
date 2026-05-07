@@ -7,7 +7,7 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
-const SITE_URL = "https://kreostudio.co.uk";
+const SITE_URL = "https://www.kreostudio.co.uk";
 const SITE_NAME = "KREO";
 
 export const metadata: Metadata = {
@@ -90,7 +90,7 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD structured data for local business SEO + FAQ rich results
+// JSON-LD structured data for local business SEO
 const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
@@ -140,43 +140,6 @@ const jsonLd = {
       url: SITE_URL,
       name: "KREO Studio — Plymouth Graphic Design",
       publisher: { "@id": `${SITE_URL}/#business` },
-    },
-    {
-      "@type": "FAQPage",
-      mainEntity: [
-        {
-          "@type": "Question",
-          name: "How much does graphic design cost in Plymouth?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Graphic design in Plymouth ranges from £90 for business cards or flyers, £250 for logo design, £700 for a full brand identity, and £900 for website design. KREO Studio provides competitive, transparent pricing for Plymouth and Devon businesses.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "Where is KREO Studio based?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "KREO Studio is based in Plymouth, Devon, and works with clients across Cornwall, the South West, Manchester, London and throughout the UK. All projects can be managed remotely.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "What graphic design services does KREO offer?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "KREO Studio offers logo design, brand identity, website design, motion graphics, 3D renders, label and packaging, social media design, and print design — all from Plymouth.",
-          },
-        },
-        {
-          "@type": "Question",
-          name: "How do I get a quote for graphic design in Plymouth?",
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: "Use the contact form on the KREO Studio website at kreostudio.co.uk — describe your project and we'll respond within 24 hours with a free, no-obligation quote.",
-          },
-        },
-      ],
     },
   ],
 };

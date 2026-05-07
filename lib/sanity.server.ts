@@ -28,7 +28,9 @@ export async function getProjects() {
     category,
     description,
     coverImage,
-    featured
+    featured,
+    publishedAt,
+    _updatedAt
   }`;
   try {
     return await client.fetch(query);

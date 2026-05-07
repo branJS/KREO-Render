@@ -3,7 +3,7 @@ import { fetchPost, fetchAllPosts, fetchAllSlugs } from "../../../lib/blog";
 import { notFound } from "next/navigation";
 import ArticleView from "../components/ArticleView";
 
-const SITE_URL = "https://kreostudio.co.uk";
+const SITE_URL = "https://www.kreostudio.co.uk";
 
 export async function generateStaticParams() {
   const slugs = await fetchAllSlugs();

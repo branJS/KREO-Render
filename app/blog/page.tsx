@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { fetchAllPosts } from "../../lib/blog";
 import BlogIndex from "./components/BlogIndex";
 
-const SITE_URL = "https://kreostudio.co.uk";
+const SITE_URL = "https://www.kreostudio.co.uk";
 
 export const metadata: Metadata = {
   title: "Journal — Design Thinking & Brand Strategy | KREO Studio Plymouth",

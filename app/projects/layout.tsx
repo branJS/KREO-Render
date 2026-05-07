@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Projects — Branding, Motion & 3D Design",
+  title: "Projects - Property Marketing, Branding & 3D Design",
   description:
-    "Explore KREO's portfolio of graphic design work — brand identities, motion graphics, 3D renders and digital projects for clients in Plymouth, Manchester and across the UK.",
+    "Explore KREO's portfolio of cinematic property marketing, brand identity, CGI visuals, 3D renders and digital design work for clients in Plymouth and across the UK.",
+  alternates: { canonical: "https://www.kreostudio.co.uk/projects" },
   openGraph: {
-    title: "Projects | KREO — Freelance Graphic Design",
+    title: "Projects | KREO - Property Marketing & Design",
     description:
-      "Brand identities, motion graphics and 3D renders from KREO's client portfolio — Plymouth & Manchester based creative studio.",
+      "Cinematic property marketing, brand identities and 3D visuals from KREO's client portfolio.",
+    url: "https://www.kreostudio.co.uk/projects",
   },
 };
 

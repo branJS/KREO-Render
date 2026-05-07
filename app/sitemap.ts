@@ -1,64 +1,64 @@
 import { MetadataRoute } from "next";
+import { fetchAllPosts } from "@/lib/blog";
+import { getProjects } from "@/lib/sanity.server";
 
-const SITE_URL = "https://kreostudio.co.uk";
+const SITE_URL = "https://www.kreostudio.co.uk";
+const STATIC_LAST_MODIFIED = "2026-05-07T00:00:00.000Z";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date().toISOString();
+type ProjectSitemapEntry = {
+  slug?: string | null;
+  publishedAt?: string | null;
+  _updatedAt?: string | null;
+};
 
-  return [
-    {
-      url: SITE_URL,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 1.0,
-    },
-    {
-      url: `${SITE_URL}/graphic-design-plymouth`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/web-design-plymouth`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/logo-design-plymouth`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${SITE_URL}/blog`,
-      lastModified: now,
-      changeFrequency: "weekly",
-      priority: 0.8,
-    },
-    {
-      url: `${SITE_URL}/blog/logo-design-cost-plymouth`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.75,
-    },
-    {
-      url: `${SITE_URL}/blog/graphic-design-plymouth-guide`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.75,
-    },
-    {
-      url: `${SITE_URL}/blog/web-design-plymouth-local`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.75,
-    },
-    {
-      url: `${SITE_URL}/blog/brand-identity-plymouth-business`,
-      lastModified: now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
+function page(
+  path = "",
+  options: {
+    lastModified?: string;
+    changeFrequency?: MetadataRoute.Sitemap[number]["changeFrequency"];
+    priority?: number;
+  } = {}
+): MetadataRoute.Sitemap[number] {
+  return {
+    url: `${SITE_URL}${path}`,
+    lastModified: options.lastModified ?? STATIC_LAST_MODIFIED,
+    changeFrequency: options.changeFrequency ?? "monthly",
+    priority: options.priority ?? 0.7,
+  };
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [posts, projects] = await Promise.all([
+    fetchAllPosts(),
+    getProjects() as Promise<ProjectSitemapEntry[]>,
+  ]);
+
+  const staticPages: MetadataRoute.Sitemap = [
+    page("", { changeFrequency: "weekly", priority: 1.0 }),
+    page("/graphic-design-plymouth", { priority: 0.9 }),
+    page("/web-design-plymouth", { priority: 0.9 }),
+    page("/logo-design-plymouth", { priority: 0.9 }),
+    page("/projects", { changeFrequency: "weekly", priority: 0.85 }),
+    page("/blog", { changeFrequency: "weekly", priority: 0.8 }),
   ];
+
+  const blogPages = posts.map((post) =>
+    page(`/blog/${post.slug}`, {
+      lastModified: post.date,
+      changeFrequency: "monthly",
+      priority: 0.75,
+    })
+  );
+
+  const projectPages = projects
+    .filter((project) => project.slug)
+    .map((project) =>
+      page(`/projects/${project.slug}`, {
+        lastModified: project._updatedAt ?? project.publishedAt ?? STATIC_LAST_MODIFIED,
+        changeFrequency: "monthly",
+        priority: 0.72,
+      })
+    );
+
+  return [...staticPages, ...projectPages, ...blogPages];
 }

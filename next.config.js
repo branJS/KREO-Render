@@ -40,6 +40,17 @@ const nextConfig = {
     return config;
   },
 
+  async redirects() {
+    return [
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "kreostudio.co.uk" }],
+        destination: "https://www.kreostudio.co.uk/:path*",
+        permanent: true,
+      },
+    ];
+  },
+
   async headers() {
     return [
       {
