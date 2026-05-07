@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getProject, urlFor } from "@/lib/sanity.server";
+import { isUniversityDesignPortfolio } from "@/lib/projectLock";
 import { notFound } from "next/navigation";
 import GalleryLightbox from "@/app/components/GalleryLightbox";
 
@@ -26,6 +27,75 @@ export default async function ProjectPage({ params }: { params: any }) {
     : null;
 
   const catColor = CAT_COLOR[project.category?.toLowerCase()] ?? "#0D0D0D";
+  const isLocked = isUniversityDesignPortfolio(project);
+
+  if (isLocked) {
+    return (
+      <main style={{ paddingTop: "5rem", minHeight: "100vh" }}>
+        <div className="section">
+          <div className="panel" style={{
+            maxWidth: 980,
+            overflow: "hidden",
+            background: "linear-gradient(135deg, var(--yellow) 0%, var(--cream) 42%, var(--teal) 100%)",
+          }}>
+            <Link href="/projects" className="btn b-yellow tiny">← All Projects</Link>
+            <div style={{
+              marginTop: "1.5rem",
+              border: "3px solid var(--ink)",
+              boxShadow: "10px 10px 0 var(--ink)",
+              background: "rgba(242,236,227,0.88)",
+              padding: "clamp(1.4rem, 4vw, 3rem)",
+              position: "relative",
+            }}>
+              <div style={{
+                position: "absolute", inset: 0,
+                backgroundImage: "repeating-linear-gradient(-45deg, rgba(13,13,13,0.08) 0 2px, transparent 2px 12px)",
+                pointerEvents: "none",
+              }} />
+              <div style={{ position: "relative", zIndex: 1 }}>
+                <span style={{
+                  display: "inline-block",
+                  background: "var(--ink)", color: "#fff",
+                  border: "2px solid var(--ink)", boxShadow: "4px 4px 0 var(--yellow)",
+                  fontWeight: 900, fontSize: "0.72rem",
+                  padding: "0.4rem 0.7rem",
+                  letterSpacing: "0.16em", textTransform: "uppercase",
+                  marginBottom: "1rem",
+                }}>
+                  Locked / Work in progress
+                </span>
+                <h1 style={{
+                  margin: 0,
+                  fontSize: "clamp(2.4rem, 8vw, 6.2rem)",
+                  lineHeight: 0.9,
+                  fontWeight: 900,
+                  letterSpacing: "0.04em",
+                }}>
+                  Portfolio<br />Under Wraps
+                </h1>
+                <p style={{
+                  margin: "1.2rem 0 0",
+                  maxWidth: 620,
+                  color: "var(--muted)",
+                  fontWeight: 700,
+                  lineHeight: 1.7,
+                  fontSize: "1rem",
+                }}>
+                  The university design portfolio is currently being refined, edited, and made properly presentable.
+                  It will return once the work is ready to be seen at full strength.
+                </p>
+                <div style={{ display: "flex", gap: "0.7rem", flexWrap: "wrap", marginTop: "1.5rem" }}>
+                  <span className="btn b-black tiny">Access paused</span>
+                  <span className="btn b-teal tiny">Coming soon</span>
+                  <span className="btn outline tiny">KREO WIP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   // Build gallery image list
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

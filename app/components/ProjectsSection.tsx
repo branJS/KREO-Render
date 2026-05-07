@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { client } from "@/lib/sanity";
+import { isUniversityDesignPortfolio } from "@/lib/projectLock";
 import { groq } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 
@@ -47,9 +48,17 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
   const catColor = CAT_COLOR[project.category?.toLowerCase()] ?? "#0D0D0D";
   const height = isHero ? "440px" : isWide ? "300px" : "240px";
   const href = project.slug === "#" ? "#" : `/projects/${project.slug}`;
+  const isLocked = isUniversityDesignPortfolio(project);
 
   return (
-    <Link href={href} style={{ textDecoration: "none", color: "inherit", display: "block", height }}>
+    <Link
+      href={href}
+      aria-disabled={isLocked}
+      onClick={(e) => {
+        if (isLocked) e.preventDefault();
+      }}
+      style={{ textDecoration: "none", color: "inherit", display: "block", height }}
+    >
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -61,7 +70,7 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
           boxShadow: hovered ? "12px 12px 0 var(--ink)" : "6px 6px 0 var(--ink)",
           transform: hovered ? "translate(-3px,-3px)" : "translate(0,0)",
           transition: "transform 0.22s ease, box-shadow 0.22s ease",
-          cursor: "none",
+          cursor: isLocked ? "not-allowed" : "none",
           background: "#fff",
         }}
       >
@@ -94,11 +103,50 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
         {/* Scrim — always present, intensifies on hover */}
         <div style={{
           position: "absolute", inset: 0,
-          background: hovered
+          background: isLocked
+            ? "linear-gradient(135deg, rgba(245,193,0,0.92) 0%, rgba(13,13,13,0.92) 46%, rgba(0,182,163,0.78) 100%)"
+            : hovered
             ? "linear-gradient(to top, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.45) 60%, transparent 100%)"
             : "linear-gradient(to top, rgba(13,13,13,0.55) 0%, transparent 60%)",
           transition: "background 0.3s ease",
         }} />
+
+        {isLocked && (
+          <>
+            <div style={{
+              position: "absolute", inset: 0,
+              backgroundImage: "repeating-linear-gradient(-45deg, rgba(255,255,255,0.18) 0 2px, transparent 2px 10px)",
+              mixBlendMode: "screen",
+              opacity: 0.45,
+            }} />
+            <div style={{
+              position: "absolute", top: "0.8rem", left: "0.8rem",
+              background: "var(--ink)", color: "#fff",
+              border: "2px solid #fff", boxShadow: "4px 4px 0 rgba(255,255,255,0.35)",
+              fontSize: "0.65rem", fontWeight: 900, padding: "0.35rem 0.65rem",
+              letterSpacing: "0.14em", textTransform: "uppercase",
+            }}>
+              Locked / WIP
+            </div>
+            <div style={{
+              position: "absolute", top: "50%", left: "50%",
+              transform: "translate(-50%,-50%) rotate(-2deg)",
+              display: "grid", placeItems: "center", gap: "0.45rem",
+              width: "min(84%, 360px)", textAlign: "center",
+              background: "rgba(242,236,227,0.92)",
+              border: "3px solid var(--ink)", boxShadow: "8px 8px 0 var(--ink)",
+              padding: "1rem",
+            }}>
+              <div style={{ fontSize: isHero ? "2.3rem" : "1.8rem", lineHeight: 1 }}>LOCKED</div>
+              <div style={{ fontSize: "0.76rem", fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+                Work in progress
+              </div>
+              <p style={{ margin: 0, fontSize: "0.78rem", fontWeight: 700, color: "var(--muted)", lineHeight: 1.45 }}>
+                University design portfolio is being sharpened behind the scenes.
+              </p>
+            </div>
+          </>
+        )}
 
         {/* Bottom content — always visible */}
         <div style={{
@@ -148,7 +196,7 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
               fontSize: "0.78rem", padding: "0.35rem 0.8rem",
               border: "2px solid #fff", letterSpacing: "0.08em",
             }}>
-              VIEW PROJECT →
+              {isLocked ? "COMING SOON" : "VIEW PROJECT →"}
             </span>
           </div>
         </div>

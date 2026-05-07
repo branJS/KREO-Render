@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { client } from "@/lib/sanity";
+import { isUniversityDesignPortfolio } from "@/lib/projectLock";
 import { groq } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
 
@@ -33,6 +34,7 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
   const [hovered, setHovered] = useState(false);
   const isFeatured = project.featured;
   const catColor = CAT_COLORS[project.category?.toLowerCase()] ?? "#0D0D0D";
+  const isLocked = isUniversityDesignPortfolio(project);
 
   const coverUrl = project.coverImage
     ? urlFor(project.coverImage).width(isFeatured ? 1200 : 700).height(isFeatured ? 700 : 500).url()
@@ -41,6 +43,10 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
   return (
     <Link
       href={`/projects/${project.slug}`}
+      aria-disabled={isLocked}
+      onClick={(e) => {
+        if (isLocked) e.preventDefault();
+      }}
       style={{ textDecoration: "none", color: "inherit", display: "block" }}
     >
       <div
@@ -53,7 +59,7 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
           boxShadow: hovered ? "14px 14px 0 var(--ink)" : "6px 6px 0 var(--ink)",
           transform: hovered ? "translate(-4px,-4px)" : "translate(0,0)",
           transition: "transform 0.22s ease, box-shadow 0.22s ease",
-          cursor: "none",
+          cursor: isLocked ? "not-allowed" : "none",
           height: isFeatured ? "480px" : "300px",
           background: "#fff",
           animation: `fadeSlideUp 0.5s ease both`,
@@ -86,11 +92,50 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
         {/* Scrim */}
         <div style={{
           position: "absolute", inset: 0,
-          background: hovered
+          background: isLocked
+            ? "linear-gradient(135deg, rgba(245,193,0,0.9) 0%, rgba(13,13,13,0.94) 48%, rgba(0,182,163,0.76) 100%)"
+            : hovered
             ? "linear-gradient(to top, rgba(13,13,13,0.95) 0%, rgba(13,13,13,0.5) 55%, transparent 100%)"
             : "linear-gradient(to top, rgba(13,13,13,0.6) 0%, transparent 55%)",
           transition: "background 0.3s ease",
         }} />
+
+        {isLocked && (
+          <>
+            <div style={{
+              position: "absolute", inset: 0,
+              backgroundImage: "repeating-linear-gradient(-45deg, rgba(255,255,255,0.18) 0 2px, transparent 2px 10px)",
+              mixBlendMode: "screen",
+              opacity: 0.45,
+            }} />
+            <div style={{
+              position: "absolute", top: "1rem", right: "1rem",
+              background: "var(--ink)", color: "#fff",
+              border: "2px solid #fff", boxShadow: "4px 4px 0 rgba(255,255,255,0.35)",
+              fontSize: "0.65rem", fontWeight: 900, padding: "0.35rem 0.65rem",
+              letterSpacing: "0.14em", textTransform: "uppercase",
+            }}>
+              Locked / WIP
+            </div>
+            <div style={{
+              position: "absolute", top: "50%", left: "50%",
+              transform: "translate(-50%,-50%) rotate(-2deg)",
+              display: "grid", placeItems: "center", gap: "0.45rem",
+              width: "min(84%, 360px)", textAlign: "center",
+              background: "rgba(242,236,227,0.92)",
+              border: "3px solid var(--ink)", boxShadow: "8px 8px 0 var(--ink)",
+              padding: "1rem",
+            }}>
+              <div style={{ fontSize: isFeatured ? "2.4rem" : "1.8rem", lineHeight: 1 }}>LOCKED</div>
+              <div style={{ fontSize: "0.76rem", fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase" }}>
+                Work in progress
+              </div>
+              <p style={{ margin: 0, fontSize: "0.78rem", fontWeight: 700, color: "var(--muted)", lineHeight: 1.45 }}>
+                University design portfolio is being sharpened behind the scenes.
+              </p>
+            </div>
+          </>
+        )}
 
         {/* Category badge (top left) */}
         <div style={{
@@ -170,7 +215,7 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
               fontSize: "0.8rem", padding: "0.4rem 1rem",
               border: "2px solid #fff", letterSpacing: "0.08em",
             }}>
-              OPEN PROJECT →
+              {isLocked ? "COMING SOON" : "OPEN PROJECT →"}
             </span>
           </div>
         </div>
