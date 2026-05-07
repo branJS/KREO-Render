@@ -769,8 +769,15 @@ export default function Page() {
                 }}
               />
             </h1>
-            <p className="subtitle" style={{ marginTop: "0.6rem", marginBottom: "0.3rem" }}>
-              Freelance graphic design studio
+            <p className="subtitle" style={{
+              margin: "0.7rem auto 0.45rem",
+              maxWidth: 760,
+              fontSize: "clamp(1.05rem, 2.7vw, 1.65rem)",
+              lineHeight: 1.25,
+              fontWeight: 800,
+              letterSpacing: "0.01em",
+            }}>
+              Cinematic property marketing that turns spaces into stories investors, buyers, and tenants remember.
             </p>
             <p style={{
               margin: "0 0 1rem",
@@ -781,11 +788,11 @@ export default function Page() {
               color: "var(--muted)",
               opacity: 0.7,
             }}>
-              Brandon Allen — Creative Director, KREO Studio · Plymouth, UK
+              Launch films · CGI visuals · pitch decks · brand systems — Plymouth, UK
             </p>
             <div className="cta-row">
-              <a href="#projects" className="btn b-yellow" data-magnetic>Explore Projects</a>
-              <a href="#contact"  className="btn b-blue outline" data-magnetic>Get in Touch</a>
+              <a href="#projects" className="btn b-yellow" data-magnetic>View Property Work</a>
+              <a href="#contact"  className="btn b-blue outline" data-magnetic>Plan a Launch</a>
             </div>
           </div>
         </div>
