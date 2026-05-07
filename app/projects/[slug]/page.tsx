@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type React from "react";
 import { getProject, urlFor } from "@/lib/sanity.server";
 import { isUniversityDesignPortfolio } from "@/lib/projectLock";
 import { notFound } from "next/navigation";
@@ -14,6 +15,71 @@ const CAT_COLOR: Record<string, string> = {
   uiux: "#E56BE3",
   other: "#E24C3A",
 };
+
+function formatCategory(category?: string) {
+  return category?.replace(/-/g, " ").replace("3d", "3D") || "Project";
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function buildDeliverables(project: any, galleryCount: number) {
+  const items = new Set<string>();
+  const category = project.category?.toLowerCase() ?? "";
+
+  if (category.includes("3d") || category.includes("render")) items.add("CGI stills");
+  if (category.includes("motion")) items.add("Launch film");
+  if (category.includes("branding")) items.add("Visual identity system");
+  if (category.includes("print")) items.add("Investor print assets");
+  if (project.videoUrl) items.add("Cinematic video asset");
+  if (galleryCount > 0) items.add("Hero stills and image set");
+  if (project.url) items.add("Digital launch destination");
+  project.tags?.slice(0, 3).forEach((tag: string) => items.add(tag));
+
+  return Array.from(items).slice(0, 6);
+}
+
+function DeckCard({
+  num,
+  title,
+  children,
+  accent,
+}: {
+  num: string;
+  title: string;
+  children: React.ReactNode;
+  accent: string;
+}) {
+  return (
+    <div style={{
+      border: "3px solid var(--ink)",
+      boxShadow: "6px 6px 0 var(--ink)",
+      padding: "1.25rem",
+      background: "var(--cream)",
+      minHeight: "100%",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "0.55rem", marginBottom: "0.75rem" }}>
+        <span style={{ display: "inline-block", width: 10, height: 10, background: accent, border: "2px solid var(--ink)" }} />
+        <span style={{
+          fontFamily: "monospace",
+          fontSize: "0.62rem",
+          fontWeight: 900,
+          letterSpacing: "0.16em",
+          textTransform: "uppercase",
+          opacity: 0.45,
+        }}>{num}</span>
+      </div>
+      <h3 style={{
+        margin: "0 0 0.75rem",
+        fontSize: "clamp(1rem, 2vw, 1.25rem)",
+        lineHeight: 1.15,
+        fontWeight: 900,
+        letterSpacing: "0.02em",
+      }}>
+        {title}
+      </h3>
+      {children}
+    </div>
+  );
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function ProjectPage({ params }: { params: any }) {
@@ -105,6 +171,16 @@ export default async function ProjectPage({ params }: { params: any }) {
     caption: item.caption ?? null,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   })).filter((img: any) => img.url);
+  const deliverables = buildDeliverables(project, galleryImages.length);
+  const launchAssets = [
+    coverUrl ? "Hero still" : null,
+    project.videoUrl ? "Cinematic film embed" : null,
+    galleryImages.length ? `${galleryImages.length} gallery assets` : null,
+    project.url ? "Live launch link" : null,
+  ].filter(Boolean);
+  const challengeText = project.brief || project.description || "Create a visual story that makes the property feel credible, desirable, and ready for a commercial audience.";
+  const strategyText = project.process || "Build the property around atmosphere, clarity, and sequence: hero imagery first, then supporting visuals that help buyers, tenants, or investors understand the opportunity quickly.";
+  const outcomeText = project.outcome || "Designed to increase confidence before the viewing, pitch, or launch moment by giving the property a sharper first impression.";
 
   return (
     <main style={{ paddingTop: "5rem", minHeight: "100vh" }}>
@@ -132,14 +208,40 @@ export default async function ProjectPage({ params }: { params: any }) {
             position: "absolute", bottom: "2.5rem", left: "2rem", right: "2rem",
           }}>
             <div style={{
-              display: "inline-block",
-              background: catColor, color: "#0D0D0D",
-              border: "2px solid #fff", fontWeight: 800,
-              fontSize: "0.7rem", padding: "3px 10px",
-              letterSpacing: "0.12em", textTransform: "uppercase",
-              marginBottom: "0.6rem",
+              display: "flex",
+              gap: "0.55rem",
+              flexWrap: "wrap",
+              alignItems: "center",
+              marginBottom: "0.7rem",
             }}>
-              {project.category?.replace(/-/g, " ").replace("3d", "3D") || "Project"}
+              <span style={{
+                display: "inline-block",
+                background: "var(--ink)", color: "#fff",
+                border: "2px solid #fff", fontWeight: 900,
+                fontSize: "0.68rem", padding: "4px 10px",
+                letterSpacing: "0.14em", textTransform: "uppercase",
+              }}>
+                Private deck
+              </span>
+              <span style={{
+                display: "inline-block",
+                background: catColor, color: "#0D0D0D",
+                border: "2px solid #fff", fontWeight: 900,
+                fontSize: "0.68rem", padding: "4px 10px",
+                letterSpacing: "0.14em", textTransform: "uppercase",
+              }}>
+                {formatCategory(project.category)}
+              </span>
+            </div>
+            <div style={{
+              color: "rgba(255,255,255,0.78)",
+              fontWeight: 800,
+              fontSize: "0.78rem",
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
+              marginBottom: "0.45rem",
+            }}>
+              Built for investor, buyer, or tenant attention
             </div>
             <h1 style={{
               color: "#fff", margin: 0,
@@ -180,7 +282,7 @@ export default async function ProjectPage({ params }: { params: any }) {
                 fontWeight: 800, fontSize: "0.72rem", padding: "3px 10px",
                 letterSpacing: "0.1em", textTransform: "uppercase",
               }}>
-                {project.category.replace(/-/g, " ").replace("3d", "3D")}
+                {formatCategory(project.category)}
               </span>
             )}
             {project.tags?.map((tag: string) => (
@@ -192,57 +294,99 @@ export default async function ProjectPage({ params }: { params: any }) {
             ))}
           </div>
 
-          {/* Project Story: Brief / Process / Outcome */}
-          {(project.brief || project.process || project.outcome) && (
-            <div style={{ marginBottom: "2.5rem" }}>
-              <h2 style={{
-                fontSize: "0.8rem", fontWeight: 800, letterSpacing: "0.15em",
-                textTransform: "uppercase", marginBottom: "1rem",
-                display: "flex", alignItems: "center", gap: "0.5rem",
-              }}>
-                <span style={{ display: "inline-block", width: 10, height: 10, background: catColor, border: "2px solid var(--ink)" }} />
-                Project Story
-              </h2>
-              <div style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-                gap: "1rem",
-              }}>
-                {[
-                  { num: "01", label: "The Brief",   text: project.brief,   color: "var(--yellow)" },
-                  { num: "02", label: "The Process",  text: project.process, color: "var(--teal)" },
-                  { num: "03", label: "The Outcome",  text: project.outcome, color: "var(--green)" },
-                ].map(({ num, label, text, color }) => text ? (
-                  <div key={num} style={{
-                    border: "3px solid var(--ink)",
-                    boxShadow: "5px 5px 0 var(--ink)",
-                    padding: "1.2rem",
-                    background: "var(--cream)",
-                  }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.6rem" }}>
-                      <span style={{
-                        display: "inline-block", width: 8, height: 8,
-                        background: color, border: "2px solid var(--ink)",
-                        flexShrink: 0,
-                      }} />
-                      <span style={{
-                        fontFamily: "monospace", fontSize: "0.6rem",
-                        fontWeight: 800, letterSpacing: "0.14em",
-                        textTransform: "uppercase", opacity: 0.45,
-                      }}>{num}</span>
-                      <span style={{
-                        fontSize: "0.78rem", fontWeight: 800,
-                        letterSpacing: "0.06em", textTransform: "uppercase",
-                      }}>{label}</span>
-                    </div>
-                    <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: "var(--muted)" }}>
-                      {text}
-                    </p>
-                  </div>
-                ) : null)}
+          {/* Investor deck structure */}
+          <div style={{ marginBottom: "2.5rem" }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "flex-end",
+              gap: "1rem",
+              flexWrap: "wrap",
+              borderBottom: "3px solid var(--ink)",
+              paddingBottom: "0.9rem",
+              marginBottom: "1rem",
+            }}>
+              <div>
+                <span style={{
+                  display: "block",
+                  fontFamily: "monospace",
+                  fontSize: "0.66rem",
+                  fontWeight: 900,
+                  letterSpacing: "0.18em",
+                  textTransform: "uppercase",
+                  opacity: 0.45,
+                  marginBottom: "0.3rem",
+                }}>
+                  Case study deck
+                </span>
+                <h2 className="section-title" style={{ margin: 0 }}>
+                  Property Launch Narrative
+                </h2>
               </div>
+              <span className="btn b-black tiny" style={{ fontSize: "0.72rem" }}>
+                Built for attention
+              </span>
             </div>
-          )}
+
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(245px, 1fr))",
+              gap: "1rem",
+            }}>
+              <DeckCard num="01" title="Hero Still" accent={catColor}>
+                <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: "var(--muted)", fontWeight: 650 }}>
+                  The lead image sets the commercial first impression: atmosphere, credibility, and a clear sense of place before the viewer reads a word.
+                </p>
+              </DeckCard>
+
+              <DeckCard num="02" title="Challenge" accent="var(--yellow)">
+                <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: "var(--muted)", fontWeight: 650 }}>
+                  {challengeText}
+                </p>
+              </DeckCard>
+
+              <DeckCard num="03" title="Visual Strategy" accent="var(--teal)">
+                <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: "var(--muted)", fontWeight: 650 }}>
+                  {strategyText}
+                </p>
+              </DeckCard>
+
+              <DeckCard num="04" title="Deliverables" accent="var(--green)">
+                <div style={{ display: "flex", gap: "0.45rem", flexWrap: "wrap" }}>
+                  {(deliverables.length ? deliverables : ["Hero stills", "Visual direction", "Launch-ready story"]).map((item) => (
+                    <span key={item} className="btn tiny outline" style={{
+                      fontSize: "0.7rem",
+                      padding: "0.28rem 0.55rem",
+                      boxShadow: "3px 3px 0 var(--ink)",
+                    }}>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </DeckCard>
+
+              <DeckCard num="05" title="Launch Assets" accent="var(--blue)">
+                <ul style={{
+                  margin: 0,
+                  paddingLeft: "1.05rem",
+                  color: "var(--muted)",
+                  fontSize: "0.9rem",
+                  lineHeight: 1.8,
+                  fontWeight: 650,
+                }}>
+                  {(launchAssets.length ? launchAssets : ["Investor-facing case study", "Marketing-ready project story", "Contact pathway for launch enquiries"]).map((asset) => (
+                    <li key={String(asset)}>{asset}</li>
+                  ))}
+                </ul>
+              </DeckCard>
+
+              <DeckCard num="06" title="Outcome / Intended Impact" accent="var(--pink)">
+                <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: "var(--muted)", fontWeight: 650 }}>
+                  {outcomeText}
+                </p>
+              </DeckCard>
+            </div>
+          </div>
 
           {/* Description + CTA row */}
           <div style={{
@@ -271,6 +415,43 @@ export default async function ProjectPage({ params }: { params: any }) {
                 View Live ↗
               </a>
             )}
+          </div>
+
+          <div style={{
+            marginBottom: "2rem",
+            background: "var(--ink)",
+            color: "#fff",
+            border: "3px solid var(--ink)",
+            boxShadow: "8px 8px 0 var(--yellow)",
+            padding: "1.1rem 1.25rem",
+            display: "flex",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            gap: "1rem",
+            alignItems: "center",
+          }}>
+            <p style={{
+              margin: 0,
+              fontSize: "clamp(1rem, 2.4vw, 1.35rem)",
+              lineHeight: 1.35,
+              fontWeight: 900,
+            }}>
+              Built for investor, buyer, or tenant attention.
+            </p>
+            <span style={{
+              background: "var(--yellow)",
+              color: "var(--ink)",
+              border: "2px solid #fff",
+              boxShadow: "4px 4px 0 rgba(255,255,255,0.25)",
+              fontSize: "0.7rem",
+              fontWeight: 900,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+              padding: "0.45rem 0.65rem",
+              whiteSpace: "nowrap",
+            }}>
+              KREO property deck
+            </span>
           </div>
 
           {/* Video embed */}
