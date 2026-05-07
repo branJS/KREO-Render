@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { client } from "@/lib/sanity";
+import { isMotionProject, REAL_ESTATE_AGENCY_PROJECT } from "@/lib/projectDisplay";
 import { isUniversityDesignPortfolio } from "@/lib/projectLock";
 import { groq } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
@@ -18,7 +19,7 @@ const QUERY = groq`*[_type == "project" && !(_id in path("drafts.**"))] | order(
 
 const CAT_COLOR: Record<string, string> = {
   branding: "#F5C100",
-  motion: "#00B6A3",
+  property: "#F5C100",
   "3d": "#1E6FE0",
   print: "#2DBA72",
   uiux: "#E56BE3",
@@ -27,7 +28,6 @@ const CAT_COLOR: Record<string, string> = {
 
 const PLACEHOLDERS = [
   { _id: "ph0", title: "Brand Identity", slug: "#", category: "branding", description: "Add real projects via Studio → Projects", coverImage: null, featured: true },
-  { _id: "ph1", title: "Motion Reel", slug: "#", category: "motion", description: "Showcase your motion work here.", coverImage: null, featured: false },
   { _id: "ph2", title: "3D Render", slug: "#", category: "3d", description: "Your 3D portfolio pieces.", coverImage: null, featured: false },
   { _id: "ph3", title: "Print Design", slug: "#", category: "print", description: "Print and editorial work.", coverImage: null, featured: false },
 ];
@@ -49,13 +49,15 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
   const height = isHero ? "440px" : isWide ? "300px" : "240px";
   const href = project.slug === "#" ? "#" : `/projects/${project.slug}`;
   const isLocked = isUniversityDesignPortfolio(project);
+  const isRequestOnly = project._id === REAL_ESTATE_AGENCY_PROJECT._id;
+  const isUnavailable = isLocked || isRequestOnly;
 
   return (
     <Link
       href={href}
-      aria-disabled={isLocked}
+      aria-disabled={isUnavailable}
       onClick={(e) => {
-        if (isLocked) e.preventDefault();
+        if (isUnavailable) e.preventDefault();
       }}
       style={{ textDecoration: "none", color: "inherit", display: "block", height }}
     >
@@ -70,7 +72,7 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
           boxShadow: hovered ? "12px 12px 0 var(--ink)" : "6px 6px 0 var(--ink)",
           transform: hovered ? "translate(-3px,-3px)" : "translate(0,0)",
           transition: "transform 0.22s ease, box-shadow 0.22s ease",
-          cursor: isLocked ? "not-allowed" : "none",
+          cursor: isUnavailable ? "not-allowed" : "none",
           background: "#fff",
         }}
       >
@@ -88,12 +90,14 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
         ) : (
           <div style={{
             width: "100%", height: "100%",
-            background: `linear-gradient(135deg, ${catColor}22 0%, ${catColor}55 100%)`,
+            background: isRequestOnly
+              ? "linear-gradient(135deg, #050505 0%, #17120A 44%, #0A3937 100%)"
+              : `linear-gradient(135deg, ${catColor}22 0%, ${catColor}55 100%)`,
             display: "flex", alignItems: "center", justifyContent: "center",
           }}>
             <span style={{
               fontSize: isHero ? "5rem" : "3rem", fontWeight: 800,
-              color: catColor, opacity: 0.4, letterSpacing: "0.05em",
+              color: isRequestOnly ? "#F2ECE3" : catColor, opacity: isRequestOnly ? 0.22 : 0.4, letterSpacing: "0.05em",
             }}>
               {project.title?.[0] ?? "K"}
             </span>
@@ -103,7 +107,9 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
         {/* Scrim — always present, intensifies on hover */}
         <div style={{
           position: "absolute", inset: 0,
-          background: isLocked
+          background: isRequestOnly
+            ? "linear-gradient(135deg, rgba(5,5,5,0.68) 0%, rgba(13,13,13,0.94) 52%, rgba(245,193,0,0.42) 100%)"
+            : isLocked
             ? "linear-gradient(135deg, rgba(245,193,0,0.92) 0%, rgba(13,13,13,0.92) 46%, rgba(0,182,163,0.78) 100%)"
             : hovered
             ? "linear-gradient(to top, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.45) 60%, transparent 100%)"
@@ -111,11 +117,13 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
           transition: "background 0.3s ease",
         }} />
 
-        {isLocked && (
+        {isUnavailable && (
           <>
             <div style={{
               position: "absolute", inset: 0,
-              backgroundImage: "repeating-linear-gradient(-45deg, rgba(255,255,255,0.18) 0 2px, transparent 2px 10px)",
+              backgroundImage: isRequestOnly
+                ? "linear-gradient(90deg, transparent 0 12%, rgba(245,193,0,0.24) 12% 13%, transparent 13% 24%, rgba(242,236,227,0.16) 24% 25%, transparent 25%)"
+                : "repeating-linear-gradient(-45deg, rgba(255,255,255,0.18) 0 2px, transparent 2px 10px)",
               mixBlendMode: "screen",
               opacity: 0.45,
             }} />
@@ -126,23 +134,27 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
               fontSize: "0.65rem", fontWeight: 900, padding: "0.35rem 0.65rem",
               letterSpacing: "0.14em", textTransform: "uppercase",
             }}>
-              Locked / WIP
+              {isRequestOnly ? "Available on request" : "Locked / WIP"}
             </div>
             <div style={{
               position: "absolute", top: "50%", left: "50%",
               transform: "translate(-50%,-50%) rotate(-2deg)",
               display: "grid", placeItems: "center", gap: "0.45rem",
               width: "min(84%, 360px)", textAlign: "center",
-              background: "rgba(242,236,227,0.92)",
+              background: isRequestOnly ? "rgba(5,5,5,0.86)" : "rgba(242,236,227,0.92)",
               border: "3px solid var(--ink)", boxShadow: "8px 8px 0 var(--ink)",
               padding: "1rem",
             }}>
-              <div style={{ fontSize: isHero ? "2.3rem" : "1.8rem", lineHeight: 1 }}>LOCKED</div>
-              <div style={{ fontSize: "0.76rem", fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase" }}>
-                Work in progress
+              <div style={{ fontSize: isHero ? "2.3rem" : "1.8rem", lineHeight: 1, color: isRequestOnly ? "#F2ECE3" : "inherit" }}>
+                {isRequestOnly ? "PRIVATE" : "LOCKED"}
               </div>
-              <p style={{ margin: 0, fontSize: "0.78rem", fontWeight: 700, color: "var(--muted)", lineHeight: 1.45 }}>
-                University design portfolio is being sharpened behind the scenes.
+              <div style={{ fontSize: "0.76rem", fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: isRequestOnly ? "#F5C100" : "inherit" }}>
+                {isRequestOnly ? "Real estate agency projects" : "Work in progress"}
+              </div>
+              <p style={{ margin: 0, fontSize: "0.78rem", fontWeight: 700, color: isRequestOnly ? "rgba(242,236,227,0.74)" : "var(--muted)", lineHeight: 1.45 }}>
+                {isRequestOnly
+                  ? "Cinematic property work is available privately while public case studies are being prepared."
+                  : "University design portfolio is being sharpened behind the scenes."}
               </p>
             </div>
           </>
@@ -196,7 +208,7 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
               fontSize: "0.78rem", padding: "0.35rem 0.8rem",
               border: "2px solid #fff", letterSpacing: "0.08em",
             }}>
-              {isLocked ? "COMING SOON" : "VIEW PROJECT →"}
+              {isRequestOnly ? "REQUEST ACCESS" : isLocked ? "COMING SOON" : "VIEW PROJECT →"}
             </span>
           </div>
         </div>
@@ -230,7 +242,8 @@ export default function ProjectsSection() {
       .catch(() => setLoading(false));
   }, []);
 
-  const display = projects.length > 0 ? projects : PLACEHOLDERS;
+  const visibleProjects = (projects.length > 0 ? projects : PLACEHOLDERS).filter((project) => !isMotionProject(project));
+  const display = [...visibleProjects, REAL_ESTATE_AGENCY_PROJECT];
   const [hero, ...rest] = display;
 
   // Split rest into left column (wide) and right column (normals)
