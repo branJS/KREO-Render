@@ -194,17 +194,13 @@ export default function TheGatePreview() {
             <p className="gate-kicker">Private documents</p>
             <h2>Prepared for selective review.</h2>
             <p>
-              The supporting PDFs are positioned as client-facing launch assets: concise, premium, and
-              ready to share when the conversation moves from interest to action.
+              The pitch sheet is kept concise, premium, and ready to share when the conversation
+              moves from interest to action.
             </p>
           </div>
           <div className="gate-doc-links">
-            <a href="/preview/the-gate/THE_GATE_Private_Funding_Case_Study.pdf" target="_blank" rel="noopener noreferrer">
-              <span>01</span>
-              Private Funding Case Study
-            </a>
             <a href="/preview/the-gate/THE_GATE_Pitch_Sheet.pdf" target="_blank" rel="noopener noreferrer">
-              <span>02</span>
+              <span>01</span>
               Download Pitch Sheet
             </a>
           </div>
