@@ -104,10 +104,11 @@ function HUD({
             "home",
             "projects",
             "about",
-            "contact",
+            "why-kreo",
+            "reviews",
             "blog",
-            "shop",
-            "downloads",
+            "pricing",
+            "contact",
           ].map((s) => (
             <a
               key={s}
@@ -123,7 +124,7 @@ function HUD({
                   target.scrollIntoView({ behavior: "smooth", block: "start" });
               }}
             >
-              {s.toUpperCase()}
+              {s === "blog" ? "JOURNAL" : s.toUpperCase()}
             </a>
           ))}
         </nav>
@@ -158,10 +159,11 @@ export default function ClientPage({
           "home",
           "projects",
           "about",
-          "contact",
+          "why-kreo",
+          "reviews",
           "blog",
-          "shop",
-          "downloads",
+          "pricing",
+          "contact",
         ]}
       />
       <HUD muted={muted} setMuted={setMuted} />

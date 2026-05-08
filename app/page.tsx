@@ -3,6 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useEditMode } from "./providers";
 import ContactForm from "./components/ContactForm";
 import ProjectsSection from "./components/ProjectsSection";
@@ -694,18 +695,17 @@ function HUD() {
             /* BLOG links out of the page with a cinematic transition */
             if (s === "blog") {
               return (
-                <a
+                <Link
                   key={s}
                   href="/blog"
                   className={`hud-link${activeSection === s ? " active" : ""}`}
-                  style={{ background: "var(--yellow)" }}
                   onClick={(e) => {
                     e.preventDefault();
                     navigate("/blog");
                   }}
                 >
                   JOURNAL
-                </a>
+                </Link>
               );
             }
             return (
@@ -746,7 +746,7 @@ export default function Page() {
   return (
     <main className="kreo">
       <IntroScreen />
-      <WorldScene sections={["home","projects","about","reviews","blog","pricing","contact"]} />
+      <WorldScene sections={["home","projects","about","why-kreo","reviews","blog","pricing","contact"]} />
       <Cursor />
       <HUD />
       <CinemaOverlay state={cinemaState} onClose={closeCinema} />
@@ -754,7 +754,7 @@ export default function Page() {
 
       {/* HERO */}
       <section id="home" className="section hero visible">
-        <div className="panel hero-panel center" style={{ padding: "1.5rem 1.2rem" }}>
+        <div className="panel hero-panel center">
           <div className="hero-content">
             <h1 style={{ margin: 0, lineHeight: 1, padding: 0 }}>
               <img
@@ -762,7 +762,7 @@ export default function Page() {
                 alt="KREO"
                 className="kreo-logo-hero"
                 style={{
-                  width: "min(780px, 88vw)",
+                  width: "min(560px, 82vw)",
                   height: "auto",
                   display: "block",
                   margin: "0 auto",
@@ -777,9 +777,9 @@ export default function Page() {
               fontWeight: 800,
               letterSpacing: "0.01em",
             }}>
-              Cinematic property marketing that turns spaces into stories investors, buyers, and tenants remember.
+              Premium graphic design, brand identity and cinematic visuals for businesses that need to look serious.
             </p>
-            <p style={{
+            <p className="hero-services" style={{
               margin: "0 0 1rem",
               fontSize: "clamp(0.72rem, 1.5vw, 0.85rem)",
               fontWeight: 600,
@@ -788,11 +788,11 @@ export default function Page() {
               color: "var(--muted)",
               opacity: 0.7,
             }}>
-              Launch films · CGI visuals · pitch decks · brand systems — Plymouth, UK
+              <span className="hero-services-copy">Logo design &middot; brand systems &middot; property marketing &middot; CGI visuals &middot; pitch decks &middot; web design &mdash; Plymouth, UK</span>
             </p>
             <div className="cta-row">
-              <a href="#projects" className="btn b-yellow" data-magnetic>View Property Work</a>
-              <a href="#contact"  className="btn b-blue outline" data-magnetic>Plan a Launch</a>
+              <a href="#projects" className="btn b-yellow" data-magnetic>View Portfolio Work</a>
+              <a href="#contact"  className="btn b-blue outline" data-magnetic>Plan a Project</a>
             </div>
           </div>
         </div>
