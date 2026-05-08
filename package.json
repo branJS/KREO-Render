@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "chat:relay": "node relay-server/server.mjs",
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint ."

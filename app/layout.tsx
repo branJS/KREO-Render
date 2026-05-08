@@ -3,6 +3,7 @@ import "./globals.css";
 import { EditModeProvider } from "./providers";
 import { KreoTransitionProvider } from "./components/KreoTransition";
 import KreoNav from "./components/KreoNav";
+import LiveChatWidget from "./components/LiveChatWidget";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -165,6 +166,7 @@ export default function RootLayout({
           <KreoTransitionProvider>
             {children}
             <KreoNav />
+            <LiveChatWidget />
           </KreoTransitionProvider>
         </EditModeProvider>
 

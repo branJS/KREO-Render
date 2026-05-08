@@ -1489,3 +1489,335 @@ body::after {
     display: none;
   }
 }
+
+.kreo-chat {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 80;
+  font-family: var(--font-space, "Space Grotesk", system-ui, sans-serif);
+}
+
+.kreo-chat-launcher,
+.kreo-chat-panel {
+  border: 1px solid rgba(13, 13, 13, 0.88);
+  background: rgba(248, 244, 234, 0.94);
+  color: var(--ink);
+  box-shadow: 8px 8px 0 rgba(13, 13, 13, 0.88), 0 18px 54px rgba(13, 13, 13, 0.18);
+  backdrop-filter: blur(18px);
+}
+
+.kreo-chat-launcher {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.58rem;
+  min-height: 3.05rem;
+  padding: 0.82rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+
+.kreo-chat-launcher:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0 rgba(13, 13, 13, 0.9), 0 22px 60px rgba(13, 13, 13, 0.22);
+}
+
+.kreo-chat:has(.kreo-chat-dot.online) .kreo-chat-launcher {
+  animation: kreoChatOnlineLift 5.8s infinite ease-in-out;
+}
+
+.kreo-chat-invite {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 0.84rem);
+  width: min(250px, calc(100vw - 2rem));
+  padding: 0.78rem 0.9rem;
+  border: 1px solid rgba(13, 13, 13, 0.82);
+  background: rgba(13, 13, 13, 0.94);
+  color: #fffaf0;
+  box-shadow: 6px 6px 0 rgba(13, 13, 13, 0.28), 0 18px 42px rgba(13, 13, 13, 0.22);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  animation: kreoChatInviteIn 420ms ease-out both, kreoChatInviteFloat 5.8s 600ms infinite ease-in-out;
+}
+
+.kreo-chat-invite::after {
+  content: "";
+  position: absolute;
+  right: 1.1rem;
+  bottom: -0.48rem;
+  width: 0.78rem;
+  height: 0.78rem;
+  border-right: 1px solid rgba(13, 13, 13, 0.82);
+  border-bottom: 1px solid rgba(13, 13, 13, 0.82);
+  background: rgba(13, 13, 13, 0.94);
+  transform: rotate(45deg);
+}
+
+.kreo-chat-panel {
+  width: min(360px, calc(100vw - 2rem));
+  max-height: min(520px, calc(100vh - 7rem));
+  margin-bottom: 0.9rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.kreo-chat-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(13, 13, 13, 0.16);
+  background: var(--ink);
+  color: #fffaf0;
+}
+
+.kreo-chat-head strong {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.kreo-chat-head p {
+  margin: 0.25rem 0 0;
+  color: rgba(255, 250, 240, 0.68);
+  font-size: 0.74rem;
+}
+
+.kreo-chat-head button {
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid rgba(255, 250, 240, 0.28);
+  background: transparent;
+  color: #fffaf0;
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.kreo-chat-dot {
+  display: inline-block;
+  width: 0.62rem;
+  height: 0.62rem;
+  flex: 0 0 auto;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: #b7b0a1;
+  box-shadow: 0 0 0 2px rgba(255, 250, 240, 0.5);
+}
+
+.kreo-chat-head .kreo-chat-dot {
+  margin-right: 0.45rem;
+  border-color: rgba(255, 250, 240, 0.7);
+  vertical-align: 0.02rem;
+}
+
+.kreo-chat-dot.online {
+  background: var(--yellow);
+  box-shadow: 0 0 0 2px rgba(255, 208, 0, 0.2), 0 0 18px rgba(255, 208, 0, 0.72);
+  animation: kreoChatDotPulse 1.8s infinite ease-in-out;
+}
+
+.kreo-chat-messages {
+  display: grid;
+  gap: 0.55rem;
+  max-height: 190px;
+  overflow: auto;
+  padding: 1rem;
+  background: rgba(236, 231, 220, 0.72);
+}
+
+.kreo-chat-message {
+  max-width: 88%;
+  padding: 0.72rem 0.78rem;
+  border: 1px solid rgba(13, 13, 13, 0.16);
+  background: rgba(255, 250, 240, 0.74);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.kreo-chat-message.visitor {
+  margin-left: auto;
+  background: var(--yellow);
+  color: var(--ink);
+}
+
+.kreo-chat-message.system {
+  color: rgba(13, 13, 13, 0.72);
+}
+
+.kreo-chat-typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.34rem;
+  width: fit-content;
+  max-width: 88%;
+  padding: 0.66rem 0.72rem;
+  border: 1px solid rgba(13, 13, 13, 0.16);
+  background: rgba(255, 250, 240, 0.74);
+  color: rgba(13, 13, 13, 0.68);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.kreo-chat-typing span {
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 999px;
+  background: var(--yellow);
+  animation: kreoTypingPulse 1s infinite ease-in-out;
+}
+
+.kreo-chat-typing span:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.kreo-chat-typing span:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+@keyframes kreoTypingPulse {
+  0%, 80%, 100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+@keyframes kreoChatDotPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 2px rgba(255, 208, 0, 0.2), 0 0 12px rgba(255, 208, 0, 0.5);
+  }
+
+  50% {
+    box-shadow: 0 0 0 5px rgba(255, 208, 0, 0.18), 0 0 22px rgba(255, 208, 0, 0.82);
+  }
+}
+
+@keyframes kreoChatOnlineLift {
+  0%, 82%, 100% {
+    transform: translateY(0);
+  }
+
+  88% {
+    transform: translateY(-4px);
+  }
+
+  94% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes kreoChatInviteIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes kreoChatInviteFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.kreo-chat-fields {
+  display: grid;
+  gap: 0.55rem;
+  padding: 1rem;
+  background: rgba(248, 244, 234, 0.96);
+  flex: 0 0 auto;
+}
+
+.kreo-chat-fields input,
+.kreo-chat-fields textarea {
+  width: 100%;
+  border: 1px solid rgba(13, 13, 13, 0.28);
+  background: rgba(255, 250, 240, 0.75);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.82rem;
+  padding: 0.72rem 0.78rem;
+  outline: none;
+}
+
+.kreo-chat-fields textarea {
+  min-height: 5.3rem;
+  resize: vertical;
+}
+
+.kreo-chat-fields input:focus,
+.kreo-chat-fields textarea:focus {
+  border-color: var(--ink);
+}
+
+.kreo-chat-fields button {
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #fffaf0;
+  font-weight: 900;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 0.82rem;
+  cursor: pointer;
+}
+
+.kreo-chat-fields button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (max-width: 640px) {
+  .kreo-chat {
+    right: 0.82rem;
+    bottom: 0.82rem;
+  }
+
+  .kreo-chat-launcher {
+    min-height: 2.8rem;
+    padding: 0.74rem 0.82rem;
+    font-size: 0.66rem;
+  }
+
+  .kreo-chat-invite {
+    width: min(220px, calc(100vw - 1.64rem));
+    font-size: 0.66rem;
+  }
+
+  .kreo-chat-panel {
+    max-height: calc(100vh - 6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kreo-chat:has(.kreo-chat-dot.online) .kreo-chat-launcher,
+  .kreo-chat-dot.online,
+  .kreo-chat-invite {
+    animation: none;
+  }
+}
