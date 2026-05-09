@@ -6,6 +6,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useEditMode } from "./providers";
 import ContactForm from "./components/ContactForm";
+import KreoScheduler from "./components/KreoScheduler";
 import ProjectsSection from "./components/ProjectsSection";
 import AboutSection from "./components/AboutSection";
 import ReviewsSection from "./components/ReviewsSection";
@@ -568,11 +569,13 @@ function WhyKreo() {
             Start a project →
           </a>
           <a
-            href="https://calendly.com/ionstudiosx/30min"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#contact"
             className="btn outline"
             style={{ background: "var(--cream)" }}
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
           >
             Book a free 30-min call ↗
           </a>
@@ -878,14 +881,7 @@ export default function Page() {
                   Book a call
                 </span>
               </div>
-              <div className="kreo-calendly-wrap">
-                <iframe
-                  src="https://calendly.com/ionstudiosx/30min?embed_background_color=ffffff&hide_gdpr_banner=1&hide_landing_page_details=1"
-                  title="Book a 30-minute call with KREO Studio"
-                  style={{ width: "100%", height: "640px", border: 0 }}
-                  loading="lazy"
-                />
-              </div>
+              <KreoScheduler />
             </div>
 
             {/* RIGHT: Contact form */}

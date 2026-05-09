@@ -18,6 +18,23 @@ export type LiveChatReply = {
   createdAt: string;
 };
 
+export type KreoBooking = {
+  id: string;
+  name: string;
+  email: string;
+  businessName: string;
+  phone: string;
+  meetingType: string;
+  projectType: string;
+  selectedDate: string;
+  selectedTime: string;
+  timezone: string;
+  durationMinutes: number;
+  notes: string;
+  status: "new" | "confirmed" | "cancelled";
+  createdAt: string;
+};
+
 type OperatorState = {
   online: boolean;
   operatorName: string;
@@ -34,6 +51,7 @@ const operatorKey = "kreo:chat:operator";
 const messagesKey = "kreo:chat:messages";
 const repliesKey = "kreo:chat:replies";
 const typingKey = "kreo:chat:typing";
+const bookingsKey = "kreo:calendar:bookings";
 
 const memory = globalThis as typeof globalThis & {
   __kreoChatStore?: {
@@ -41,6 +59,7 @@ const memory = globalThis as typeof globalThis & {
     messages: LiveChatMessage[];
     replies: LiveChatReply[];
     typingByVisitor: Record<string, TypingState>;
+    bookings: KreoBooking[];
   };
 };
 
@@ -49,8 +68,10 @@ function memoryStore() {
     operator: { online: false, operatorName: "Brandon", lastHeartbeatAt: 0 },
     messages: [],
     replies: [],
-    typingByVisitor: {}
+    typingByVisitor: {},
+    bookings: []
   };
+  memory.__kreoChatStore.bookings ||= [];
   return memory.__kreoChatStore;
 }
 
@@ -80,7 +101,9 @@ export async function listMessages() {
   return (await getJson<LiveChatMessage[]>(messagesKey)) || memoryStore().messages;
 }
 
-export async function addMessage(body: any) {
+type JsonBody = Record<string, unknown>;
+
+export async function addMessage(body: JsonBody) {
   const messages = await listMessages();
   const message: LiveChatMessage = {
     id: randomUUID(),
@@ -102,7 +125,7 @@ export async function listReplies() {
   return (await getJson<LiveChatReply[]>(repliesKey)) || memoryStore().replies;
 }
 
-export async function addReply(body: any) {
+export async function addReply(body: JsonBody) {
   const replies = await listReplies();
   const reply: LiveChatReply = {
     id: randomUUID(),
@@ -139,6 +162,45 @@ export async function setTyping(visitorId: string, typing: boolean, operatorName
   await setJson(typingKey, typingByVisitor);
 }
 
+export async function listBookings() {
+  return ((await getJson<KreoBooking[]>(bookingsKey)) || memoryStore().bookings).sort(
+    (a, b) => `${a.selectedDate} ${a.selectedTime}`.localeCompare(`${b.selectedDate} ${b.selectedTime}`)
+  );
+}
+
+export async function addBooking(body: JsonBody) {
+  const bookings = await listBookings();
+  const booking: KreoBooking = {
+    id: randomUUID(),
+    name: cleanText(body.name).slice(0, 140),
+    email: cleanText(body.email).slice(0, 180),
+    businessName: cleanText(body.businessName).slice(0, 180),
+    phone: cleanText(body.phone).slice(0, 80),
+    meetingType: cleanText(body.meetingType).slice(0, 80) || "Discovery Call",
+    projectType: cleanText(body.projectType).slice(0, 120),
+    selectedDate: cleanText(body.selectedDate).slice(0, 10),
+    selectedTime: cleanText(body.selectedTime).slice(0, 5),
+    timezone: cleanText(body.timezone).slice(0, 80) || "Europe/London",
+    durationMinutes: Number(body.durationMinutes || 30),
+    notes: cleanText(body.notes),
+    status: "new",
+    createdAt: new Date().toISOString()
+  };
+  if (!booking.name) throw new Error("Name is required.");
+  if (!/^\S+@\S+\.\S+$/.test(booking.email)) throw new Error("A valid email is required.");
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(booking.selectedDate) || !/^\d{2}:\d{2}$/.test(booking.selectedTime)) {
+    throw new Error("Choose a valid booking slot.");
+  }
+  const taken = bookings.some(
+    (item) => item.status !== "cancelled" && item.selectedDate === booking.selectedDate && item.selectedTime === booking.selectedTime
+  );
+  if (taken) throw new Error("That slot has just been taken. Please choose another time.");
+  const next = [booking, ...bookings].slice(0, 300);
+  memoryStore().bookings = next;
+  await setJson(bookingsKey, next);
+  return booking;
+}
+
 export function json(payload: unknown, status = 200) {
   return Response.json(payload, {
     status,
@@ -163,7 +225,7 @@ export function options() {
 }
 
 export async function readBody(request: Request) {
-  return request.json().catch(() => ({}));
+  return request.json().catch(() => ({})) as Promise<JsonBody>;
 }
 
 function cleanText(value: unknown) {
