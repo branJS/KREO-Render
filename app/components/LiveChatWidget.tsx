@@ -14,7 +14,7 @@ type Presence = {
   error?: string;
 };
 
-const relayUrl = (process.env.NEXT_PUBLIC_KREO_CHAT_RELAY_URL || "").replace(/\/+$/, "");
+const externalRelayUrl = (process.env.NEXT_PUBLIC_KREO_CHAT_RELAY_URL || "").replace(/\/+$/, "");
 
 export default function LiveChatWidget() {
   const [open, setOpen] = useState(false);
@@ -32,7 +32,7 @@ export default function LiveChatWidget() {
     }
   ]);
 
-  const configured = Boolean(relayUrl);
+  const configured = true;
   const conversationStarted = messages.some((message) => message.role === "visitor" || message.role === "operator");
   const statusText = useMemo(() => {
     if (!configured) return "Leave a message";
@@ -56,7 +56,7 @@ export default function LiveChatWidget() {
     let alive = true;
     async function checkPresence() {
       try {
-        const response = await fetch(`${relayUrl}/api/widget/status`, { cache: "no-store" });
+        const response = await fetch(relayPath("/api/widget/status"), { cache: "no-store" });
         if (!response.ok) throw new Error("Relay status unavailable");
         const data = (await response.json()) as Presence;
         if (alive) setPresence({ online: Boolean(data.online), operatorName: data.operatorName });
@@ -81,8 +81,8 @@ export default function LiveChatWidget() {
     async function pollThread() {
       try {
         const [replyResponse, typingResponse] = await Promise.all([
-          fetch(`${relayUrl}/api/widget/replies?visitorId=${encodeURIComponent(visitorId)}`, { cache: "no-store" }),
-          fetch(`${relayUrl}/api/widget/typing?visitorId=${encodeURIComponent(visitorId)}`, { cache: "no-store" })
+          fetch(relayPath(`/api/widget/replies?visitorId=${encodeURIComponent(visitorId)}`), { cache: "no-store" }),
+          fetch(relayPath(`/api/widget/typing?visitorId=${encodeURIComponent(visitorId)}`), { cache: "no-store" })
         ]);
         if (typingResponse.ok) {
           const typingData = (await typingResponse.json()) as { typing?: boolean };
@@ -146,7 +146,7 @@ export default function LiveChatWidget() {
         ...items,
         {
           role: "system",
-          text: "I could not reach the live chat relay. Please use the contact form below and I will still get your enquiry."
+          text: "The live desk is temporarily unreachable. You can still send the project through the contact form and I will pick it up there."
         }
       ]);
     } finally {
@@ -199,6 +199,11 @@ export default function LiveChatWidget() {
             <button type="button" onClick={sendMessage} disabled={sending || !draft.trim()}>
               {sending ? "Sending..." : conversationStarted ? "Send message" : presence.online ? "Send live message" : "Leave message"}
             </button>
+            {presence.error && (
+              <button type="button" className="kreo-chat-contact-button" onClick={openContactForm}>
+                Open contact form
+              </button>
+            )}
           </div>
         </section>
       )}
@@ -218,7 +223,7 @@ export default function LiveChatWidget() {
 }
 
 async function sendToRelay(payload: Record<string, unknown>) {
-  const response = await fetch(`${relayUrl}/api/widget/messages`, {
+  const response = await fetch(relayPath("/api/widget/messages"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -227,10 +232,29 @@ async function sendToRelay(payload: Record<string, unknown>) {
   if (response.ok) return;
   if (response.status !== 404) throw new Error("Relay rejected message");
 
-  const fallback = await fetch(`${relayUrl}/api/widget/message`, {
+  const fallback = await fetch(relayPath("/api/widget/message"), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
   });
   if (!fallback.ok) throw new Error("Relay rejected message");
+}
+
+function relayPath(path: string) {
+  const activeRelay = activeRelayUrl();
+  return activeRelay ? `${activeRelay}${path}` : path;
+}
+
+function openContactForm() {
+  const contact = document.getElementById("contact");
+  window.dispatchEvent(new CustomEvent("kreo:cinema-open"));
+  if (contact) contact.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+function activeRelayUrl() {
+  if (!externalRelayUrl) return "";
+  if (typeof window === "undefined") return externalRelayUrl;
+  const isLocalRelay = externalRelayUrl.includes("localhost") || externalRelayUrl.includes("127.0.0.1");
+  const isLocalSite = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+  return isLocalRelay && !isLocalSite ? "" : externalRelayUrl;
 }

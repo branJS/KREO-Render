@@ -1787,6 +1787,11 @@ body::after {
   cursor: pointer;
 }
 
+.kreo-chat-fields .kreo-chat-contact-button {
+  background: var(--yellow);
+  color: var(--ink);
+}
+
 .kreo-chat-fields button:disabled {
   cursor: not-allowed;
   opacity: 0.5;
