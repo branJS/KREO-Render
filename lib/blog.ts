@@ -1,5 +1,6 @@
 import { client, hasSanityConfig } from './sanity';
 import imageUrlBuilder from '@sanity/image-url';
+import { GENERATED_POSTS } from './generated-posts';
 
 /* ══════════════════════════════════════════════════════════════════════════
    KREO JOURNAL — Blog data layer
@@ -275,11 +276,11 @@ export const POSTS: BlogPost[] = [
 ════════════════════════════════════════════════════════════════════════ */
 
 export function getPost(slug: string): BlogPost | undefined {
-  return POSTS.find((p) => p.slug === slug);
+  return mergePosts(GENERATED_POSTS, POSTS).find((p) => p.slug === slug);
 }
 
 export function getAllPosts(): BlogPost[] {
-  return [...POSTS].sort(
+  return mergePosts(GENERATED_POSTS, POSTS).sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   );
 }
@@ -455,7 +456,7 @@ export async function fetchAllPosts(): Promise<BlogPost[]> {
       {},
       { next: { revalidate: 60 } }
     );
-    if (docs?.length) return docs.map(sanityDocToPost);
+    if (docs?.length) return mergePosts(docs.map(sanityDocToPost), GENERATED_POSTS, POSTS);
   } catch (err) {
     console.warn('[blog] Sanity fetch failed, using hardcoded posts:', err);
   }
@@ -479,7 +480,7 @@ export async function fetchPost(slug: string): Promise<BlogPost | undefined> {
 }
 
 export async function fetchAllSlugs(): Promise<string[]> {
-  if (!hasSanityConfig) return POSTS.map((p) => p.slug);
+  if (!hasSanityConfig) return mergePosts(GENERATED_POSTS, POSTS).map((p) => p.slug);
 
   try {
     const docs = await client.fetch(
@@ -487,9 +488,18 @@ export async function fetchAllSlugs(): Promise<string[]> {
       {},
       { next: { revalidate: 3600 } }
     );
-    if (docs?.length) return docs.map((d: { slug: string }) => d.slug);
+    if (docs?.length) return Array.from(new Set([...docs.map((d: { slug: string }) => d.slug), ...GENERATED_POSTS.map((p) => p.slug), ...POSTS.map((p) => p.slug)]));
   } catch {
     /* fallback */
   }
-  return POSTS.map((p) => p.slug);
+  return mergePosts(GENERATED_POSTS, POSTS).map((p) => p.slug);
+}
+
+function mergePosts(...groups: BlogPost[][]): BlogPost[] {
+  const bySlug = new Map<string, BlogPost>();
+  groups.flat().forEach((post) => {
+    if (!post?.slug || bySlug.has(post.slug)) return;
+    bySlug.set(post.slug, post);
+  });
+  return Array.from(bySlug.values());
 }

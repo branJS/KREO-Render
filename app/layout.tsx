@@ -9,16 +9,16 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 const SITE_URL = "https://www.kreostudio.co.uk";
-const SITE_NAME = "KREO";
+const SITE_NAME = "KREO Design Studio";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Freelance Graphic Designer Plymouth & Manchester | KREO",
-    template: "%s | KREO — Graphic Design & Motion",
+    default: "KREO Design Studio | Branding, Motion, Web & Visual Systems",
+    template: "%s | KREO Design Studio",
   },
   description:
-    "KREO is a freelance graphic design studio based in Plymouth, UK — serving Plymouth, Manchester and beyond. Specialising in branding, 3D renders, motion graphics, print design and UI/UX.",
+    "KREO is a Plymouth-based design studio creating brand identity, graphic design, websites, motion graphics, 3D visuals, print and premium campaign systems for businesses across the UK.",
   keywords: [
     // Plymouth
     "graphic designer Plymouth",
@@ -70,9 +70,9 @@ export const metadata: Metadata = {
     shortcut: "/logos/favicon-32.png",
   },
   openGraph: {
-    title: "Freelance Graphic Designer Plymouth & Manchester | KREO",
+    title: "KREO Design Studio",
     description:
-      "KREO is a freelance graphic design studio based in Plymouth, UK — specialising in branding, motion graphics, 3D renders and digital design.",
+      "Brand identity, graphic design, websites, motion, 3D visuals and premium campaign systems from a Plymouth-based creative studio.",
     url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_GB",
@@ -80,9 +80,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Freelance Graphic Designer Plymouth & Manchester | KREO",
+    title: "KREO Design Studio",
     description:
-      "Branding, motion graphics, 3D renders and digital design — from Plymouth to Manchester and beyond.",
+      "Branding, websites, motion graphics, 3D visuals and premium creative systems from Plymouth to the wider UK.",
     site: "@kreoxi",
     creator: "@kreoxi",
   },
@@ -102,7 +102,7 @@ const jsonLd = {
       url: SITE_URL,
       logo: `${SITE_URL}/logos/kreo-yellow-crop.png`,
       description:
-        "Freelance graphic design studio in Plymouth, Devon — logo design, brand identity, motion graphics, 3D renders, website design and print. Serving Plymouth, Devon, Cornwall, Manchester and the wider UK.",
+        "Design studio in Plymouth, Devon creating logo design, brand identity, motion graphics, 3D renders, website design, print and premium campaign systems. Serving Plymouth, Devon, Cornwall, Manchester and the wider UK.",
       address: {
         "@type": "PostalAddress",
         addressLocality: "Plymouth",
@@ -139,7 +139,7 @@ const jsonLd = {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "KREO Studio — Plymouth Graphic Design",
+      name: "KREO Design Studio",
       publisher: { "@id": `${SITE_URL}/#business` },
     },
   ],
