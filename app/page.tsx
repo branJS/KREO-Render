@@ -808,7 +808,7 @@ export default function Page() {
           color: "var(--muted)",
           margin: 0,
         }}>
-          I&apos;m Brandon — a graphic designer and creative director based in Plymouth. I&apos;ve been working with brands on visuals, motion, and identity for five years. KREO Studio is where that work lives.
+          I&apos;m Brandon — a creative director, full-stack builder, and AI technologist based in Plymouth. Five years shaping brands through visuals, motion, and identity. KREO is where design and technology converge.
         </p>
       </div>
 
