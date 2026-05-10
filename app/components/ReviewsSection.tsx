@@ -156,8 +156,7 @@ export default function ReviewsSection() {
                   &ldquo;{review.quote}&rdquo;
                 </p>
 
-                <div style={{ borderTop: "2px solid var(--ink)", paddingTop: "0.6rem", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ fontWeight: 800, fontSize: "0.88rem" }}>{review.name}</div>
+                <div style={{ borderTop: "2px solid var(--ink)", paddingTop: "0.6rem", display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
                   <div style={{ fontWeight: 600, fontSize: "0.72rem", color: "var(--muted)" }}>{review.date}</div>
                 </div>
               </a>

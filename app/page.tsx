@@ -353,8 +353,6 @@ function ClientLogos() {
                     width: "auto",
                     maxWidth: "120px",
                     objectFit: "contain",
-                    filter: "grayscale(1) contrast(1.1)",
-                    opacity: 0.75,
                   }}
                 />
               ) : (
