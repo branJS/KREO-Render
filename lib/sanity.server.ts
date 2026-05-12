@@ -1,5 +1,6 @@
 import { createClient, groq } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
+import { LOCAL_PORTFOLIO_PROJECTS } from "@/lib/projectDisplay";
 
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset   = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -20,7 +21,7 @@ export function urlFor(source: any) {
 }
 
 export async function getProjects() {
-  if (!projectId || !dataset) return [];
+  if (!projectId || !dataset) return LOCAL_PORTFOLIO_PROJECTS;
   const query = groq`*[_type == "project" && !(_id in path("drafts.**"))] | order(order asc, publishedAt desc) {
     _id,
     title,
@@ -33,10 +34,11 @@ export async function getProjects() {
     _updatedAt
   }`;
   try {
-    return await client.fetch(query);
+    const projects = await client.fetch(query);
+    return [...LOCAL_PORTFOLIO_PROJECTS, ...projects];
   } catch (err) {
     console.error('[getProjects] Failed to fetch projects from Sanity', err);
-    return [];
+    return LOCAL_PORTFOLIO_PROJECTS;
   }
 }
 
@@ -69,6 +71,8 @@ export async function getReviews() {
 }
 
 export async function getProject(slug: string) {
+  const localProject = LOCAL_PORTFOLIO_PROJECTS.find((project) => project.slug === slug);
+  if (localProject) return localProject;
   if (!projectId || !dataset) return null;
   const query = groq`*[_type == "project" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
     _id,

@@ -13,6 +13,7 @@ const SITE_URL = "https://www.kreostudio.co.uk";
 const CAT_COLOR: Record<string, string> = {
   branding: "#F5C100",
   motion: "#00B6A3",
+  campaign: "#00B6A3",
   "3d": "#1E6FE0",
   print: "#2DBA72",
   uiux: "#E56BE3",
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: { params: any }): Promise<Met
   const description =
     project.description ||
     "A KREO Studio case study covering visual strategy, deliverables, launch assets and intended impact.";
-  const coverUrl = project.coverImage ? urlFor(project.coverImage).width(1200).height(630).url() : undefined;
+  const coverUrl = project.coverImageUrl || (project.coverImage ? urlFor(project.coverImage).width(1200).height(630).url() : undefined);
   const url = `${SITE_URL}/projects/${project.slug}`;
 
   return {
@@ -80,6 +81,8 @@ function buildDeliverables(project: any, galleryCount: number) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isPropertyProject(project: any) {
+  if (project.category?.toLowerCase() === "campaign") return false;
+
   const haystack = [
     project.title,
     project.slug,
@@ -169,12 +172,13 @@ export default async function ProjectPage({ params }: { params: any }) {
 
   if (!project) notFound();
 
-  const coverUrl = project.coverImage
+  const coverUrl = project.coverImageUrl || (project.coverImage
     ? urlFor(project.coverImage).width(1600).height(800).url()
-    : null;
+    : null);
 
   const catColor = CAT_COLOR[project.category?.toLowerCase()] ?? "#0D0D0D";
   const isLocked = isUniversityDesignPortfolio(project);
+  const isCampaign = project.category?.toLowerCase() === "campaign";
   const cinematic = isPropertyProject(project);
 
   if (isLocked) {
@@ -263,11 +267,13 @@ export default async function ProjectPage({ params }: { params: any }) {
   const challengeText = project.brief || project.description || "Create a visual story that makes the property feel credible, desirable, and ready for a commercial audience.";
   const strategyText = project.process || "Build the property around atmosphere, clarity, and sequence: hero imagery first, then supporting visuals that help buyers, tenants, or investors understand the opportunity quickly.";
   const outcomeText = project.outcome || "Designed to increase confidence before the viewing, pitch, or launch moment by giving the property a sharper first impression.";
-  const locationMeta = project.tags?.find((tag: string) => /plymouth|london|manchester|devon|cornwall|chelsea|road|sq|square/i.test(tag)) || "Plymouth / UK";
+  const locationMeta = isCampaign
+    ? "University of Plymouth / IMLRU"
+    : project.tags?.find((tag: string) => /plymouth|london|manchester|devon|cornwall|chelsea|road|sq|square/i.test(tag)) || "Plymouth / UK";
   const productionNotes = [
-    project.videoUrl ? "Motion-ready launch sequence" : "Still-led launch narrative",
-    galleryImages.length ? "Wide-format still selection" : "Hero-first visual system",
-    "Investor-facing story structure",
+    project.videoUrl ? (isCampaign ? "Short-form social video" : "Motion-ready launch sequence") : "Still-led launch narrative",
+    galleryImages.length ? (isCampaign ? "Five keyframe sequence" : "Wide-format still selection") : "Hero-first visual system",
+    isCampaign ? "Awareness-led message structure" : "Investor-facing story structure",
   ];
 
   return (
@@ -348,7 +354,7 @@ export default async function ProjectPage({ params }: { params: any }) {
                 fontSize: "0.68rem", padding: "4px 10px",
                 letterSpacing: "0.14em", textTransform: "uppercase",
               }}>
-                Private deck
+                {isCampaign ? "Social campaign" : "Private deck"}
               </span>
               <span style={{
                 display: "inline-block",
@@ -368,7 +374,7 @@ export default async function ProjectPage({ params }: { params: any }) {
               textTransform: "uppercase",
               marginBottom: "0.45rem",
             }}>
-              Built for investor, buyer, or tenant attention
+              {isCampaign ? "Built for public awareness and environmental communication" : "Built for investor, buyer, or tenant attention"}
             </div>
             <h1 style={{
               color: "#fff", margin: 0,
@@ -424,9 +430,9 @@ export default async function ProjectPage({ params }: { params: any }) {
               marginBottom: "1.5rem",
             }}>
               {[
-                ["Location", locationMeta],
-                ["Audience", "Investor / buyer / tenant"],
-                ["Format", "Cinematic property deck"],
+                ["Context", locationMeta],
+                ["Audience", isCampaign ? "Instagram / public awareness" : "Investor / buyer / tenant"],
+                ["Format", isCampaign ? "Short-form motion campaign" : "Cinematic property deck"],
                 ["Production", productionNotes[0]],
               ].map(([label, value]) => (
                 <div key={label} style={{
@@ -507,11 +513,11 @@ export default async function ProjectPage({ params }: { params: any }) {
                   Case study deck
                 </span>
                 <h2 className="section-title" style={{ margin: 0 }}>
-                  Property Launch Narrative
+                  {isCampaign ? "Campaign Design Narrative" : "Property Launch Narrative"}
                 </h2>
               </div>
               <span className="btn b-black tiny" style={{ fontSize: "0.72rem" }}>
-                Built for attention
+                {isCampaign ? "Built for awareness" : "Built for attention"}
               </span>
             </div>
 
@@ -522,7 +528,9 @@ export default async function ProjectPage({ params }: { params: any }) {
             }}>
               <DeckCard num="01" title="Hero Still" accent={catColor} cinematic={cinematic}>
                 <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: cinematic ? "rgba(247,240,223,0.66)" : "var(--muted)", fontWeight: 650 }}>
-                  The lead image sets the commercial first impression: atmosphere, credibility, and a clear sense of place before the viewer reads a word.
+                  {isCampaign
+                    ? "The lead image establishes the ocean as the source of the story before the sequence moves the issue closer to the viewer."
+                    : "The lead image sets the commercial first impression: atmosphere, credibility, and a clear sense of place before the viewer reads a word."}
                 </p>
               </DeckCard>
 
@@ -624,7 +632,7 @@ export default async function ProjectPage({ params }: { params: any }) {
               lineHeight: 1.35,
               fontWeight: 900,
             }}>
-              Built for investor, buyer, or tenant attention.
+              {isCampaign ? "Built to make invisible pollution feel immediate." : "Built for investor, buyer, or tenant attention."}
             </p>
             <span style={{
               background: "var(--yellow)",
@@ -638,7 +646,7 @@ export default async function ProjectPage({ params }: { params: any }) {
               padding: "0.45rem 0.65rem",
               whiteSpace: "nowrap",
             }}>
-              KREO property deck
+              {isCampaign ? "KREO campaign case study" : "KREO property deck"}
             </span>
           </div>
 
@@ -661,17 +669,35 @@ export default async function ProjectPage({ params }: { params: any }) {
                 }} />
                 Video
               </h2>
-              <iframe
-                src={project.videoUrl}
-                style={{
-                  width: "100%", aspectRatio: "16/9",
-                  border: cinematic ? "1px solid rgba(245,193,0,0.28)" : "3px solid var(--ink)",
-                  boxShadow: cinematic ? "none" : "8px 8px 0 var(--ink)",
-                  display: "block",
-                }}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
+              {String(project.videoUrl).toLowerCase().endsWith(".mp4") ? (
+                <video
+                  src={project.videoUrl}
+                  controls
+                  playsInline
+                  preload="metadata"
+                  poster={coverUrl ?? undefined}
+                  style={{
+                    width: "100%", aspectRatio: "16/9",
+                    objectFit: "cover",
+                    border: cinematic ? "1px solid rgba(245,193,0,0.28)" : "3px solid var(--ink)",
+                    boxShadow: cinematic ? "none" : "8px 8px 0 var(--ink)",
+                    display: "block",
+                    background: "#050505",
+                  }}
+                />
+              ) : (
+                <iframe
+                  src={project.videoUrl}
+                  style={{
+                    width: "100%", aspectRatio: "16/9",
+                    border: cinematic ? "1px solid rgba(245,193,0,0.28)" : "3px solid var(--ink)",
+                    boxShadow: cinematic ? "none" : "8px 8px 0 var(--ink)",
+                    display: "block",
+                  }}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              )}
             </div>
           )}
 

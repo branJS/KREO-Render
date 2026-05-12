@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import Link from "next/link";
 import { client } from "@/lib/sanity";
-import { isMotionProject, REAL_ESTATE_AGENCY_PROJECT } from "@/lib/projectDisplay";
+import { isMotionProject, LOCAL_PORTFOLIO_PROJECTS, REAL_ESTATE_AGENCY_PROJECT } from "@/lib/projectDisplay";
 import { isUniversityDesignPortfolio } from "@/lib/projectLock";
 import { groq } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
@@ -25,10 +25,11 @@ const CAT_COLORS: Record<string, string> = {
   "3d": "#1E6FE0",
   print: "#2DBA72",
   uiux: "#E56BE3",
+  campaign: "#00B6A3",
   other: "#E24C3A",
 };
 
-const ALL_CATS = ["all", "property", "branding", "3d", "print", "uiux", "other"];
+const ALL_CATS = ["all", "property", "campaign", "branding", "3d", "print", "uiux", "other"];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function ProjectCard({ project, index }: { project: any; index: number }) {
@@ -39,9 +40,9 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
   const isRequestOnly = project._id === REAL_ESTATE_AGENCY_PROJECT._id;
   const isUnavailable = isLocked || isRequestOnly;
 
-  const coverUrl = project.coverImage
+  const coverUrl = project.coverImageUrl || (project.coverImage
     ? urlFor(project.coverImage).width(isFeatured ? 1200 : 700).height(isFeatured ? 700 : 500).url()
-    : null;
+    : null);
 
   return (
     <Link
@@ -251,7 +252,11 @@ export default function ProjectsPage() {
   }, []);
 
   const visibleProjects = useMemo(() => {
-    return [...projects.filter((project) => !isMotionProject(project)), REAL_ESTATE_AGENCY_PROJECT];
+    return [
+      ...LOCAL_PORTFOLIO_PROJECTS,
+      ...projects.filter((project) => !isMotionProject(project)),
+      REAL_ESTATE_AGENCY_PROJECT,
+    ];
   }, [projects]);
 
   const filtered = useMemo(() => {
@@ -314,7 +319,7 @@ export default function ProjectsPage() {
                   boxShadow: "4px 4px 0 var(--ink)", padding: "0.3rem 0.8rem",
                   fontWeight: 800, fontSize: "1.1rem",
                 }}>
-                  {loading ? "—" : visibleProjects.length} Projects
+                  {visibleProjects.length} Projects
                 </div>
                 <span style={{ fontWeight: 600, color: "var(--muted)", fontSize: "0.8rem" }}>
                   Plymouth, UK
@@ -323,7 +328,7 @@ export default function ProjectsPage() {
             </div>
 
             {/* Filter pills */}
-            {!loading && existingCats.length > 1 && (
+            {existingCats.length > 1 && (
               <div style={{
                 display: "flex", gap: "0.4rem", flexWrap: "wrap", marginTop: "1.2rem",
                 animation: "fadeIn 0.4s ease",
@@ -365,7 +370,7 @@ export default function ProjectsPage() {
         <div className="section" style={{ paddingTop: "1.5rem" }}>
           <div style={{ maxWidth: 1100, margin: "0 auto" }}>
 
-            {loading ? (
+            {loading && visibleProjects.length === 0 ? (
               <div style={{ padding: "4rem 0", textAlign: "center" }}>
                 <div style={{
                   display: "inline-block",

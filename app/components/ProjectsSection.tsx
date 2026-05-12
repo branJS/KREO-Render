@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { client } from "@/lib/sanity";
-import { isMotionProject, REAL_ESTATE_AGENCY_PROJECT } from "@/lib/projectDisplay";
+import { isMotionProject, LOCAL_PORTFOLIO_PROJECTS, REAL_ESTATE_AGENCY_PROJECT } from "@/lib/projectDisplay";
 import { isUniversityDesignPortfolio } from "@/lib/projectLock";
 import { groq } from "next-sanity";
 import imageUrlBuilder from "@sanity/image-url";
@@ -23,6 +23,7 @@ const CAT_COLOR: Record<string, string> = {
   "3d": "#1E6FE0",
   print: "#2DBA72",
   uiux: "#E56BE3",
+  campaign: "#00B6A3",
   other: "#E24C3A",
 };
 
@@ -38,12 +39,12 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
   const isHero = size === "hero";
   const isWide = size === "wide";
 
-  const coverUrl = project.coverImage
+  const coverUrl = project.coverImageUrl || (project.coverImage
     ? urlFor(project.coverImage)
         .width(isHero ? 1400 : isWide ? 800 : 600)
         .height(isHero ? 700 : isWide ? 500 : 400)
         .url()
-    : null;
+    : null);
 
   const catColor = CAT_COLOR[project.category?.toLowerCase()] ?? "#0D0D0D";
   const height = isHero ? "440px" : isWide ? "300px" : "240px";
@@ -242,7 +243,8 @@ export default function ProjectsSection() {
       .catch(() => setLoading(false));
   }, []);
 
-  const visibleProjects = (projects.length > 0 ? projects : PLACEHOLDERS).filter((project) => !isMotionProject(project));
+  const sourceProjects = projects.length > 0 ? projects : PLACEHOLDERS;
+  const visibleProjects = [...LOCAL_PORTFOLIO_PROJECTS, ...sourceProjects].filter((project) => !isMotionProject(project));
   const display = [...visibleProjects, REAL_ESTATE_AGENCY_PROJECT];
   const [hero, ...rest] = display;
 
@@ -258,7 +260,7 @@ export default function ProjectsSection() {
           <Link href="/projects" className="btn b-yellow tiny">View All →</Link>
         </div>
 
-        {loading ? (
+        {loading && visibleProjects.length === 0 ? (
           <p style={{ color: "var(--muted)", fontWeight: 600, padding: "1rem 0" }}>Loading…</p>
         ) : (
           <div style={{ marginTop: "1rem", display: "flex", flexDirection: "column", gap: "0.8rem" }}>
