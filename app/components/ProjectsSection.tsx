@@ -13,6 +13,10 @@ const builder = imageUrlBuilder(client as any);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function urlFor(source: any) { return builder.image(source); }
 
+function formatCategory(category?: string) {
+  return category?.replace(/-/g, " ").replace("3d", "3D").replace("webapp", "Web App") || "Project";
+}
+
 const QUERY = groq`*[_type == "project" && !(_id in path("drafts.**"))] | order(featured desc, order asc, publishedAt desc) {
   _id, title, "slug": slug.current, category, description, coverImage, featured
 }`;
@@ -24,6 +28,7 @@ const CAT_COLOR: Record<string, string> = {
   print: "#2DBA72",
   uiux: "#E56BE3",
   campaign: "#00B6A3",
+  webapp: "#00B6A3",
   other: "#E24C3A",
 };
 
@@ -175,7 +180,7 @@ function ProjectCard({ project, size = "normal" }: { project: any; size?: "hero"
             letterSpacing: "0.12em", textTransform: "uppercase",
             marginBottom: "0.5rem",
           }}>
-            {project.category || "Project"}
+            {formatCategory(project.category)}
           </div>
 
           <h3 style={{

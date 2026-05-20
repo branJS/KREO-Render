@@ -14,6 +14,7 @@ const CAT_COLOR: Record<string, string> = {
   branding: "#F5C100",
   motion: "#00B6A3",
   campaign: "#00B6A3",
+  webapp: "#00B6A3",
   "3d": "#1E6FE0",
   print: "#2DBA72",
   uiux: "#E56BE3",
@@ -21,7 +22,7 @@ const CAT_COLOR: Record<string, string> = {
 };
 
 function formatCategory(category?: string) {
-  return category?.replace(/-/g, " ").replace("3d", "3D") || "Project";
+  return category?.replace(/-/g, " ").replace("3d", "3D").replace("webapp", "Web App") || "Project";
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -67,6 +68,12 @@ function buildDeliverables(project: any, galleryCount: number) {
   const items = new Set<string>();
   const category = project.category?.toLowerCase() ?? "";
 
+  if (category.includes("webapp")) {
+    items.add("Realtime dashboard UI");
+    items.add("Signal map experience");
+    items.add("Live data surfaces");
+    items.add("Civic feed system");
+  }
   if (category.includes("3d") || category.includes("render")) items.add("CGI stills");
   if (category.includes("motion")) items.add("Launch film");
   if (category.includes("branding")) items.add("Visual identity system");
@@ -81,7 +88,8 @@ function buildDeliverables(project: any, galleryCount: number) {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isPropertyProject(project: any) {
-  if (project.category?.toLowerCase() === "campaign") return false;
+  const category = project.category?.toLowerCase();
+  if (category === "campaign" || category === "webapp") return false;
 
   const haystack = [
     project.title,
@@ -179,7 +187,8 @@ export default async function ProjectPage({ params }: { params: any }) {
   const catColor = CAT_COLOR[project.category?.toLowerCase()] ?? "#0D0D0D";
   const isLocked = isUniversityDesignPortfolio(project);
   const isCampaign = project.category?.toLowerCase() === "campaign";
-  const cinematic = isPropertyProject(project);
+  const isWebApp = project.category?.toLowerCase() === "webapp";
+  const cinematic = isPropertyProject(project) || isWebApp;
 
   if (isLocked) {
     return (
@@ -258,22 +267,32 @@ export default async function ProjectPage({ params }: { params: any }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   })).filter((img: any) => img.url);
   const deliverables = buildDeliverables(project, galleryImages.length);
-  const launchAssets = [
-    coverUrl ? "Hero still" : null,
-    project.videoUrl ? "Cinematic film embed" : null,
-    galleryImages.length ? `${galleryImages.length} gallery assets` : null,
-    project.url ? "Live launch link" : null,
-  ].filter(Boolean);
+  const launchAssets = isWebApp
+    ? [
+      "Pulse dashboard",
+      "City feed surface",
+      "Transit and map views",
+      "Events and webcam treatments",
+      "Ask console concept",
+    ]
+    : [
+      coverUrl ? "Hero still" : null,
+      project.videoUrl ? "Cinematic film embed" : null,
+      galleryImages.length ? `${galleryImages.length} gallery assets` : null,
+      project.url ? "Live launch link" : null,
+    ].filter(Boolean);
   const challengeText = project.brief || project.description || "Create a visual story that makes the property feel credible, desirable, and ready for a commercial audience.";
   const strategyText = project.process || "Build the property around atmosphere, clarity, and sequence: hero imagery first, then supporting visuals that help buyers, tenants, or investors understand the opportunity quickly.";
   const outcomeText = project.outcome || "Designed to increase confidence before the viewing, pitch, or launch moment by giving the property a sharper first impression.";
   const locationMeta = isCampaign
     ? "University of Plymouth / IMLRU"
+    : isWebApp
+      ? "Plymouth / civic intelligence"
     : project.tags?.find((tag: string) => /plymouth|london|manchester|devon|cornwall|chelsea|road|sq|square/i.test(tag)) || "Plymouth / UK";
   const productionNotes = [
-    project.videoUrl ? (isCampaign ? "Short-form social video" : "Motion-ready launch sequence") : "Still-led launch narrative",
-    galleryImages.length ? (isCampaign ? "Five keyframe sequence" : "Wide-format still selection") : "Hero-first visual system",
-    isCampaign ? "Awareness-led message structure" : "Investor-facing story structure",
+    isWebApp ? "Dashboard / map / feed system" : project.videoUrl ? (isCampaign ? "Short-form social video" : "Motion-ready launch sequence") : "Still-led launch narrative",
+    isWebApp ? "Realtime interface suite" : galleryImages.length ? (isCampaign ? "Five keyframe sequence" : "Wide-format still selection") : "Hero-first visual system",
+    isWebApp ? "Operational product narrative" : isCampaign ? "Awareness-led message structure" : "Investor-facing story structure",
   ];
 
   return (
@@ -354,7 +373,7 @@ export default async function ProjectPage({ params }: { params: any }) {
                 fontSize: "0.68rem", padding: "4px 10px",
                 letterSpacing: "0.14em", textTransform: "uppercase",
               }}>
-                {isCampaign ? "Social campaign" : "Private deck"}
+                {isWebApp ? "Web application" : isCampaign ? "Social campaign" : "Private deck"}
               </span>
               <span style={{
                 display: "inline-block",
@@ -374,7 +393,7 @@ export default async function ProjectPage({ params }: { params: any }) {
               textTransform: "uppercase",
               marginBottom: "0.45rem",
             }}>
-              {isCampaign ? "Built for public awareness and environmental communication" : "Built for investor, buyer, or tenant attention"}
+              {isWebApp ? "Built for live civic signals, city awareness, and operational clarity" : isCampaign ? "Built for public awareness and environmental communication" : "Built for investor, buyer, or tenant attention"}
             </div>
             <h1 style={{
               color: "#fff", margin: 0,
@@ -431,8 +450,8 @@ export default async function ProjectPage({ params }: { params: any }) {
             }}>
               {[
                 ["Context", locationMeta],
-                ["Audience", isCampaign ? "Instagram / public awareness" : "Investor / buyer / tenant"],
-                ["Format", isCampaign ? "Short-form motion campaign" : "Cinematic property deck"],
+                ["Audience", isWebApp ? "Residents / operators / visitors" : isCampaign ? "Instagram / public awareness" : "Investor / buyer / tenant"],
+                ["Format", isWebApp ? "Realtime web application" : isCampaign ? "Short-form motion campaign" : "Cinematic property deck"],
                 ["Production", productionNotes[0]],
               ].map(([label, value]) => (
                 <div key={label} style={{
@@ -513,11 +532,11 @@ export default async function ProjectPage({ params }: { params: any }) {
                   Case study deck
                 </span>
                 <h2 className="section-title" style={{ margin: 0 }}>
-                  {isCampaign ? "Campaign Design Narrative" : "Property Launch Narrative"}
+                  {isWebApp ? "Application Design Narrative" : isCampaign ? "Campaign Design Narrative" : "Property Launch Narrative"}
                 </h2>
               </div>
               <span className="btn b-black tiny" style={{ fontSize: "0.72rem" }}>
-                {isCampaign ? "Built for awareness" : "Built for attention"}
+                {isWebApp ? "Built for clarity" : isCampaign ? "Built for awareness" : "Built for attention"}
               </span>
             </div>
 
@@ -526,9 +545,11 @@ export default async function ProjectPage({ params }: { params: any }) {
               gridTemplateColumns: "repeat(auto-fit, minmax(245px, 1fr))",
               gap: "1rem",
             }}>
-              <DeckCard num="01" title="Hero Still" accent={catColor} cinematic={cinematic}>
+              <DeckCard num="01" title={isWebApp ? "Interface System" : "Hero Still"} accent={catColor} cinematic={cinematic}>
                 <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: cinematic ? "rgba(247,240,223,0.66)" : "var(--muted)", fontWeight: 650 }}>
-                  {isCampaign
+                  {isWebApp
+                    ? "The lead dashboard frames the city as a readable live instrument: status, movement, weather, tide and source confidence without visual noise."
+                    : isCampaign
                     ? "The lead image establishes the ocean as the source of the story before the sequence moves the issue closer to the viewer."
                     : "The lead image sets the commercial first impression: atmosphere, credibility, and a clear sense of place before the viewer reads a word."}
                 </p>
@@ -540,13 +561,13 @@ export default async function ProjectPage({ params }: { params: any }) {
                 </p>
               </DeckCard>
 
-              <DeckCard num="03" title="Visual Strategy" accent="var(--teal)" cinematic={cinematic}>
+              <DeckCard num="03" title={isWebApp ? "Product Strategy" : "Visual Strategy"} accent="var(--teal)" cinematic={cinematic}>
                 <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: cinematic ? "rgba(247,240,223,0.66)" : "var(--muted)", fontWeight: 650 }}>
                   {strategyText}
                 </p>
               </DeckCard>
 
-              <DeckCard num="04" title="Deliverables" accent="var(--green)" cinematic={cinematic}>
+              <DeckCard num="04" title={isWebApp ? "Capabilities" : "Deliverables"} accent="var(--green)" cinematic={cinematic}>
                 <div style={{ display: "flex", gap: "0.45rem", flexWrap: "wrap" }}>
                   {(deliverables.length ? deliverables : ["Hero stills", "Visual direction", "Launch-ready story"]).map((item) => (
                     <span key={item} className="btn tiny outline" style={{
@@ -560,7 +581,7 @@ export default async function ProjectPage({ params }: { params: any }) {
                 </div>
               </DeckCard>
 
-              <DeckCard num="05" title="Launch Assets" accent="var(--teal)" cinematic={cinematic}>
+              <DeckCard num="05" title={isWebApp ? "Product Surfaces" : "Launch Assets"} accent="var(--teal)" cinematic={cinematic}>
                 <ul style={{
                   margin: 0,
                   paddingLeft: "1.05rem",
@@ -632,7 +653,7 @@ export default async function ProjectPage({ params }: { params: any }) {
               lineHeight: 1.35,
               fontWeight: 900,
             }}>
-              {isCampaign ? "Built to make invisible pollution feel immediate." : "Built for investor, buyer, or tenant attention."}
+              {isWebApp ? "Built to make a live city feel readable." : isCampaign ? "Built to make invisible pollution feel immediate." : "Built for investor, buyer, or tenant attention."}
             </p>
             <span style={{
               background: "var(--yellow)",
@@ -646,7 +667,7 @@ export default async function ProjectPage({ params }: { params: any }) {
               padding: "0.45rem 0.65rem",
               whiteSpace: "nowrap",
             }}>
-              {isCampaign ? "KREO campaign case study" : "KREO property deck"}
+              {isWebApp ? "KREO web application case study" : isCampaign ? "KREO campaign case study" : "KREO property deck"}
             </span>
           </div>
 
@@ -717,7 +738,7 @@ export default async function ProjectPage({ params }: { params: any }) {
                   display: "inline-block", width: "10px", height: "10px",
                   background: catColor, border: "2px solid var(--ink)",
                 }} />
-                {cinematic ? "Film-strip Assets - click to expand" : "Gallery - click to expand"}
+                {isWebApp ? "Interface stills - click to expand" : cinematic ? "Film-strip Assets - click to expand" : "Gallery - click to expand"}
               </h2>
               {cinematic && (
                 <div style={{

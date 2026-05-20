@@ -13,6 +13,10 @@ const builder = imageUrlBuilder(client as any);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function urlFor(source: any) { return builder.image(source); }
 
+function formatCategory(category?: string) {
+  return category?.replace(/-/g, " ").replace("3d", "3D").replace("webapp", "Web App") || "Project";
+}
+
 export const dynamic = "force-dynamic";
 
 const QUERY = groq`*[_type == "project" && !(_id in path("drafts.**"))] | order(featured desc, order asc, publishedAt desc) {
@@ -26,10 +30,11 @@ const CAT_COLORS: Record<string, string> = {
   print: "#2DBA72",
   uiux: "#E56BE3",
   campaign: "#00B6A3",
+  webapp: "#00B6A3",
   other: "#E24C3A",
 };
 
-const ALL_CATS = ["all", "property", "campaign", "branding", "3d", "print", "uiux", "other"];
+const ALL_CATS = ["all", "property", "webapp", "campaign", "branding", "3d", "print", "uiux", "other"];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function ProjectCard({ project, index }: { project: any; index: number }) {
@@ -161,7 +166,7 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
           opacity: hovered ? 0 : 1,
           transition: "opacity 0.2s ease",
         }}>
-          {project.category?.replace(/-/g, " ").replace("3d", "3D") || "Project"}
+          {formatCategory(project.category)}
         </div>
 
         {/* Featured badge */}
@@ -193,7 +198,7 @@ function ProjectCard({ project, index }: { project: any; index: number }) {
             opacity: hovered ? 1 : 0,
             transition: "opacity 0.2s ease",
           }}>
-            {project.category?.replace(/-/g, " ").replace("3d", "3D") || "Project"}
+            {formatCategory(project.category)}
           </div>
 
           <h3 style={{
@@ -352,7 +357,7 @@ export default function ProjectsPage() {
                         transform: isActive ? "translate(-1px,-1px)" : "translate(0,0)",
                       }}
                     >
-                      {cat === "all" ? "ALL" : cat.replace("3d", "3D").replace("uiux", "UI/UX").toUpperCase()}
+                      {cat === "all" ? "ALL" : cat.replace("3d", "3D").replace("uiux", "UI/UX").replace("webapp", "WEB APP").toUpperCase()}
                       {cat !== "all" && (
                         <span style={{ marginLeft: "0.4rem", opacity: 0.6 }}>
                           ({visibleProjects.filter((p) => p.category?.toLowerCase() === cat).length})

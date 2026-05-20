@@ -78,4 +78,52 @@ export const OCEAN_POLLUTION_PROJECT = {
     "The final campaign uses five quiet, atmospheric frames to shift the viewer from ocean distance to personal exposure, landing on the line: You are breathing ocean pollution.",
 };
 
-export const LOCAL_PORTFOLIO_PROJECTS = [OCEAN_POLLUTION_PROJECT];
+export const PLYMOUTH_SIGNAL_PROJECT = {
+  _id: "plymouth-signal-web-application",
+  title: "Plymouth Signal",
+  slug: "plymouth-signal",
+  category: "webapp",
+  description:
+    "A real-time civic intelligence dashboard for Plymouth, designed as one calm instrument for transport, weather, marine, civic and event signals.",
+  coverImage: null,
+  coverImageUrl: "/portfolio/plymouth-signal/pulse.png",
+  featured: true,
+  tags: ["Web Application", "Civic Intelligence", "Realtime Dashboard"],
+  publishedAt: "2026-05-20T00:00:00.000Z",
+  _updatedAt: "2026-05-20T00:00:00.000Z",
+  gallery: [
+    {
+      url: "/portfolio/plymouth-signal/pulse.png",
+      alt: "Plymouth Signal pulse dashboard with city score and live status cards",
+      caption: "Pulse: city status, live arrivals, weather, tide and source health in one calm overview.",
+    },
+    {
+      url: "/portfolio/plymouth-signal/feed.png",
+      alt: "Plymouth Signal city feed with live civic signal rows",
+      caption: "City Feed: priority-ranked conditions and operational signal rows.",
+    },
+    {
+      url: "/portfolio/plymouth-signal/transit.png",
+      alt: "Plymouth Signal transit page with live bus map and Royal Parade board",
+      caption: "Transit: live bus positions, route filters and scheduled departure board.",
+    },
+    {
+      url: "/portfolio/plymouth-signal/events.png",
+      alt: "Plymouth Signal events page with editorial event cards",
+      caption: "Events: date-grouped listings with restrained categorisation.",
+    },
+    {
+      url: "/portfolio/plymouth-signal/webcam.png",
+      alt: "Plymouth Signal webcam page showing Plymouth Sound and Hoe Foreshore",
+      caption: "Webcam: Hoe Foreshore stream treatment with source context.",
+    },
+  ],
+  brief:
+    "Design and build a city-facing intelligence surface that makes Plymouth feel legible at a glance without becoming noisy, tactical or overbuilt.",
+  process:
+    "The system was shaped around a maritime research-vessel mood: quiet dark surfaces, sparse live accents, route-level views and a dashboard rhythm that can scale across map, feed, transit, events, webcam and ask-console surfaces.",
+  outcome:
+    "The result is a polished civic web application concept that shows full-stack product thinking, data-interface craft, operational UI design and atmospheric brand direction without exposing sensitive implementation details.",
+};
+
+export const LOCAL_PORTFOLIO_PROJECTS = [PLYMOUTH_SIGNAL_PROJECT, OCEAN_POLLUTION_PROJECT];
