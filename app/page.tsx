@@ -20,7 +20,20 @@ import { useKreoNav } from "./components/KreoTransition";
 
 const WorldScene = dynamic(() => import("./WorldScene"), { ssr: false });
 
-const SECTIONS = ["home","projects","about","why-kreo","reviews","blog","pricing","contact"] as const;
+const SECTIONS = ["home","hire-brandon","work-with-kreo","projects","about","why-kreo","reviews","blog","pricing","contact"] as const;
+
+const SECTION_LABELS: Record<string, string> = {
+  home: "Home",
+  "hire-brandon": "Hire Brandon",
+  "work-with-kreo": "Work With KREO",
+  projects: "Portfolio",
+  about: "About",
+  "why-kreo": "Capabilities",
+  reviews: "Proof",
+  blog: "Journal",
+  pricing: "Services",
+  contact: "Contact",
+};
 
 /* ---------------- Cinema Mode ---------------- */
 type CinemaState = "off" | "active" | "success" | "closing";
@@ -583,6 +596,254 @@ function WhyKreo() {
   );
 }
 
+function AudiencePathways() {
+  const paths = [
+    {
+      title: "Hire Brandon",
+      eyebrow: "For employers / collaborators",
+      body: "Evaluate Brandon as a high-level creative technologist: AI workflow thinking, full-stack web applications, data interfaces, product judgement and visual systems.",
+      href: "#hire-brandon",
+      cta: "See hire proof",
+      color: "var(--yellow)",
+    },
+    {
+      title: "Work with KREO",
+      eyebrow: "For clients / founders",
+      body: "Explore portfolio work, case studies and services for brand systems, web builds, cinematic property marketing, CGI, motion and pitch-ready launch assets.",
+      href: "#work-with-kreo",
+      cta: "See client track",
+      color: "var(--teal)",
+    },
+  ];
+
+  return (
+    <section className="section" style={{ paddingTop: "1.4rem", paddingBottom: "0.4rem" }}>
+      <div className="panel" style={{ maxWidth: 1120 }}>
+        <div className="panel-head">
+          <h2 className="section-title" style={{ margin: 0 }}>Choose Your Path</h2>
+          <span className="btn b-yellow tiny" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 var(--ink)" }}>
+            Two Audiences
+          </span>
+        </div>
+        <p style={{ margin: "0.2rem 0 1.1rem", maxWidth: 700, color: "var(--muted)", fontWeight: 650, lineHeight: 1.65 }}>
+          The same work tells two stories. One is Brandon as a standout hire and technical creative partner. The other is KREO as a premium studio for client projects.
+        </p>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gap: "1rem",
+        }}>
+          {paths.map((path) => (
+            <a
+              key={path.title}
+              href={path.href}
+              className="card"
+              data-magnetic
+              onClick={(e) => {
+                e.preventDefault();
+                document.querySelector(path.href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+              }}
+              style={{
+                textDecoration: "none",
+                color: "var(--ink)",
+                display: "block",
+                borderTop: `7px solid ${path.color}`,
+                padding: "1rem",
+                minHeight: 220,
+              }}
+            >
+              <span style={{
+                display: "inline-block",
+                fontFamily: "monospace",
+                fontSize: "0.62rem",
+                fontWeight: 900,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "var(--muted)",
+                marginBottom: "0.65rem",
+              }}>
+                {path.eyebrow}
+              </span>
+              <h3 style={{ margin: "0 0 0.6rem", fontSize: "clamp(1.35rem, 3vw, 2rem)", lineHeight: 1, fontWeight: 900 }}>
+                {path.title}
+              </h3>
+              <p style={{ margin: "0 0 1.1rem", color: "var(--muted)", fontWeight: 650, lineHeight: 1.6 }}>
+                {path.body}
+              </p>
+              <span className="btn tiny b-black" style={{ fontSize: "0.74rem", boxShadow: "3px 3px 0 var(--ink)" }}>
+                {path.cta}
+              </span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function HireBrandonSection() {
+  const proofs = [
+    {
+      title: "Plymouth Signal",
+      challenge: "Make a city feel readable through one calm civic intelligence surface.",
+      built: "A real-time dashboard concept with transport, weather, marine, events, webcam, source health and map-led interfaces.",
+      impact: "Shows product thinking, data-interface craft, live-source design and a polished technical UI language.",
+      tag: "Web app / civic intelligence",
+    },
+    {
+      title: "KREO Studio Platform",
+      challenge: "Build a personal studio site that acts as portfolio, booking funnel, live chat surface and SEO engine.",
+      built: "A Next.js site with project systems, Sanity content, booking/contact flows, preview routes, analytics and structured SEO.",
+      impact: "Demonstrates end-to-end ownership across brand, frontend, content architecture, deployment and conversion thinking.",
+      tag: "Full-stack / brand system",
+    },
+    {
+      title: "Private Property Preview Systems",
+      challenge: "Present property work with premium confidence while keeping sensitive material controlled.",
+      built: "Private preview routes, cinematic case-study language, request-only portfolio cards and investor-facing visual structures.",
+      impact: "Shows judgement around confidentiality, commercial presentation and high-trust client experiences.",
+      tag: "Property / access control",
+    },
+    {
+      title: "AI-Assisted Production Workflow",
+      challenge: "Move faster across visual direction, copy, systems thinking and build execution without losing taste.",
+      built: "Practical AI-assisted workflows around concepting, interface planning, asset direction and implementation support.",
+      impact: "Shows the ability to integrate modern tools into real production rather than treating AI as a gimmick.",
+      tag: "AI workflow / creative tech",
+    },
+  ];
+
+  return (
+    <section id="hire-brandon" className="section">
+      <div className="panel" style={{ background: "var(--ink)", color: "#fff" }}>
+        <div className="panel-head">
+          <h2 className="section-title" style={{ margin: 0, color: "#fff" }}>Hire Brandon</h2>
+          <span className="btn b-yellow tiny" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 rgba(255,255,255,0.25)" }}>
+            High-Level Hire Track
+          </span>
+        </div>
+        <p style={{ margin: "0 0 1.4rem", maxWidth: 760, color: "rgba(255,255,255,0.68)", fontWeight: 650, lineHeight: 1.7 }}>
+          Brandon is useful where design, technical build and AI-literate product thinking need to meet. This track is for teams looking for someone who can understand the problem, shape the interface, build the system and communicate the outcome.
+        </p>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+          gap: "1rem",
+          marginBottom: "1.4rem",
+        }}>
+          {proofs.map((item) => (
+            <div key={item.title} style={{
+              border: "1px solid rgba(245,193,0,0.35)",
+              background: "rgba(255,255,255,0.055)",
+              padding: "1rem",
+              minHeight: "100%",
+            }}>
+              <span style={{
+                display: "inline-block",
+                fontFamily: "monospace",
+                fontSize: "0.58rem",
+                fontWeight: 900,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "var(--yellow)",
+                marginBottom: "0.55rem",
+              }}>
+                {item.tag}
+              </span>
+              <h3 style={{ margin: "0 0 0.75rem", fontSize: "1.1rem", fontWeight: 900 }}>{item.title}</h3>
+              <p style={{ margin: "0 0 0.55rem", fontSize: "0.84rem", lineHeight: 1.6, color: "rgba(255,255,255,0.66)" }}>
+                <strong style={{ color: "#fff" }}>Challenge:</strong> {item.challenge}
+              </p>
+              <p style={{ margin: "0 0 0.55rem", fontSize: "0.84rem", lineHeight: 1.6, color: "rgba(255,255,255,0.66)" }}>
+                <strong style={{ color: "#fff" }}>Built:</strong> {item.built}
+              </p>
+              <p style={{ margin: 0, fontSize: "0.84rem", lineHeight: 1.6, color: "rgba(255,255,255,0.66)" }}>
+                <strong style={{ color: "#fff" }}>Impact:</strong> {item.impact}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))",
+          gap: "0.65rem",
+          marginBottom: "1.4rem",
+        }}>
+          {["AI workflow design", "Full-stack web apps", "Data-led interfaces", "Visual systems", "Product thinking", "Commercial presentation"].map((skill) => (
+            <div key={skill} style={{
+              border: "1px solid rgba(255,255,255,0.12)",
+              background: "rgba(255,255,255,0.045)",
+              padding: "0.65rem 0.75rem",
+              fontSize: "0.78rem",
+              fontWeight: 800,
+              color: "rgba(255,255,255,0.82)",
+            }}>
+              {skill}
+            </div>
+          ))}
+        </div>
+
+        <a
+          href="#contact"
+          className="btn b-yellow"
+          data-magnetic
+          style={{ boxShadow: "5px 5px 0 rgba(255,255,255,0.28)" }}
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }}
+        >
+          Discuss a role or collaboration
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function WorkWithKreoIntro() {
+  return (
+    <section id="work-with-kreo" className="section" style={{ paddingBottom: "0.2rem" }}>
+      <div className="panel">
+        <div className="panel-head">
+          <h2 className="section-title" style={{ margin: 0 }}>Work With KREO</h2>
+          <span className="btn b-teal tiny" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 var(--ink)" }}>
+            Client Track
+          </span>
+        </div>
+        <p style={{ margin: "0 0 1rem", maxWidth: 720, color: "var(--muted)", fontWeight: 650, lineHeight: 1.7 }}>
+          For clients, KREO is a direct creative partner for premium brand systems, web experiences, cinematic property marketing and pitch-ready launch assets. The portfolio below is the proof layer.
+        </p>
+        <div style={{ display: "flex", gap: "0.7rem", flexWrap: "wrap" }}>
+          <a
+            href="#projects"
+            className="btn b-yellow"
+            data-magnetic
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("projects")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
+            View portfolio
+          </a>
+          <a
+            href="#pricing"
+            className="btn outline"
+            data-magnetic
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("pricing")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
+            See services
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- Capability Receipts ---------------- */
 function CapabilityReceipts() {
   const capabilities = [
@@ -929,7 +1190,7 @@ function HUD() {
                   if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
                 }}
               >
-                {s.toUpperCase()}
+                {SECTION_LABELS[s] ?? s.toUpperCase()}
               </a>
             );
           })}
@@ -954,7 +1215,7 @@ export default function Page() {
   return (
     <main className="kreo">
       <IntroScreen />
-      <WorldScene sections={["home","projects","about","why-kreo","reviews","blog","pricing","contact"]} />
+      <WorldScene sections={["home","hire-brandon","work-with-kreo","projects","about","why-kreo","reviews","blog","pricing","contact"]} />
       <Cursor />
       <HUD />
       <CinemaOverlay state={cinemaState} onClose={closeCinema} />
@@ -1016,8 +1277,8 @@ export default function Page() {
               <span className="hero-services-copy">Premium brand, web, AI and cinematic visual systems - Plymouth, UK</span>
             </p>
             <div className="cta-row">
-              <a href="#contact" className="btn b-yellow" data-magnetic>Book a Project Call</a>
-              <a href="#projects"  className="btn b-blue outline" data-magnetic>View Portfolio Work</a>
+              <a href="#hire-brandon" className="btn b-yellow" data-magnetic>Hire Brandon</a>
+              <a href="#work-with-kreo"  className="btn b-blue outline" data-magnetic>Work with KREO</a>
             </div>
           </div>
         </div>
@@ -1069,7 +1330,13 @@ export default function Page() {
       </div>
 
       {/* CLIENT LOGOS BAND — social proof immediately below hero */}
+      <AudiencePathways />
+
       <ClientLogos />
+
+      <HireBrandonSection />
+
+      <WorkWithKreoIntro />
 
       {/* PROJECTS */}
       <ProjectsSection />
@@ -1119,6 +1386,33 @@ export default function Page() {
           <p style={{ margin: "0 0 1.5rem", fontSize: "0.92rem", fontWeight: 600, color: "var(--muted)", maxWidth: 580, lineHeight: 1.65 }}>
             You are speaking directly with Brandon. Book a focused project call, or send the brief and I&apos;ll come back with the clearest next step.
           </p>
+
+          <div style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "0.8rem",
+            marginBottom: "1.5rem",
+          }}>
+            {[
+              ["Hiring / collaboration", "For roles, partnerships, technical creative projects or AI/product opportunities.", "Discuss a role"],
+              ["Client project", "For brand, web, property marketing, pitch decks, CGI, motion or ongoing studio support.", "Book a project call"],
+            ].map(([label, body, cta]) => (
+              <a
+                key={label}
+                href="#contact"
+                className="card"
+                style={{ textDecoration: "none", color: "inherit", display: "block", padding: "0.9rem 1rem" }}
+              >
+                <div style={{ fontWeight: 900, fontSize: "0.94rem", marginBottom: "0.35rem" }}>{label}</div>
+                <p style={{ margin: "0 0 0.75rem", fontSize: "0.82rem", lineHeight: 1.55, color: "var(--muted)", fontWeight: 650 }}>
+                  {body}
+                </p>
+                <span className="btn tiny b-yellow" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 var(--ink)" }}>
+                  {cta}
+                </span>
+              </a>
+            ))}
+          </div>
 
           <div className="kreo-contact-grid">
             {/* LEFT: Calendly embed */}

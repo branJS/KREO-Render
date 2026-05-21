@@ -14,13 +14,17 @@ import { useKreoNav } from "./KreoTransition";
    On blog       (/blog*) → section links navigate to portfolio with hash
 ═══════════════════════════════════════════════════════════════════════════ */
 
-const PORTFOLIO_SECTIONS = [
-  { id: "home",      label: "Home",      color: "var(--yellow)" },
-  { id: "projects",  label: "Projects",  color: "var(--teal)" },
-  { id: "about",     label: "About",     color: "var(--green)" },
-  { id: "why-kreo",  label: "Why KREO",  color: "var(--yellow)" },
-  { id: "pricing",   label: "Pricing",   color: "var(--blue)" },
-  { id: "contact",   label: "Contact",   color: "var(--ink)" },
+const EMPLOYER_SECTIONS = [
+  { id: "hire-brandon", label: "Hire Brandon", color: "var(--yellow)" },
+  { id: "why-kreo", label: "Capabilities", color: "var(--teal)" },
+  { id: "contact", label: "Discuss a Role", color: "var(--green)" },
+];
+
+const CLIENT_SECTIONS = [
+  { id: "work-with-kreo", label: "Work with KREO", color: "var(--yellow)" },
+  { id: "projects", label: "Portfolio", color: "var(--teal)" },
+  { id: "pricing", label: "Services", color: "var(--blue)" },
+  { id: "contact", label: "Book a Call", color: "var(--ink)" },
 ];
 
 export default function KreoNav() {
@@ -131,15 +135,33 @@ export default function KreoNav() {
 
           {/* Section grid */}
           <nav className="kreo-nav-sections">
-            <p className="kreo-nav-label">Portfolio</p>
+            <p className="kreo-nav-label">For Employers</p>
             <div className="kreo-nav-grid">
-              {PORTFOLIO_SECTIONS.map((s, i) => (
+              {EMPLOYER_SECTIONS.map((s, i) => (
                 <button
                   key={s.id}
                   className="kreo-nav-item"
                   style={{
                     "--accent": s.color,
                     animationDelay: `${i * 40}ms`,
+                  } as React.CSSProperties}
+                  onClick={() => handleSectionClick(s.id)}
+                >
+                  <span className="kreo-nav-item-dot" style={{ background: s.color }} />
+                  {s.label}
+                </button>
+              ))}
+            </div>
+
+            <p className="kreo-nav-label" style={{ marginTop: "2rem" }}>For Clients</p>
+            <div className="kreo-nav-grid">
+              {CLIENT_SECTIONS.map((s, i) => (
+                <button
+                  key={s.id}
+                  className="kreo-nav-item"
+                  style={{
+                    "--accent": s.color,
+                    animationDelay: `${(i + EMPLOYER_SECTIONS.length) * 40}ms`,
                   } as React.CSSProperties}
                   onClick={() => handleSectionClick(s.id)}
                 >
