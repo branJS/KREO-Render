@@ -9,16 +9,16 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
 const SITE_URL = "https://www.kreostudio.co.uk";
-const SITE_NAME = "KREO Design Studio";
+const SITE_NAME = "KREO Studio by Brandon Allen";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "KREO Design Studio | Branding, Motion, Web & Visual Systems",
-    template: "%s | KREO Design Studio",
+    default: "Brandon Allen / KREO Studio | Brand, Web, AI & Cinematic Visual Systems",
+    template: "%s | Brandon Allen / KREO Studio",
   },
   description:
-    "KREO is a Plymouth-based design studio creating brand identity, graphic design, websites, motion graphics, 3D visuals, print and premium campaign systems for businesses across the UK.",
+    "KREO is the personal studio of Brandon Allen, an independent creative technologist and designer in Plymouth creating brand identity, websites, AI workflows, cinematic property marketing, 3D visuals and premium campaign systems.",
   keywords: [
     // Plymouth
     "graphic designer Plymouth",
@@ -47,12 +47,15 @@ export const metadata: Metadata = {
     // Brand
     "KREO design",
     "KREO studio",
+    "Brandon Allen designer",
+    "Brandon Allen KREO",
+    "creative technologist Plymouth",
     "visual identity designer",
     "brand identity UK",
   ],
-  authors: [{ name: "KREO", url: SITE_URL }],
-  creator: "KREO",
-  publisher: "KREO",
+  authors: [{ name: "Brandon Allen", url: SITE_URL }],
+  creator: "Brandon Allen",
+  publisher: "KREO Studio",
   robots: {
     index: true,
     follow: true,
@@ -70,9 +73,9 @@ export const metadata: Metadata = {
     shortcut: "/logos/favicon-32.png",
   },
   openGraph: {
-    title: "KREO Design Studio",
+    title: "Brandon Allen / KREO Studio",
     description:
-      "Brand identity, graphic design, websites, motion, 3D visuals and premium campaign systems from a Plymouth-based creative studio.",
+      "Brand identity, websites, AI workflows, cinematic property marketing, 3D visuals and premium campaign systems from Brandon Allen's Plymouth-based creative studio.",
     url: SITE_URL,
     siteName: SITE_NAME,
     locale: "en_GB",
@@ -80,9 +83,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "KREO Design Studio",
+    title: "Brandon Allen / KREO Studio",
     description:
-      "Branding, websites, motion graphics, 3D visuals and premium creative systems from Plymouth to the wider UK.",
+      "Branding, websites, AI workflows, motion, 3D visuals and premium creative systems by Brandon Allen in Plymouth, UK.",
     site: "@kreoxi",
     creator: "@kreoxi",
   },
@@ -99,10 +102,13 @@ const jsonLd = {
       "@type": ["LocalBusiness", "ProfessionalService"],
       "@id": `${SITE_URL}/#business`,
       name: "KREO Studio",
+      alternateName: "KREO Studio by Brandon Allen",
       url: SITE_URL,
       logo: `${SITE_URL}/logos/kreo-yellow-crop.png`,
       description:
-        "Design studio in Plymouth, Devon creating logo design, brand identity, motion graphics, 3D renders, website design, print and premium campaign systems. Serving Plymouth, Devon, Cornwall, Manchester and the wider UK.",
+        "Personal design and creative technology studio led by Brandon Allen in Plymouth, Devon, creating brand identity, websites, AI workflows, cinematic property marketing, 3D renders, motion and premium campaign systems.",
+      founder: { "@id": `${SITE_URL}/#brandon-allen` },
+      employee: { "@id": `${SITE_URL}/#brandon-allen` },
       address: {
         "@type": "PostalAddress",
         addressLocality: "Plymouth",
@@ -136,10 +142,28 @@ const jsonLd = {
       priceRange: "££",
     },
     {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#brandon-allen`,
+      name: "Brandon Allen",
+      url: SITE_URL,
+      jobTitle: "Independent creative technologist, designer and full-stack builder",
+      worksFor: { "@id": `${SITE_URL}/#business` },
+      sameAs: ["https://x.com/kreoxi"],
+      knowsAbout: [
+        "Brand identity",
+        "Website design",
+        "Full-stack web development",
+        "AI workflows",
+        "Cinematic property marketing",
+        "3D visualisation",
+        "Motion design",
+      ],
+    },
+    {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "KREO Design Studio",
+      name: "KREO Studio by Brandon Allen",
       publisher: { "@id": `${SITE_URL}/#business` },
     },
   ],

@@ -14,19 +14,31 @@ export default function Footer() {
       }}
     >
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
-
-        {/* Top row */}
         <div style={{
           display: "flex", alignItems: "center",
           justifyContent: "space-between", flexWrap: "wrap",
           gap: "1rem", marginBottom: "1.2rem",
         }}>
-          <img
-            src="/logos/kreo-black-crop.png"
-            alt="KREO"
-            className="kreo-footer-logo"
-            style={{ height: "28px", width: "auto" }}
-          />
+          <div>
+            <img
+              src="/logos/kreo-black-crop.png"
+              alt="KREO Studio by Brandon Allen"
+              className="kreo-footer-logo"
+              style={{ height: "28px", width: "auto", display: "block", marginBottom: "0.45rem" }}
+            />
+            <p style={{
+              margin: 0,
+              fontWeight: 800,
+              fontSize: "0.76rem",
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+            }}>
+              KREO Studio by Brandon Allen
+            </p>
+            <p style={{ margin: "0.25rem 0 0", fontSize: "0.78rem", fontWeight: 650, color: "var(--muted)" }}>
+              Independent creative studio, Plymouth UK.
+            </p>
+          </div>
           <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
             <a
               href="https://x.com/kreoxi"
@@ -34,26 +46,22 @@ export default function Footer() {
               className="btn tiny b-black"
               style={{ fontSize: "0.72rem", boxShadow: "3px 3px 0 var(--ink)" }}
             >
-              X / Twitter ↗
+              X / Twitter
             </a>
             <a
-              href="https://x.com/messages/compose?recipient_id=kreoxi"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="#contact"
               className="btn tiny b-yellow"
               style={{ fontSize: "0.72rem", boxShadow: "3px 3px 0 var(--ink)" }}
             >
-              DM on X ↗
+              Book a Call
             </a>
           </div>
         </div>
 
-        {/* Services + Coverage */}
         <div style={{
           display: "flex", gap: "2.5rem", flexWrap: "wrap",
           marginBottom: "1.4rem",
         }}>
-          {/* Services */}
           <div>
             <p style={{
               margin: "0 0 0.5rem",
@@ -61,19 +69,19 @@ export default function Footer() {
               letterSpacing: "0.18em", textTransform: "uppercase",
               opacity: 0.4,
             }}>
-              Services
+              Capabilities
             </p>
             <div style={{
               display: "flex", flexWrap: "wrap", gap: "0.25rem 0.8rem",
-              maxWidth: "520px",
+              maxWidth: "620px",
             }}>
               {[
-                "Website Design", "Graphic Design", "Identity & Branding",
-                "Logo Design", "Label & Packaging", "Flyer & Brochure Design",
-                "Business Card Design", "Social Media Design", "More on request",
+                "Brand Identity", "Web Applications", "AI Workflows",
+                "Cinematic Property Marketing", "3D / CGI", "Motion Assets",
+                "Pitch Decks", "Visual Systems",
               ].map((s) => (
                 <span key={s} style={{
-                  fontSize: "0.72rem", fontWeight: 600, opacity: 0.5,
+                  fontSize: "0.72rem", fontWeight: 600, opacity: 0.55,
                   whiteSpace: "nowrap",
                 }}>
                   {s}
@@ -82,7 +90,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Coverage */}
           <div style={{ marginLeft: "auto" }}>
             <p style={{
               margin: "0 0 0.5rem",
@@ -94,14 +101,13 @@ export default function Footer() {
             </p>
             <p style={{
               margin: 0, fontSize: "0.72rem", fontWeight: 600,
-              opacity: 0.5, lineHeight: 1.7, maxWidth: "300px",
+              opacity: 0.55, lineHeight: 1.7, maxWidth: "320px",
             }}>
-              Based in Plymouth, Devon — working with clients across Cornwall, the South West, Manchester, London and throughout the UK &amp; Europe.
+              Based in Plymouth, Devon - working with clients across the South West, Manchester, London and the wider UK.
             </p>
           </div>
         </div>
 
-        {/* SEO location landing pages */}
         <div style={{ marginBottom: "1.2rem" }}>
           <p style={{
             margin: "0 0 0.45rem", fontWeight: 800, fontSize: "0.65rem",
@@ -112,9 +118,9 @@ export default function Footer() {
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.25rem 0.8rem" }}>
             {[
               { href: "/graphic-design-plymouth", label: "Graphic Design Plymouth" },
-              { href: "/web-design-plymouth",     label: "Web Design Plymouth" },
-              { href: "/logo-design-plymouth",    label: "Logo Design Plymouth" },
-              { href: "/blog",                    label: "Design Journal" },
+              { href: "/web-design-plymouth", label: "Web Design Plymouth" },
+              { href: "/logo-design-plymouth", label: "Logo Design Plymouth" },
+              { href: "/blog", label: "Design Journal" },
             ].map(({ href, label }) => (
               <Link key={href} href={href} style={{
                 fontSize: "0.72rem", fontWeight: 700, opacity: 0.55,
@@ -129,20 +135,17 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Divider */}
         <div style={{ borderTop: "2px solid var(--ink)", margin: "0 0 1rem" }} />
 
-        {/* Bottom row */}
         <div style={{
           display: "flex", alignItems: "center",
           justifyContent: "space-between", flexWrap: "wrap",
           gap: "0.6rem",
         }}>
           <p style={{ margin: 0, fontWeight: 700, fontSize: "0.78rem" }}>
-            © {year} KREO. All rights reserved.
+            © {year} KREO Studio. Led by Brandon Allen.
           </p>
 
-          {/* Plymouth location — low opacity */}
           <p style={{
             margin: 0, fontWeight: 700,
             fontSize: "0.72rem", letterSpacing: "0.14em",
@@ -152,10 +155,9 @@ export default function Footer() {
           </p>
 
           <p style={{ margin: 0, fontWeight: 600, fontSize: "0.72rem", opacity: 0.5 }}>
-            Graphic Design &amp; Motion · Plymouth &amp; Manchester
+            Brand · Web · AI · Cinematic Visual Systems
           </p>
         </div>
-
       </div>
     </footer>
   );

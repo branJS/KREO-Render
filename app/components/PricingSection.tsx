@@ -1,15 +1,14 @@
 "use client";
 
 const SERVICES = [
-  { name: "Logo Design",           from: "£250",  color: "var(--yellow)", note: "Primary mark + variations" },
-  { name: "Brand Identity",        from: "£700",  color: "var(--teal)",   note: "Logo · guidelines · asset pack" },
-  { name: "Website Design",        from: "£900",  color: "var(--blue)",   note: "Design + build, custom layouts" },
-  { name: "Label & Packaging",     from: "£350",  color: "var(--green)",  note: "Print-ready, full artwork" },
-  { name: "Motion Graphics",       from: "£450",  color: "var(--pink)",   note: "Animated assets & reels" },
-  { name: "3D Renders",            from: "£250",  color: "var(--yellow)", note: "Product · arch · concept" },
-  { name: "Social Media Pack",     from: "£180",  color: "var(--teal)",   note: "Sized & ready to post" },
-  { name: "Flyer / Brochure",      from: "£90",   color: "var(--blue)",   note: "Print-ready PDF supplied" },
-  { name: "Business Card",         from: "£90",   color: "var(--green)",  note: "Both sides, print-ready" },
+  { name: "Brand Identity System", from: "£700", color: "var(--yellow)", note: "Positioning, logo direction, visual rules and launch assets" },
+  { name: "Website / Web App", from: "£900", color: "var(--blue)", note: "Custom design and build for polished digital experiences" },
+  { name: "Property Marketing Deck", from: "£650", color: "var(--teal)", note: "Cinematic previews, launch decks and investor-facing visuals" },
+  { name: "AI Workflow / Automation", from: "£450", color: "var(--green)", note: "Practical AI-assisted systems, prompts, tooling and pipelines" },
+  { name: "CGI / 3D Visuals", from: "£250", color: "var(--yellow)", note: "Product, concept, architectural and campaign visuals" },
+  { name: "Motion / Launch Assets", from: "£450", color: "var(--pink)", note: "Animated campaign pieces, reels and branded motion assets" },
+  { name: "Pitch Deck / Presentation", from: "£350", color: "var(--blue)", note: "Commercial story, layout and decision-ready presentation design" },
+  { name: "Ongoing Studio Support", from: "on request", color: "var(--teal)", note: "Retainers, fast-turnaround work and integrated creative support" },
 ];
 
 export default function PricingSection() {
@@ -18,17 +17,18 @@ export default function PricingSection() {
       <div className="panel">
 
         <div className="panel-head">
-          <h2 className="section-title" style={{ margin: 0 }}>Pricing</h2>
+          <h2 className="section-title" style={{ margin: 0 }}>Ways to Work</h2>
           <span className="btn b-yellow tiny" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 var(--ink)" }}>
-            Starting From
+            Starting Points
           </span>
         </div>
 
         <p style={{
           color: "var(--muted)", fontWeight: 600, fontSize: "0.88rem",
           margin: "0.4rem 0 1.2rem", lineHeight: 1.6,
+          maxWidth: 640,
         }}>
-          Every project is different — these are starting points. Get in touch for a quote tailored to your brief.
+          KREO is built for serious, practical creative work: brand systems, web builds, cinematic property marketing, AI workflows and launch-ready assets. These are starting points so you can understand fit before we shape the right scope.
         </p>
 
         <div style={{
@@ -56,19 +56,20 @@ export default function PricingSection() {
                 </div>
               </div>
               <div style={{
-                fontWeight: 900, fontSize: "1.1rem",
-                whiteSpace: "nowrap", flexShrink: 0,
+                fontWeight: 900, fontSize: from === "on request" ? "0.82rem" : "1.1rem",
+                whiteSpace: "nowrap", flexShrink: 0, textAlign: "right",
               }}>
                 {from}
-                <span style={{ fontSize: "0.64rem", fontWeight: 600, color: "var(--muted)", display: "block", textAlign: "right" }}>
-                  from
-                </span>
+                {from !== "on request" && (
+                  <span style={{ fontSize: "0.64rem", fontWeight: 600, color: "var(--muted)", display: "block", textAlign: "right" }}>
+                    from
+                  </span>
+                )}
               </div>
             </div>
           ))}
         </div>
 
-        {/* CTA */}
         <div style={{ marginTop: "1.2rem", display: "flex", gap: "0.6rem", flexWrap: "wrap", alignItems: "center" }}>
           <button
             className="btn b-yellow"
@@ -78,10 +79,10 @@ export default function PricingSection() {
               window.dispatchEvent(new CustomEvent("kreo:cinema-open"));
             }}
           >
-            Get a Quote
+            Book a Project Call
           </button>
           <p style={{ margin: 0, fontWeight: 600, fontSize: "0.8rem", color: "var(--muted)" }}>
-            Rush jobs, retainers &amp; ongoing work — rates on request.
+            Scope, pace and budget are shaped directly with Brandon.
           </p>
         </div>
 

@@ -583,6 +583,137 @@ function WhyKreo() {
   );
 }
 
+/* ---------------- Capability Receipts ---------------- */
+function CapabilityReceipts() {
+  const capabilities = [
+    {
+      num: "01",
+      heading: "Brand identity systems",
+      body: "Positioning, logo direction, visual rules and launch-ready assets built to make a business look established fast.",
+      accent: "var(--yellow)",
+    },
+    {
+      num: "02",
+      heading: "Web applications and dashboards",
+      body: "Full-stack product surfaces, live-data interfaces and polished web experiences designed from the user journey through to implementation.",
+      accent: "var(--teal)",
+    },
+    {
+      num: "03",
+      heading: "Cinematic property marketing",
+      body: "Premium visual systems for developments, investor previews, launch decks and private property presentations.",
+      accent: "var(--green)",
+    },
+    {
+      num: "04",
+      heading: "AI-assisted production workflows",
+      body: "Practical AI pipelines, LLM-assisted tools and automation thinking used to move faster without losing creative control.",
+      accent: "var(--blue)",
+    },
+    {
+      num: "05",
+      heading: "3D, CGI and motion assets",
+      body: "Still-led and motion-ready visuals for products, campaigns, concepts and spatial storytelling.",
+      accent: "var(--pink)",
+    },
+    {
+      num: "06",
+      heading: "Pitch and investor systems",
+      body: "Clear presentation structures that help people understand the offer, trust the work and move towards a decision.",
+      accent: "var(--yellow)",
+    },
+  ];
+
+  return (
+    <section id="why-kreo" className="section">
+      <div className="panel" style={{ background: "var(--yellow)", borderColor: "var(--ink)" }}>
+        <div className="panel-head">
+          <h2 className="section-title" style={{ margin: 0 }}>Capability Receipts</h2>
+          <span className="btn tiny outline" style={{ fontSize: "0.7rem", boxShadow: "3px 3px 0 var(--ink)" }}>
+            Brandon Allen / KREO
+          </span>
+        </div>
+
+        <p style={{
+          fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)",
+          fontWeight: 800,
+          lineHeight: 1.3,
+          margin: "0 0 0.5rem",
+          maxWidth: "760px",
+          letterSpacing: "-0.01em",
+        }}>
+          A solo studio with agency-level range: strategy, design, build, motion, AI systems and launch assets under one roof.
+        </p>
+        <p style={{
+          fontSize: "clamp(0.82rem, 1.6vw, 0.96rem)",
+          fontWeight: 600,
+          color: "var(--ink)",
+          opacity: 0.65,
+          margin: "0 0 1.8rem",
+          maxWidth: "640px",
+          lineHeight: 1.65,
+        }}>
+          Clients work directly with Brandon from first call to final delivery. That means fewer handoffs, faster decisions and creative systems designed to be used, extended and integrated.
+        </p>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+          gap: "1rem",
+          marginBottom: "2rem",
+        }}>
+          {capabilities.map(({ num, heading, body, accent }) => (
+            <div key={num} data-sr className="kreo-guarantee-card" style={{ background: "var(--cream)" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.3rem" }}>
+                <span style={{
+                  display: "inline-block", width: 8, height: 8,
+                  background: accent, border: "2px solid var(--ink)", flexShrink: 0,
+                }} />
+                <span style={{
+                  fontFamily: "monospace", fontSize: "0.6rem",
+                  fontWeight: 800, letterSpacing: "0.18em",
+                  textTransform: "uppercase", opacity: 0.4,
+                }}>{num}</span>
+              </div>
+              <h3 style={{ margin: "0 0 0.6rem", fontSize: "0.95rem", fontWeight: 800, letterSpacing: "0.01em" }}>
+                {heading}
+              </h3>
+              <p style={{ margin: 0, fontSize: "0.87rem", lineHeight: 1.7, color: "var(--muted)" }}>
+                {body}
+              </p>
+            </div>
+          ))}
+        </div>
+
+        <div style={{ display: "flex", gap: "0.8rem", flexWrap: "wrap" as const, alignItems: "center" }}>
+          <a
+            href="#contact"
+            className="btn b-teal"
+            data-magnetic
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
+            Book a project call
+          </a>
+          <a
+            href="#projects"
+            className="btn outline"
+            style={{ background: "var(--cream)" }}
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById("projects")?.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
+            View proof of work
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ---------------- KREO Guarantee ---------------- */
 function KreoGuarantee() {
   return (
@@ -654,6 +785,82 @@ function KreoGuarantee() {
           }}
         >
           Claim your 14-day guarantee →
+        </a>
+      </div>
+    </section>
+  );
+}
+
+function PersonalStudioPromise() {
+  return (
+    <section className="section">
+      <div className="panel" style={{ background: "var(--ink)", borderColor: "var(--ink)" }}>
+        <div style={{ display: "flex", gap: "0.6rem", alignItems: "center", marginBottom: "1rem", flexWrap: "wrap" as const }}>
+          <h2 className="section-title" style={{ margin: 0, color: "#fff" }}>Direct With Brandon</h2>
+          <span className="btn tiny" style={{
+            fontSize: "0.7rem", background: "var(--yellow)",
+            boxShadow: "3px 3px 0 rgba(255,255,255,0.3)",
+          }}>
+            Personal Studio
+          </span>
+        </div>
+
+        <p style={{
+          fontSize: "clamp(1rem, 2.2vw, 1.35rem)",
+          fontWeight: 800,
+          color: "#fff",
+          lineHeight: 1.35,
+          margin: "0 0 1rem",
+          maxWidth: "640px",
+        }}>
+          Work directly with Brandon from first call to final delivery.
+        </p>
+
+        <p style={{ fontSize: "0.88rem", color: "rgba(255,255,255,0.55)", fontWeight: 600, margin: "0 0 1.8rem", maxWidth: 560, lineHeight: 1.65 }}>
+          KREO is intentionally small: one accountable lead, a direct line of communication and a practical mix of visual direction, technical build and AI workflow thinking.
+        </p>
+
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: "0.8rem",
+          marginBottom: "2rem",
+        }}>
+          {[
+            { icon: "✓", label: "Direct access to the person doing the work" },
+            { icon: "✓", label: "Commercial thinking before visuals" },
+            { icon: "✓", label: "Design and implementation in one workflow" },
+            { icon: "✓", label: "Built for launch, handoff and future use" },
+          ].map(({ icon, label }) => (
+            <div key={label} style={{
+              display: "flex", alignItems: "center", gap: "0.6rem",
+              background: "rgba(255,255,255,0.06)",
+              border: "1.5px solid rgba(255,255,255,0.12)",
+              padding: "0.8rem 1rem",
+              fontWeight: 700, fontSize: "0.85rem", color: "#fff",
+            }}>
+              <span style={{
+                width: 22, height: 22, borderRadius: "50%",
+                background: "var(--yellow)", color: "var(--ink)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                fontSize: "0.7rem", fontWeight: 900, flexShrink: 0,
+              }}>{icon}</span>
+              {label}
+            </div>
+          ))}
+        </div>
+
+        <a
+          href="#contact"
+          className="btn b-yellow"
+          data-magnetic
+          style={{ boxShadow: "5px 5px 0 rgba(255,255,255,0.3)" }}
+          onClick={(e) => {
+            e.preventDefault();
+            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }}
+        >
+          Book a project call
         </a>
       </div>
     </section>
@@ -770,6 +977,23 @@ export default function Page() {
                 }}
               />
             </h1>
+            <div style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.5rem",
+              marginTop: "0.85rem",
+              padding: "0.35rem 0.7rem",
+              border: "2px solid var(--ink)",
+              boxShadow: "3px 3px 0 var(--ink)",
+              background: "var(--yellow)",
+              fontFamily: "monospace",
+              fontSize: "0.68rem",
+              fontWeight: 900,
+              letterSpacing: "0.14em",
+              textTransform: "uppercase",
+            }}>
+              Brandon Allen / KREO Studio
+            </div>
             <p className="subtitle" style={{
               margin: "0.7rem auto 0.45rem",
               maxWidth: 760,
@@ -778,7 +1002,7 @@ export default function Page() {
               fontWeight: 800,
               letterSpacing: "0.01em",
             }}>
-              Premium graphic design, brand identity and cinematic visuals for businesses that need to look serious.
+              Independent creative technologist, designer and full-stack builder for brands that need to look serious and move intelligently.
             </p>
             <p className="hero-services" style={{
               margin: "0 0 1rem",
@@ -789,27 +1013,59 @@ export default function Page() {
               color: "var(--muted)",
               opacity: 0.7,
             }}>
-              <span className="hero-services-copy">Logo design &middot; brand systems &middot; property marketing &middot; CGI visuals &middot; pitch decks &middot; web design &mdash; Plymouth, UK</span>
+              <span className="hero-services-copy">Premium brand, web, AI and cinematic visual systems - Plymouth, UK</span>
             </p>
             <div className="cta-row">
-              <a href="#projects" className="btn b-yellow" data-magnetic>View Portfolio Work</a>
-              <a href="#contact"  className="btn b-blue outline" data-magnetic>Plan a Project</a>
+              <a href="#contact" className="btn b-yellow" data-magnetic>Book a Project Call</a>
+              <a href="#projects"  className="btn b-blue outline" data-magnetic>View Portfolio Work</a>
             </div>
           </div>
         </div>
       </section>
 
       {/* SHORT BIO — intro under hero */}
-      <div style={{ padding: "1.4rem 1.2rem 0.2rem", maxWidth: "680px", margin: "0 auto" }}>
+      <div style={{ padding: "1.4rem 1.2rem 0.2rem", maxWidth: "980px", margin: "0 auto" }}>
         <p style={{
           fontWeight: 600,
           lineHeight: 1.75,
           fontSize: "clamp(0.9rem, 1.8vw, 1.05rem)",
           color: "var(--muted)",
-          margin: 0,
+          margin: "0 0 1rem",
         }}>
-          I&apos;m Brandon — a creative director, full-stack builder, and AI technologist based in Plymouth. Five years shaping brands through visuals, motion, and identity. KREO is where design and technology converge.
+          I&apos;m Brandon Allen, the person behind KREO. I combine visual direction, full-stack implementation and AI workflow thinking to create brand, web and cinematic systems that are polished, practical and ready to use.
         </p>
+        <div style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: "0.7rem",
+        }}>
+          {[
+            ["Solo studio", "Direct with Brandon from first call to delivery."],
+            ["Integrated skillset", "Brand, web, AI, 3D, motion and pitch systems."],
+            ["Ready to work", "Commercially focused, fast-moving and implementation minded."],
+          ].map(([label, body]) => (
+            <div key={label} style={{
+              border: "3px solid var(--ink)",
+              boxShadow: "4px 4px 0 var(--ink)",
+              background: "var(--cream)",
+              padding: "0.8rem 0.9rem",
+            }}>
+              <div style={{
+                fontFamily: "monospace",
+                fontSize: "0.62rem",
+                fontWeight: 900,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                marginBottom: "0.35rem",
+              }}>
+                {label}
+              </div>
+              <p style={{ margin: 0, fontSize: "0.82rem", lineHeight: 1.55, fontWeight: 650, color: "var(--muted)" }}>
+                {body}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* CLIENT LOGOS BAND — social proof immediately below hero */}
@@ -821,11 +1077,11 @@ export default function Page() {
       {/* ABOUT */}
       <AboutSection />
 
-      {/* WHY KREO — anti-AI positioning */}
-      <WhyKreo />
+      {/* CAPABILITY RECEIPTS */}
+      <CapabilityReceipts />
 
-      {/* KREO GUARANTEE */}
-      <KreoGuarantee />
+      {/* DIRECT WITH BRANDON */}
+      <PersonalStudioPromise />
 
       {/* SOCIAL PROOF — hidden until real testimonials are added; uncomment when ready */}
       {/* <SocialProof /> */}
@@ -861,7 +1117,7 @@ export default function Page() {
 
           {/* Intro line */}
           <p style={{ margin: "0 0 1.5rem", fontSize: "0.92rem", fontWeight: 600, color: "var(--muted)", maxWidth: 580, lineHeight: 1.65 }}>
-            Pick your preferred way in. Book a free 30-minute call to talk through your project, or drop a message and I&apos;ll come back to you within 24 hours.
+            You are speaking directly with Brandon. Book a focused project call, or send the brief and I&apos;ll come back with the clearest next step.
           </p>
 
           <div className="kreo-contact-grid">

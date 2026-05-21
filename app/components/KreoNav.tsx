@@ -113,9 +113,12 @@ export default function KreoNav() {
             <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
               <img
                 src="/logos/kreo-black-crop.png"
-                alt="KREO"
+                alt="KREO Studio by Brandon Allen"
                 style={{ height: 28, width: "auto", filter: "invert(1)" }}
               />
+              <span style={{ fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.12em", textTransform: "uppercase", opacity: 0.72 }}>
+                by Brandon Allen
+              </span>
             </div>
             <button
               className="kreo-nav-close"
@@ -173,7 +176,7 @@ export default function KreoNav() {
               onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
               onMouseLeave={e => (e.currentTarget.style.opacity = "0.3")}
             >
-              @kreoxi · kreostudio.co.uk
+              KREO Studio by Brandon Allen · kreostudio.co.uk
             </a>
           </div>
         </div>
