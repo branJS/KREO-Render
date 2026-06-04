@@ -294,6 +294,7 @@ export default async function ProjectPage({ params }: { params: any }) {
     isWebApp ? "Realtime interface suite" : galleryImages.length ? (isCampaign ? "Five keyframe sequence" : "Wide-format still selection") : "Hero-first visual system",
     isWebApp ? "Operational product narrative" : isCampaign ? "Awareness-led message structure" : "Investor-facing story structure",
   ];
+  const workbookPdfUrl = project.workbookPdfUrl;
 
   return (
     <main style={{
@@ -670,6 +671,64 @@ export default async function ProjectPage({ params }: { params: any }) {
               {isWebApp ? "KREO web application case study" : isCampaign ? "KREO campaign case study" : "KREO property deck"}
             </span>
           </div>
+
+          {workbookPdfUrl && (
+            <div style={{
+              marginBottom: "2rem",
+              border: "3px solid var(--ink)",
+              boxShadow: "8px 8px 0 var(--ink)",
+              background: "linear-gradient(135deg, rgba(0,182,163,0.14) 0%, rgba(255,255,255,0.92) 42%, rgba(245,193,0,0.22) 100%)",
+              color: "var(--ink)",
+              padding: "1.2rem",
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "space-between",
+              gap: "1.2rem",
+              alignItems: "center",
+            }}>
+              <div>
+                <div style={{
+                  fontFamily: "monospace",
+                  fontSize: "0.65rem",
+                  fontWeight: 900,
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "rgba(13,13,13,0.56)",
+                  marginBottom: "0.45rem",
+                }}>
+                  Research and development workbook
+                </div>
+                <h2 style={{
+                  margin: "0 0 0.55rem",
+                  fontSize: "clamp(1.25rem, 2.8vw, 2rem)",
+                  lineHeight: 1.05,
+                  fontWeight: 900,
+                  letterSpacing: "0.01em",
+                }}>
+                  Full process booklet
+                </h2>
+                <p style={{
+                  margin: 0,
+                  maxWidth: 640,
+                  color: "rgba(13,13,13,0.68)",
+                  fontSize: "0.92rem",
+                  fontWeight: 700,
+                  lineHeight: 1.65,
+                }}>
+                  A 42-page workbook documenting the research, references, moodboards, keyframe planning, ComfyUI experiments, After Effects production and final campaign development.
+                </p>
+              </div>
+              <a
+                href={workbookPdfUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn b-yellow"
+                style={{ whiteSpace: "nowrap" }}
+              >
+                View Workbook PDF →
+              </a>
+            </div>
+          )}
 
           {/* Video embed */}
           {project.videoUrl && (

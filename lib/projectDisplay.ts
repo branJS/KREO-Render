@@ -43,6 +43,7 @@ export const OCEAN_POLLUTION_PROJECT = {
   publishedAt: "2026-05-12T00:00:00.000Z",
   _updatedAt: "2026-05-12T00:00:00.000Z",
   videoUrl: "/projects/ocean-pollution/final-reel.mp4",
+  workbookPdfUrl: "/projects/ocean-pollution/GDES464_Brandon_Allen_Workbook.pdf",
   gallery: [
     {
       url: "/projects/ocean-pollution/frame-01-ocean.jpg",
