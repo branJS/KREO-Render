@@ -48,6 +48,11 @@ const nextConfig = {
         destination: "https://www.kreostudio.co.uk/:path*",
         permanent: true,
       },
+      {
+        source: "/projects/ocean-pollution/GDES464_Brandon_Allen_Workbook.pdf",
+        destination: "/projects/ocean-pollution/workbook/index.html",
+        permanent: false,
+      },
     ];
   },
 

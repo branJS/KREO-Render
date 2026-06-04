@@ -294,7 +294,7 @@ export default async function ProjectPage({ params }: { params: any }) {
     isWebApp ? "Realtime interface suite" : galleryImages.length ? (isCampaign ? "Five keyframe sequence" : "Wide-format still selection") : "Hero-first visual system",
     isWebApp ? "Operational product narrative" : isCampaign ? "Awareness-led message structure" : "Investor-facing story structure",
   ];
-  const workbookPdfUrl = project.workbookPdfUrl;
+  const workbookUrl = project.workbookUrl;
 
   return (
     <main style={{
@@ -672,7 +672,7 @@ export default async function ProjectPage({ params }: { params: any }) {
             </span>
           </div>
 
-          {workbookPdfUrl && (
+          {workbookUrl && (
             <div style={{
               marginBottom: "2rem",
               border: "3px solid var(--ink)",
@@ -705,7 +705,7 @@ export default async function ProjectPage({ params }: { params: any }) {
                   fontWeight: 900,
                   letterSpacing: "0.01em",
                 }}>
-                  Full process booklet
+                  Interactive process booklet
                 </h2>
                 <p style={{
                   margin: 0,
@@ -715,17 +715,17 @@ export default async function ProjectPage({ params }: { params: any }) {
                   fontWeight: 700,
                   lineHeight: 1.65,
                 }}>
-                  A 42-page workbook documenting the research, references, moodboards, keyframe planning, ComfyUI experiments, After Effects production and final campaign development.
+                  A 42-page interactive HTML workbook documenting the research, references, moodboards, keyframe planning, ComfyUI experiments, After Effects production and final campaign development.
                 </p>
               </div>
               <a
-                href={workbookPdfUrl}
+                href={workbookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn b-yellow"
                 style={{ whiteSpace: "nowrap" }}
               >
-                View Workbook PDF →
+                View Workbook HTML →
               </a>
             </div>
           )}
