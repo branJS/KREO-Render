@@ -67,8 +67,16 @@ export async function generateMetadata({ params }: { params: any }): Promise<Met
 function buildDeliverables(project: any, galleryCount: number) {
   const items = new Set<string>();
   const category = project.category?.toLowerCase() ?? "";
+  const slug = project.slug?.toLowerCase() ?? "";
+  const isCaitlin = slug === "project-caitlin";
 
-  if (category.includes("webapp")) {
+  if (isCaitlin) {
+    items.add("Mission Control GUI");
+    items.add("ChromaDB vector memory");
+    items.add("Local vision pipeline");
+    items.add("Self-upgrade sandbox");
+    items.add("Sovereignty policy engine");
+  } else if (category.includes("webapp")) {
     items.add("Realtime dashboard UI");
     items.add("Signal map experience");
     items.add("Live data surfaces");
@@ -188,6 +196,7 @@ export default async function ProjectPage({ params }: { params: any }) {
   const isLocked = isUniversityDesignPortfolio(project);
   const isCampaign = project.category?.toLowerCase() === "campaign";
   const isWebApp = project.category?.toLowerCase() === "webapp";
+  const isCaitlin = project.slug?.toLowerCase() === "project-caitlin";
   const cinematic = isPropertyProject(project) || isWebApp;
 
   if (isLocked) {
@@ -267,7 +276,15 @@ export default async function ProjectPage({ params }: { params: any }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   })).filter((img: any) => img.url);
   const deliverables = buildDeliverables(project, galleryImages.length);
-  const launchAssets = isWebApp
+  const launchAssets = isCaitlin
+    ? [
+      "Mission Control GUI (CustomTkinter)",
+      "Chat, Memory, Runtime, Vision tabs",
+      "Upgrades, Logs, Policies tabs",
+      "ChromaDB vector store with RAG",
+      "Local Ollama model orchestration",
+    ]
+    : isWebApp
     ? [
       "Pulse dashboard",
       "City feed surface",
@@ -286,13 +303,15 @@ export default async function ProjectPage({ params }: { params: any }) {
   const outcomeText = project.outcome || "Designed to increase confidence before the viewing, pitch, or launch moment by giving the property a sharper first impression.";
   const locationMeta = isCampaign
     ? "University of Plymouth / IMLRU"
+    : isCaitlin
+      ? "Local-first / Windows / RTX 3080"
     : isWebApp
       ? "Plymouth / civic intelligence"
     : project.tags?.find((tag: string) => /plymouth|london|manchester|devon|cornwall|chelsea|road|sq|square/i.test(tag)) || "Plymouth / UK";
   const productionNotes = [
-    isWebApp ? "Dashboard / map / feed system" : project.videoUrl ? (isCampaign ? "Short-form social video" : "Motion-ready launch sequence") : "Still-led launch narrative",
-    isWebApp ? "Realtime interface suite" : galleryImages.length ? (isCampaign ? "Five keyframe sequence" : "Wide-format still selection") : "Hero-first visual system",
-    isWebApp ? "Operational product narrative" : isCampaign ? "Awareness-led message structure" : "Investor-facing story structure",
+    isCaitlin ? "Local backend on 127.0.0.1:8765" : isWebApp ? "Dashboard / map / feed system" : project.videoUrl ? (isCampaign ? "Short-form social video" : "Motion-ready launch sequence") : "Still-led launch narrative",
+    isCaitlin ? "Hybrid local + API cognition" : isWebApp ? "Realtime interface suite" : galleryImages.length ? (isCampaign ? "Five keyframe sequence" : "Wide-format still selection") : "Hero-first visual system",
+    isCaitlin ? "Sovereign command-mind narrative" : isWebApp ? "Operational product narrative" : isCampaign ? "Awareness-led message structure" : "Investor-facing story structure",
   ];
   const workbookUrl = project.workbookUrl;
 
@@ -394,7 +413,7 @@ export default async function ProjectPage({ params }: { params: any }) {
               textTransform: "uppercase",
               marginBottom: "0.45rem",
             }}>
-              {isWebApp ? "Built for live civic signals, city awareness, and operational clarity" : isCampaign ? "Built for public awareness and environmental communication" : "Built for investor, buyer, or tenant attention"}
+              {isCaitlin ? "Built as a local, sovereign command mind that reasons, sees, remembers, and self-improves on a single workstation" : isWebApp ? "Built for live civic signals, city awareness, and operational clarity" : isCampaign ? "Built for public awareness and environmental communication" : "Built for investor, buyer, or tenant attention"}
             </div>
             <h1 style={{
               color: "#fff", margin: 0,
@@ -451,8 +470,8 @@ export default async function ProjectPage({ params }: { params: any }) {
             }}>
               {[
                 ["Context", locationMeta],
-                ["Audience", isWebApp ? "Residents / operators / visitors" : isCampaign ? "Instagram / public awareness" : "Investor / buyer / tenant"],
-                ["Format", isWebApp ? "Realtime web application" : isCampaign ? "Short-form motion campaign" : "Cinematic property deck"],
+                ["Audience", isCaitlin ? "Operator / single user / sovereign" : isWebApp ? "Residents / operators / visitors" : isCampaign ? "Instagram / public awareness" : "Investor / buyer / tenant"],
+                ["Format", isCaitlin ? "Local AI command system" : isWebApp ? "Realtime web application" : isCampaign ? "Short-form motion campaign" : "Cinematic property deck"],
                 ["Production", productionNotes[0]],
               ].map(([label, value]) => (
                 <div key={label} style={{
@@ -546,9 +565,11 @@ export default async function ProjectPage({ params }: { params: any }) {
               gridTemplateColumns: "repeat(auto-fit, minmax(245px, 1fr))",
               gap: "1rem",
             }}>
-              <DeckCard num="01" title={isWebApp ? "Interface System" : "Hero Still"} accent={catColor} cinematic={cinematic}>
+              <DeckCard num="01" title={isCaitlin ? "Mission Control" : isWebApp ? "Interface System" : "Hero Still"} accent={catColor} cinematic={cinematic}>
                 <p style={{ margin: 0, fontSize: "0.9rem", lineHeight: 1.7, color: cinematic ? "rgba(247,240,223,0.66)" : "var(--muted)", fontWeight: 650 }}>
-                  {isWebApp
+                  {isCaitlin
+                    ? "The Mission Control GUI surfaces every layer of Caitlin in one terminal-style interface: chat with streaming tool calls, memory, runtime health, vision, self-upgrades, log taxonomy and sovereignty policies."
+                    : isWebApp
                     ? "The lead dashboard frames the city as a readable live instrument: status, movement, weather, tide and source confidence without visual noise."
                     : isCampaign
                     ? "The lead image establishes the ocean as the source of the story before the sequence moves the issue closer to the viewer."
@@ -654,7 +675,7 @@ export default async function ProjectPage({ params }: { params: any }) {
               lineHeight: 1.35,
               fontWeight: 900,
             }}>
-              {isWebApp ? "Built to make a live city feel readable." : isCampaign ? "Built to make invisible pollution feel immediate." : "Built for investor, buyer, or tenant attention."}
+              {isCaitlin ? "Built to make a workstation think, see, and remember on its own." : isWebApp ? "Built to make a live city feel readable." : isCampaign ? "Built to make invisible pollution feel immediate." : "Built for investor, buyer, or tenant attention."}
             </p>
             <span style={{
               background: "var(--yellow)",
@@ -668,7 +689,7 @@ export default async function ProjectPage({ params }: { params: any }) {
               padding: "0.45rem 0.65rem",
               whiteSpace: "nowrap",
             }}>
-              {isWebApp ? "KREO web application case study" : isCampaign ? "KREO campaign case study" : "KREO property deck"}
+              {isCaitlin ? "KREO local AI system case study" : isWebApp ? "KREO web application case study" : isCampaign ? "KREO campaign case study" : "KREO property deck"}
             </span>
           </div>
 
