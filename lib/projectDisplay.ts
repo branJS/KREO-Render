@@ -127,4 +127,62 @@ export const PLYMOUTH_SIGNAL_PROJECT = {
     "The result is a polished civic web application concept that shows full-stack product thinking, data-interface craft, operational UI design and atmospheric brand direction without exposing sensitive implementation details.",
 };
 
-export const LOCAL_PORTFOLIO_PROJECTS = [PLYMOUTH_SIGNAL_PROJECT, OCEAN_POLLUTION_PROJECT];
+export const PROJECT_CAITLIN_PROJECT = {
+  _id: "project-caitlin-command-mind",
+  title: "Project Caitlin",
+  slug: "project-caitlin",
+  category: "webapp",
+  description:
+    "A local, Windows-first AI command system. A hybrid cognitive engine pairing a local RTX 3080 for vision and fallback with high-context API models for reasoning, run entirely on localhost through a CustomTkinter Mission Control GUI, a Streamlit dashboard and a ChromaDB-backed vector memory powered by Ollama.",
+  coverImage: null,
+  coverImageUrl: "/portfolio/project-caitlin/chat.png",
+  featured: true,
+  tags: ["AI System", "Local-First", "Mission Control"],
+  publishedAt: "2026-06-05T00:00:00.000Z",
+  _updatedAt: "2026-06-05T00:00:00.000Z",
+  gallery: [
+    {
+      url: "/portfolio/project-caitlin/chat.png",
+      alt: "Caitlin Mission Control chat interface with streaming tool calls and recalled memory",
+      caption: "Chat: conversational command interface with streaming responses, tool-call tracking and memory recall.",
+    },
+    {
+      url: "/portfolio/project-caitlin/memory.png",
+      alt: "Caitlin memory tab with ChromaDB vector embedding plot",
+      caption: "Memory: ChromaDB-backed vector store with embedding map, archivist maintenance and Obsidian vault sync.",
+    },
+    {
+      url: "/portfolio/project-caitlin/runtime.png",
+      alt: "Caitlin runtime doctor showing VRAM, tier SLO budgets and model residency",
+      caption: "Runtime: doctor checks, tier SLO budgets, VRAM airlock and live model residency across the worker pool.",
+    },
+    {
+      url: "/portfolio/project-caitlin/vision.png",
+      alt: "Caitlin vision tab for screen and image analysis through the VRAM airlock",
+      caption: "Vision: local moondream2 and qwen3vl-fast for screen capture and image analysis through the VRAM airlock.",
+    },
+    {
+      url: "/portfolio/project-caitlin/upgrades.png",
+      alt: "Caitlin self-upgrade review queue with shadow-branch sandbox gate",
+      caption: "Upgrades: sandbox-verified self-upgrade pipeline with shadow-branch gate and human approval on every diff.",
+    },
+    {
+      url: "/portfolio/project-caitlin/logs.png",
+      alt: "Caitlin live log stream filtered by routing, memory, orchestration, safety and health",
+      caption: "Logs: streaming agent event taxonomy filtered across routing, memory, orchestration, safety and health.",
+    },
+    {
+      url: "/portfolio/project-caitlin/policies.png",
+      alt: "Caitlin sovereignty policy viewer with approval queue and self-upgrade test matrix",
+      caption: "Policies: sovereignty gates, runtime profile, approval queue and the self-upgrade pytest matrix.",
+    },
+  ],
+  brief:
+    "Build a local-first command mind that can reason, see, remember and self-improve on a single workstation without leaking sensitive context out to the cloud, while staying governed by explicit sovereignty rules.",
+  process:
+    "A ThreadingHTTPServer backend on 127.0.0.1:8765 routes intent through tiered model profiles (router, brain_fast, brain_deep) with Caitlin as the command mind coordinating Brandon (code worker) and Baba (analysis worker). The CustomTkinter Mission Control surfaces every layer, Chat, Memory, Runtime, Vision, Upgrades, Logs and Policies, behind a calm terminal-style design.",
+  outcome:
+    "A working hybrid cognitive engine: ChromaDB vector memory with RAG and archivist pruning, local vision through moondream2 and qwen3vl-fast, a sandbox-gated self-upgrade pipeline with pytest matrix and approval workflow, and YAML-based sovereignty policies constraining autonomous behaviour, all observable through one local Mission Control GUI.",
+};
+
+export const LOCAL_PORTFOLIO_PROJECTS = [PROJECT_CAITLIN_PROJECT, PLYMOUTH_SIGNAL_PROJECT, OCEAN_POLLUTION_PROJECT];
